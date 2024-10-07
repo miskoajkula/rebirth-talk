@@ -45,17 +45,18 @@ const Header = () => {
             onClick={() => handleToggle()}
           />
 
-          <Link href="/" className={'w-[96px] max-[768px]:w-[64px]'}>
-            <img src={'/logo-v4.png'}/>
+          <Link href="/" className={'flex items-center'}>
+            <img src={'/logo-prew.png'} className={"w-[96px] max-[768px]:w-[64px]"}/>
+            <span className={"text-black text-xl"}>Rebirth Talk</span>
           </Link>
 
-          <div className={'flex w-5/12 max-[1024px]:w-1/12'}>
+          <div className={'flex w-4/12 max-[1024px]:w-1/12 relative'}>
             <input
               defaultValue={search ?? ''}
               className={
-                'w-10/12 rounded-l-md border pb-2 pl-4 pt-2 text-black max-[1024px]:hidden'
+                'w-full bg-gray-100 rounded-2xl border pb-2 pl-4 pt-2 text-black max-[1024px]:hidden'
               }
-              placeholder={'Search...'}
+              placeholder={'Search Rebirth Talk'}
               onChange={(e) => {
                 searchRef.current = e.target.value;
               }}
@@ -67,13 +68,13 @@ const Header = () => {
             />
             <div
               className={
-                'flex w-[44px] items-center justify-center rounded-r-md bg-denim-700 hover:cursor-pointer max-[1024px]:bg-transparent'
+                'absolute border-l-2 right-0 top-[15%] flex w-[44px] h-[70%] items-center justify-center rounded-r-md bg-denim-700 hover:cursor-pointer max-[1024px]:bg-transparent'
               }
               onClick={() => {
                 router.push(`/search?query=${searchRef.current}`);
               }}
             >
-              <BsSearch className={'w-[14px] max-[1024px]:w-[24px] max-[1024px]:invert'} />
+              <BsSearch className={'w-[32px] max-[1024px]:w-[24px] max-[1024px]:invert'} color={"gray"} />
             </div>
           </div>
 
