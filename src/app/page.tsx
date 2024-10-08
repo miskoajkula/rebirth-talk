@@ -6,8 +6,17 @@ import Layout from "@/components/layout";
 export default function Home() {
   return (
 
-    <Layout >
-      <div>test</div>
+    <Layout>
+      <div className={"text-black mt-5 relative "}>test</div>
+      <div className={"text-black"}>test</div>
+      <div className={"text-black"}>test</div>
+      <div className={"text-black"}>test</div>
+      <div className={"text-black"}>test</div>
+      <div className={"text-black"}>test</div>
+      <div className={"text-black"}>test</div>
+      <div className={"text-black"}>test</div>
+
+
     </Layout>
     // <div className="flex h-screen">
     //   {/* Sidebar */}

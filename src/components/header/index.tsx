@@ -5,6 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { BsSearch } from "react-icons/bs";
+import { TiPlus } from "react-icons/ti";
+import { LuPlus } from "react-icons/lu";
+import { RiNotificationLine } from "react-icons/ri";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const pathname = usePathname();
@@ -36,7 +40,7 @@ const Header = () => {
       <header className={'w-full bg-white max-[1024px]:sticky max-[1024px]:top-0 max-[1024px]:z-20'}>
         <div
           className={
-            'mx-auto flex max-w-[1280px] items-center justify-between pb-[30px] pt-[30px] max-[1024px]:px-1 max-[768px]:pb-[10px] max-[768px]:pt-[10px]'
+            'mx-auto flex max-w-[1280px] items-center justify-between max-[1024px]:px-1 max-[768px]:pb-[10px] max-[768px]:pt-[10px]'
           }
         >
           <img
@@ -46,7 +50,7 @@ const Header = () => {
           />
 
           <Link href="/" className={'flex items-center'}>
-            <img src={'/logo-prew.png'} className={"w-[96px] max-[768px]:w-[64px]"}/>
+            <img src={'/logo-prew.png'} className={"w-[96px] h-[64px] object-contain max-[768px]:w-[64px]"}/>
             <span className={"text-black text-xl"}>Rebirth Talk</span>
           </Link>
 
@@ -78,8 +82,17 @@ const Header = () => {
             </div>
           </div>
 
-          <div className={'flex gap-2 max-[1024px]:hidden'}>
-            <div>aa</div>
+          <div className={'flex gap-8 max-[1024px]:hidden'}>
+            <div className={"rounded-xl flex items-center gap-2"}>
+              <LuPlus className={'w-[24px] h-[24px]'} color={"black"} />
+              <span className={"text-black"}>New</span>
+            </div>
+            <div className={"flex gap-2"}>
+              <RiNotificationLine className={"w-[24px] h-[24px]"} color={"black"}/>
+              <FaUserCircle className={"w-[24px] h-[24px]"} color={"black"}/>
+            </div>
+
+
           </div>
         </div>
 
