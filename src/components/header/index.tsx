@@ -50,8 +50,8 @@ const Header = () => {
           />
 
           <Link href="/" className={'flex items-center'}>
-            <img src={'/logo-prew.png'} className={"w-[96px] h-[64px] object-contain max-[768px]:w-[64px]"}/>
-            <span className={"text-black text-xl"}>Rebirth Talk</span>
+            <img src={'/logo-prew2.png'} className={"w-[96px] h-[64px] object-contain max-[768px]:w-[64px]"}/>
+            {/*<span className={"text-black text-xl"}>Rebirth Talk</span>*/}
           </Link>
 
           <div className={'flex w-4/12 max-[1024px]:w-1/12 relative'}>
