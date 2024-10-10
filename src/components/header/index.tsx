@@ -50,7 +50,7 @@ const Header = () => {
           />
 
           <Link href="/" className={'flex items-center'}>
-            <img src={'/logo-prew2.png'} className={"w-[96px] h-[64px] object-contain max-[768px]:w-[64px]"}/>
+            <img src={'/logo-prew-3.png'} className={"w-[112px] h-[64px] object-contain max-[768px]:w-[64px]"}/>
             {/*<span className={"text-black text-xl"}>Rebirth Talk</span>*/}
           </Link>
 
@@ -78,7 +78,7 @@ const Header = () => {
                 router.push(`/search?query=${searchRef.current}`);
               }}
             >
-              <BsSearch className={'w-[32px] max-[1024px]:w-[24px] max-[1024px]:invert'} color={"gray"} />
+              <BsSearch className={'w-[32px] max-[1024px]:w-[24px] max-[1024px]:invert'} color={"#0a4244"} />
             </div>
           </div>
 
