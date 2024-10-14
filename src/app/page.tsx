@@ -2,22 +2,15 @@ import React from 'react';
 import { FaBell, FaBook, FaChartLine, FaHeart, FaPenFancy, FaTrophy, FaUsers, FaChevronRight } from 'react-icons/fa';
 import { BsFillChatQuoteFill } from "react-icons/bs";
 import Layout from "@/components/layout";
+import PostCard from "@/components/cards/post";
 
 export default function Home() {
   return (
 
     <Layout>
-      <div className={"text-black mt-5 relative "}>test</div>
-      <div className={"text-black"}>test</div>
-      <div className={"text-black"}>test</div>
-      <div className={"text-black"}>test</div>
-      <div className={"text-black"}>test</div>
-      <div className={" text-black"}>test</div>
-      <div className={"text-black"}>test</div>
-      <div className={"text-black"}>test</div>
 
       {
-        new Array(300).fill(0).map((_, i) => <div className={"text-black"}>test</div>)
+        new Array(300).fill(0).map((_, i) => <PostCard key={i}/>)
       }
 
       {/*<div className="flex h-screen">*/}

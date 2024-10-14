@@ -1,11 +1,9 @@
 import React from 'react';
 import Header from '@/components/header';
-import Footer from '@/components/footer';
 
-import { Didact_Gothic, Hind } from 'next/font/google'
-import { FaBook, FaChartLine, FaChevronRight, FaHeart, FaPenFancy, FaTrophy, FaUsers } from "react-icons/fa";
-import { BsFillChatQuoteFill } from "react-icons/bs";
+import { Hind } from 'next/font/google'
 import Sidebar from "@/components/sidebar";
+import RightSidebar from "@/components/sidebar/right-sidebar";
 
 const roboto = Hind({
   subsets: ['latin'],
@@ -19,9 +17,10 @@ const Layout = ({ children }: any) => {
       <Header />
       <main className={'mx-auto max-w-[1280px] max-[1024px]:px-1.5 flex'}>
         <Sidebar />
-        <div className={"flex w-full flex-col h-[100vh] overflow-y-scroll p-4"}>
+        <div className={"flex w-full flex-col h-[100vh] overflow-y-scroll"}>
           {children}
         </div>
+        <RightSidebar />
       </main>
       {/*<Footer/>*/}
     </div>
