@@ -1,6 +1,22 @@
 import React from 'react';
-import { FaBook, FaChartLine, FaChevronRight, FaHeart, FaPenFancy, FaTrophy, FaUsers } from "react-icons/fa";
-import { BsFillChatQuoteFill } from "react-icons/bs";
+import { FaChevronRight } from "react-icons/fa";
+
+import { FaScroll } from "react-icons/fa";
+import { LuScroll } from "react-icons/lu";
+
+import { BiTrophy, BiSolidTrophy } from "react-icons/bi";
+
+
+import { BsChatSquareQuote } from "react-icons/bs";
+import { BsChatSquareQuoteFill } from "react-icons/bs";
+
+import { BsCalendar2Check, BsCalendar2CheckFill } from "react-icons/bs";
+
+
+import { PiNotebookDuotone, PiNotebookFill } from "react-icons/pi";
+
+import { BsPeople, BsPeopleFill } from "react-icons/bs";
+
 
 const Sidebar = () => {
   return (
@@ -22,32 +38,29 @@ const Sidebar = () => {
       </div>
       <nav className="space-y-4">
         <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <FaBook className="mr-3"/>
+          <LuScroll className="mr-3"/>
           <span>Confessions</span>
         </a>
+
         <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <FaHeart className="mr-3"/>
+          <BiTrophy className="mr-3"/>
           <span>Success stories</span>
         </a>
         <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <BsFillChatQuoteFill className="mr-3"/>
-          <span>Motivational Quotes</span>
+          <BsChatSquareQuote className="mr-3"/>
+          <span>Quotes</span>
         </a>
         <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <FaChartLine className="mr-3"/>
-          <span>Tracker</span>
+          <BsCalendar2Check className="mr-3"/>
+          <span>Freedom Streak</span>
         </a>
         <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <FaPenFancy className="mr-3"/>
+          <PiNotebookDuotone className="mr-3"/>
           <span>Journal</span>
         </a>
         <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <FaUsers className="mr-3"/>
-          <span>Support Groups</span>
-        </a>
-        <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <FaTrophy className="mr-3"/>
-          <span>Achievements and Badges</span>
+          <BsPeople className="mr-3"/>
+          <span>Healing Circles</span>
         </a>
       </nav>
     </div>
