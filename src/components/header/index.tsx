@@ -9,6 +9,8 @@ import { TiPlus } from "react-icons/ti";
 import { LuPlus } from "react-icons/lu";
 import { RiNotificationLine } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
+import { AiOutlineBell } from "react-icons/ai";
+import { GoBell } from "react-icons/go";
 
 const Header = () => {
   const pathname = usePathname();
@@ -84,11 +86,13 @@ const Header = () => {
 
           <div className={'flex gap-8 max-[1024px]:hidden'}>
             <div className={"rounded-xl flex items-center gap-2"}>
-              <LuPlus className={'w-[24px] h-[24px]'} color={"black"} />
+              <div className={"w-[32px] h-[32px] bg-green-700 flex items-center justify-center rounded-2xl"}>
+                <LuPlus className={'w-[24px] h-[24px] bg-[#067168]'} color={"white"} />
+              </div>
               <span className={"text-black"}>New</span>
             </div>
             <div className={"flex gap-2"}>
-              <RiNotificationLine className={"w-[24px] h-[24px]"} color={"black"}/>
+              <GoBell className={"w-[24px] h-[24px]"} color={"black"}/>
               <FaUserCircle className={"w-[24px] h-[24px]"} color={"black"}/>
             </div>
 

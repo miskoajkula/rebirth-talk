@@ -13,14 +13,14 @@ import { BsChatSquareQuoteFill } from "react-icons/bs";
 import { BsCalendar2Check, BsCalendar2CheckFill } from "react-icons/bs";
 
 
-import { PiNotebookDuotone, PiNotebookFill } from "react-icons/pi";
+import { PiCirclesThreeLight, PiNotebookDuotone, PiNotebookFill } from "react-icons/pi";
 
 import { BsPeople, BsPeopleFill } from "react-icons/bs";
 
 
 const Sidebar = () => {
   return (
-    <div className="w-96 bg-white p-4 border-r-2">
+    <div className="w-96 bg-white p-4 border-r-2 ">
       <div className="mb-8">
         <h2 className="text-xl font-semibold">Rebirth Talk</h2>
         <div className="mt-4">
@@ -59,7 +59,7 @@ const Sidebar = () => {
           <span>Journal</span>
         </a>
         <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <BsPeople className="mr-3"/>
+          <PiCirclesThreeLight className="mr-3"/>
           <span>Healing Circles</span>
         </a>
       </nav>

@@ -52,14 +52,14 @@ const PostFilters = () => {
         className="text-black gap-2 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
         type="button">
         <FaHashtag color={"black"} className={"w-4 h-4"} />
-        Focus Area
+        Focus Community
       </button>
 
       <button
         className="text-black gap-2 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
         type="button">
         <HiOutlineArrowsUpDown color={"black"} className={"w-4 h-4"} />
-        Sort by
+        Sort
       </button>
     </div>
   );
