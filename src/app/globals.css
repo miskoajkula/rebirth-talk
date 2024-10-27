@@ -81,8 +81,7 @@ body {
   position: absolute;
   width: 56px;
   height: 96px;
-  filter: brightness(0.9);
-  opacity: .6;
+  opacity: .2;
   z-index: 1;
   fill: black;
   right: 0;
@@ -92,4 +91,5 @@ body {
 .thought p span {
   z-index: 4;
   position: relative;
+  color: white;
 }

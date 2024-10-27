@@ -1,16 +1,12 @@
-import React from 'react'
-import { IoHeartOutline } from 'react-icons/io5'
-import { BiCommentDetail } from "react-icons/bi";
-import { BiCommentDots } from "react-icons/bi";
-import { TfiCommentAlt } from "react-icons/tfi";
-import { FaRegCommentDots } from "react-icons/fa";
-import { LiaShareSolid } from "react-icons/lia";
-import { PiShareFatLight } from "react-icons/pi";
-import { BiShare } from "react-icons/bi";
-import { BiHeart } from "react-icons/bi";
-import { BiSolidHeart } from "react-icons/bi";
+import React, { FC } from 'react'
+import { BiCommentDetail, BiHeart, BiShare } from "react-icons/bi";
+import { BiSolidBadgeCheck } from "react-icons/bi";
 
-const PostCard = () => {
+interface PostCardProps {
+  isSuccess?: boolean;
+}
+
+const PostCard: FC<PostCardProps> = ({isSuccess}) => {
   return (
     <div className="flex flex-col w-full  mx-auto my-6 border-b-2">
       <div className="md:flex">
@@ -22,7 +18,13 @@ const PostCard = () => {
           />
         </div>
         <div className="p-4">
-          <div className="tracking-wide text-sm text-gray-500">#show • 4d</div>
+          <div className={"flex gap-2 items-center"}>
+            <div className="tracking-wide text-sm text-gray-500">#show • 4d</div>
+            <div className={"flex gap-1 items-center"}>
+              <BiSolidBadgeCheck/>
+              <span>Success story</span>
+            </div>
+          </div>
           <p className="mt-1 text-lg font-semibold text-black">
             I recently started documenting my thoughts while coding!
           </p>
@@ -35,15 +37,15 @@ const PostCard = () => {
           </p>
           <div className="flex items-center mt-4 gap-8">
             <button className="text-gray-500 text-sm flex items-center gap-1">
-                <BiHeart className={"w-[16px] h-[16px]"}  />
-                <span>12</span>
+              <BiHeart className={"w-[16px] h-[16px]"}/>
+              <span>12</span>
             </button>
             <button className="text-gray-500 text-sm flex items-center gap-1">
               <BiCommentDetail color={'text-gray-500'} className={"w-[16px] h-[16px]"}/>
               <span>12</span>
             </button>
             <button className="text-gray-500 text-sm  flex items-center gap-1">
-              <BiShare  color={'text-gray-500'} className={'w-[16px] h-[16px] scale-x-[-1]'}/>
+              <BiShare color={'text-gray-500'} className={'w-[16px] h-[16px] scale-x-[-1]'}/>
               <span>Share</span>
             </button>
           </div>

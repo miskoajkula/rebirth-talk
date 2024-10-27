@@ -37,28 +37,28 @@ const Sidebar = () => {
         </div>
       </div>
       <nav className="space-y-4">
-        <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <a href="/confessions" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
           <LuScroll className="mr-3"/>
           <span>Confessions</span>
         </a>
 
-        <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <a href="/success-stories" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
           <BiTrophy className="mr-3"/>
           <span>Success stories</span>
         </a>
-        <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <a href="/motivational-quotes" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
           <BsChatSquareQuote className="mr-3"/>
           <span>Quotes</span>
         </a>
-        <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <a href="/freedom-streak" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
           <BsCalendar2Check className="mr-3"/>
           <span>Freedom Streak</span>
         </a>
-        <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <a href="/journal" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
           <PiNotebookDuotone className="mr-3"/>
           <span>Journal</span>
         </a>
-        <a href="#" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+        <a href="/circles" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
           <PiCirclesThreeLight className="mr-3"/>
           <span>Healing Circles</span>
         </a>

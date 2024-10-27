@@ -85,11 +85,11 @@ const Header = () => {
           </div>
 
           <div className={'flex gap-8 max-[1024px]:hidden'}>
-            <div className={"rounded-xl flex items-center gap-2"}>
+            <div className={"rounded-xl flex items-center gap-2 pr-2 bg-gray-100"}>
               <div className={"w-[32px] h-[32px] bg-green-700 flex items-center justify-center rounded-2xl"}>
-                <LuPlus className={'w-[24px] h-[24px] bg-[#067168]'} color={"white"} />
+                <LuPlus className={'w-[24px] h-[24px] bg-green-700 rounded-xl'} color={"white"} />
               </div>
-              <span className={"text-black"}>New</span>
+              <span className={"text-black"}>Post</span>
             </div>
             <div className={"flex gap-2"}>
               <GoBell className={"w-[24px] h-[24px]"} color={"black"}/>
