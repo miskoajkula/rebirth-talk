@@ -3,6 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { FaHashtag } from "react-icons/fa6";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
+import { GiConvergenceTarget } from "react-icons/gi";
+import { VscTarget } from 'react-icons/vsc';
+import { FaTags, FaUsers } from "react-icons/fa";
+import { BiCategory, BiFilter } from "react-icons/bi";
+import { HiOutlineFilter } from "react-icons/hi";
 
 const PostFilters = () => {
   const [showFilters, setShowFilters] = useState(true);
@@ -51,14 +56,21 @@ const PostFilters = () => {
       <button
         className="text-black gap-2 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
         type="button">
-        <FaHashtag color={"black"} className={"w-4 h-4"} />
+        <FaUsers color={"black"} className={"w-4 h-4"}/>
         Focus Community
       </button>
 
       <button
         className="text-black gap-2 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
         type="button">
-        <HiOutlineArrowsUpDown color={"black"} className={"w-4 h-4"} />
+        <HiOutlineFilter color={"black"} className={"w-4 h-4"}/>
+        Filter
+      </button>
+
+      <button
+        className="text-black gap-2 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+        type="button">
+        <HiOutlineArrowsUpDown color={"black"} className={"w-4 h-4"}/>
         Sort
       </button>
     </div>

@@ -8,7 +8,7 @@ const Page = () => {
     <Layout>
       <PostFilters/>
       {
-        new Array(300).fill(0).map((_, i) => <PostCard key={i} isSuccess={true}/>)
+        new Array(300).fill(0).map((_, i) => <PostCard key={i} isSuccess={true} labelType={"success"}/>)
       }
     </Layout>
   );

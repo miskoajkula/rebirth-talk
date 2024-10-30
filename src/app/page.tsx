@@ -9,7 +9,7 @@ export default function Home() {
     <Layout>
       <PostFilters/>
       {
-        new Array(300).fill(0).map((_, i) => <PostCard key={i}/>)
+        new Array(300).fill(0).map((_, i) => <PostCard key={i} labelType={"selfAcceptance"}/>)
       }
     </Layout>
 

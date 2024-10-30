@@ -1,24 +1,61 @@
-import React from 'react';
-import { FaChevronRight } from "react-icons/fa";
+"use client"
 
-import { FaScroll } from "react-icons/fa";
+import React from 'react';
+import { FaChevronRight, FaScroll } from "react-icons/fa";
 import { LuScroll } from "react-icons/lu";
 
-import { BiTrophy, BiSolidTrophy } from "react-icons/bi";
+import { BiSolidTrophy, BiTrophy } from "react-icons/bi";
 
 
-import { BsChatSquareQuote } from "react-icons/bs";
-import { BsChatSquareQuoteFill } from "react-icons/bs";
-
-import { BsCalendar2Check, BsCalendar2CheckFill } from "react-icons/bs";
+import { BsCalendar2Check, BsCalendar2CheckFill, BsChatSquareQuote, BsChatSquareQuoteFill } from "react-icons/bs";
 
 
-import { PiCirclesThreeLight, PiNotebookDuotone, PiNotebookFill } from "react-icons/pi";
+import { PiCirclesThreeFill, PiCirclesThreeLight, PiNotebookDuotone, PiNotebookFill } from "react-icons/pi";
+import { usePathname } from "next/navigation";
 
-import { BsPeople, BsPeopleFill } from "react-icons/bs";
-
+const nav = [
+  {
+    name: "Confessions",
+    path: "/confessions",
+    icon: LuScroll,
+    selectedIcon: FaScroll
+  },
+  // {
+  //   name: "Success stories",
+  //   path: "/success-stories",
+  //   icon: BiTrophy,
+  //   selectedIcon: BiSolidTrophy
+  // },
+  {
+    name: "Quotes",
+    path: "/quotes",
+    icon: BsChatSquareQuote,
+    selectedIcon: BsChatSquareQuoteFill
+  },
+  {
+    name: "Freedom Streak",
+    path: "/freedom-streak",
+    icon: BsCalendar2Check,
+    selectedIcon: BsCalendar2CheckFill
+  },
+  {
+    name: "Journal",
+    path: "/journal",
+    icon: PiNotebookDuotone,
+    selectedIcon: PiNotebookFill
+  },
+  {
+    name: "Healing Circles",
+    path: "/healing-circles",
+    icon: PiCirclesThreeLight,
+    selectedIcon: PiCirclesThreeFill
+  }
+]
 
 const Sidebar = () => {
+  const pathname = usePathname()
+
+  console.log(pathname)
   return (
     <div className="w-96 bg-white p-4 border-r-2 ">
       <div className="mb-8">
@@ -37,31 +74,18 @@ const Sidebar = () => {
         </div>
       </div>
       <nav className="space-y-4">
-        <a href="/confessions" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <LuScroll className="mr-3"/>
-          <span>Confessions</span>
-        </a>
+        {
+          nav.map(item => {
+            const selected = pathname && pathname.indexOf(item.path) > -1
 
-        <a href="/success-stories" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <BiTrophy className="mr-3"/>
-          <span>Success stories</span>
-        </a>
-        <a href="/motivational-quotes" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <BsChatSquareQuote className="mr-3"/>
-          <span>Quotes</span>
-        </a>
-        <a href="/freedom-streak" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <BsCalendar2Check className="mr-3"/>
-          <span>Freedom Streak</span>
-        </a>
-        <a href="/journal" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <PiNotebookDuotone className="mr-3"/>
-          <span>Journal</span>
-        </a>
-        <a href="/circles" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-          <PiCirclesThreeLight className="mr-3"/>
-          <span>Healing Circles</span>
-        </a>
+            return <a key={item.name} href={item.path}
+                      className={`flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg ${selected ? "bg-gray-50" : ''}`}>
+              {selected ? <item.selectedIcon/> : <item.icon/>}
+              <span className={`ml-3 ${selected ? ' font-extrabold ' : 'font-light'}`}>{item.name}</span>
+            </a>
+          })
+        }
+
       </nav>
     </div>
   );
