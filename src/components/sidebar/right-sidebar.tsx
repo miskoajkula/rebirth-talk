@@ -5,7 +5,7 @@ import { ImQuotesLeft } from "react-icons/im";
 
 const RightSidebar = () => {
   return (
-    <div className="w-96 bg-white p-4 border-l-2 ">
+    <div className="w-96  p-4 border-l-2 bg-gray-50">
 
 
     </div>

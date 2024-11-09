@@ -113,7 +113,7 @@ const PostCard: FC<PostCardProps> = ({ labelType }) => {
   const label = labelMap[labelType] || labelMap.success; // Default to "success" if none provided
 
   return (
-    <div className="flex flex-col w-full mx-auto my-6 border-b-2">
+    <div className="flex flex-col w-full mx-auto  border-b-2">
       <div className="md:flex">
         <div className="flex-shrink-0">
           <img

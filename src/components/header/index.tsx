@@ -11,6 +11,7 @@ import { RiNotificationLine } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
 import { AiOutlineBell } from "react-icons/ai";
 import { GoBell } from "react-icons/go";
+import { CiSquarePlus } from "react-icons/ci";
 
 const Header = () => {
   const pathname = usePathname();
@@ -84,16 +85,18 @@ const Header = () => {
             </div>
           </div>
 
-          <div className={'flex gap-8 max-[1024px]:hidden'}>
-            <div className={"rounded-xl flex items-center gap-2 pr-2 bg-gray-100"}>
-              <div className={"w-[32px] h-[32px] bg-green-700 flex items-center justify-center rounded-2xl"}>
-                <LuPlus className={'w-[24px] h-[24px] bg-green-700 rounded-xl'} color={"white"} />
+          <div className={'flex gap-8 max-[1024px]:hidden items-center'}>
+            <div className={"rounded-md flex items-center gap-1 " }>
+              <div className={"w-[32px] h-[32px]  flex items-center justify-center rounded-2xl"}>
+                <CiSquarePlus className={'w-[28px] h-[28px]'} color={"black"} />
               </div>
-              <span className={"text-black"}>Post</span>
+              <span className={"text-black"}>New</span>
             </div>
             <div className={"flex gap-2"}>
               <GoBell className={"w-[24px] h-[24px]"} color={"black"}/>
-              <FaUserCircle className={"w-[24px] h-[24px]"} color={"black"}/>
+              <Link href={'/auth/login'}>
+                <FaUserCircle className={"w-[24px] h-[24px]"} color={"black"}/>
+              </Link>
             </div>
 
 

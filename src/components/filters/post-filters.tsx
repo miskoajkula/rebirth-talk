@@ -49,7 +49,7 @@ const PostFilters = () => {
 
   return (
     <div
-      className={`border-b-2 pt-1 sticky top-0 z-10 bg-white pb-1 flex justify-center gap-4 w-full transition-transform duration-300 ${
+      className={`shadow-md sticky top-0 z-10 bg-white flex justify-center gap-4 w-full transition-transform duration-300 ${
         showFilters ? 'transform translate-y-0' : 'transform -translate-y-full'
       }`}
     >

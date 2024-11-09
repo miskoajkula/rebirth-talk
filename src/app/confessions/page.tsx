@@ -5,7 +5,7 @@ import Layout from "@/components/layout";
 import PostFilters from "@/components/filters/post-filters";
 import PostCard, { labelMap } from "@/components/cards/post";
 
-const Page = () => {
+const Confessions = () => {
 
   return (
     <Layout>
@@ -19,4 +19,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Confessions;

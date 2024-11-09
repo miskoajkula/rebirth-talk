@@ -17,7 +17,7 @@ const Layout = ({ children }: any) => {
       <Header />
       <main className={'mx-auto max-w-[1280px] max-[1024px]:px-1.5 flex'}>
         <Sidebar />
-        <div className={"flex w-full flex-col h-[100vh] overflow-y-scroll"} id={"main-content"}>
+        <div className={"flex w-full flex-col h-[90vh] overflow-y-scroll bg-gray-50"} id={"main-content"}>
           {children}
         </div>
         <RightSidebar />

@@ -27,7 +27,7 @@ const nav = [
   //   selectedIcon: BiSolidTrophy
   // },
   {
-    name: "Quotes",
+    name: "Daily Quotes",
     path: "/quotes",
     icon: BsChatSquareQuote,
     selectedIcon: BsChatSquareQuoteFill
@@ -57,10 +57,9 @@ const Sidebar = () => {
 
   console.log(pathname)
   return (
-    <div className="w-96 bg-white p-4 border-r-2 ">
+    <div className="w-96  p-4 border-r-2 bg-gray-50">
       <div className="mb-8">
-        <h2 className="text-xl font-semibold">Rebirth Talk</h2>
-        <div className="mt-4">
+        <div className="mt-12">
           <div className="flex items-center space-x-2">
             <div className="bg-gray-300 w-10 h-10 rounded-full flex items-center justify-center text-xl">A</div>
             <div className={"flex-col gap-0"}>
@@ -76,7 +75,12 @@ const Sidebar = () => {
       <nav className="space-y-4">
         {
           nav.map(item => {
-            const selected = pathname && pathname.indexOf(item.path) > -1
+            let selected = pathname && pathname.indexOf(item.path) > -1
+
+            // if homepage
+            if(pathname === "/" && item.name === "Confessions") {
+              selected = true
+            }
 
             return <a key={item.name} href={item.path}
                       className={`flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg ${selected ? "bg-gray-50" : ''}`}>
