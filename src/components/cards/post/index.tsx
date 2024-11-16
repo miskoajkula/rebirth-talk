@@ -124,7 +124,7 @@ const PostCard: FC<PostCardProps> = ({ labelType }) => {
         </div>
         <div className="p-4">
           <div className="flex gap-2 items-center">
-            <div className="tracking-wide text-sm text-gray-500">#show • 4d</div>
+            <div className="tracking-wide text-sm text-gray-500">fikilix • #BED • 4d</div>
             <div className={`flex gap-1 items-center  ${label.bgColor} rounded-xl text-white px-2 py-1`}>
               {label.icon}
               <span className="text-xs">{label.text}</span>

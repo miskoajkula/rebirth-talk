@@ -86,12 +86,12 @@ const Header = () => {
           </div>
 
           <div className={'flex gap-8 max-[1024px]:hidden items-center'}>
-            <div className={"rounded-md flex items-center gap-1 " }>
+            <Link href={"/confessions/new"} className={"rounded-md flex items-center gap-1" }>
               <div className={"w-[32px] h-[32px]  flex items-center justify-center rounded-2xl"}>
                 <CiSquarePlus className={'w-[28px] h-[28px]'} color={"black"} />
               </div>
               <span className={"text-black"}>New</span>
-            </div>
+            </Link>
             <div className={"flex gap-2"}>
               <GoBell className={"w-[24px] h-[24px]"} color={"black"}/>
               <Link href={'/auth/login'}>
