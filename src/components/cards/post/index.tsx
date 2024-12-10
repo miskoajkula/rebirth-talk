@@ -8,6 +8,7 @@ import { AiOutlineBulb, AiOutlineExclamationCircle, AiOutlineMessage, AiOutlineS
 import { FaCircle, FaFistRaised, FaHandHoldingHeart, FaLeaf } from "react-icons/fa";
 import { MdOutlinePsychology, MdOutlineSelfImprovement } from "react-icons/md";
 import { BsMoonStars } from "react-icons/bs";
+import Link from "next/link";
 
 interface PostCardProps {
   isSuccess?: boolean;
@@ -113,7 +114,7 @@ const PostCard: FC<PostCardProps> = ({ labelType }) => {
   const label = labelMap[labelType] || labelMap.success; // Default to "success" if none provided
 
   return (
-    <div className="flex flex-col w-full mx-auto  border-b-2">
+    <div className="flex flex-col w-full mx-auto  border-b-2 hover:bg-white ">
       <div className="md:flex">
         <div className="flex-shrink-0">
           <img
@@ -130,23 +131,22 @@ const PostCard: FC<PostCardProps> = ({ labelType }) => {
               <span className="text-xs">{label.text}</span>
             </div>
           </div>
-          <p className="mt-1 text-lg font-semibold text-black">
-            I recently started documenting my thoughts while coding!
-          </p>
-          <p className="mt-1 text-gray-700">
-            Initially, it feels more of a time-consuming thing, but it helps a lot in clear thinking, reducing the complexities and you can
-            make sure that nothing is overlooked.
-          </p>
-          <p className="mt-2 text-gray-700">
-            So far, liking this process.
-          </p>
+          <Link href={`/confessions/${Math.round(Math.random()*100)}`}>
+            <p className="mt-1 text-lg font-semibold text-black">
+              I recently started documenting my thoughts while coding!
+            </p>
+            <p className="mt-1 text-gray-700">
+              Initially, it feels more of a time-consuming thing, but it helps a lot in clear thinking, reducing the complexities and you can
+              make sure that nothing is overlooked.
+            </p>
+          </Link>
           <div className="flex items-center mt-4 gap-8">
             <button className="text-gray-500 text-sm flex items-center gap-1">
-              <BiHeart className="w-[16px] h-[16px]" />
+              <BiHeart className="w-[16px] h-[16px]"/>
               <span>12</span>
             </button>
             <button className="text-gray-500 text-sm flex items-center gap-1">
-              <BiCommentDetail className="w-[16px] h-[16px]" />
+              <BiCommentDetail className="w-[16px] h-[16px]"/>
               <span>12</span>
             </button>
             <button className="text-gray-500 text-sm flex items-center gap-1">

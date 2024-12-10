@@ -11,7 +11,8 @@ import { RiNotificationLine } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
 import { AiOutlineBell } from "react-icons/ai";
 import { GoBell } from "react-icons/go";
-import { CiSquarePlus } from "react-icons/ci";
+import { CiSquarePlus, CiCirclePlus } from "react-icons/ci";
+import { GoPlus } from "react-icons/go";
 
 const Header = () => {
   const pathname = usePathname();
@@ -86,11 +87,9 @@ const Header = () => {
           </div>
 
           <div className={'flex gap-8 max-[1024px]:hidden items-center'}>
-            <Link href={"/confessions/new"} className={"rounded-md flex items-center gap-1" }>
-              <div className={"w-[32px] h-[32px]  flex items-center justify-center rounded-2xl"}>
-                <CiSquarePlus className={'w-[28px] h-[28px]'} color={"black"} />
-              </div>
-              <span className={"text-black"}>New</span>
+            <Link href={"/confessions/new"} className={"bg-[#047869] text-white rounded-3xl flex items-center gap-1 py-1 px-3"}>
+              <GoPlus className={'w-[28px] h-[28px]'} color={"white"}/>
+              <span className={"pr-2"}>Add</span>
             </Link>
             <div className={"flex gap-2"}>
               <GoBell className={"w-[24px] h-[24px]"} color={"black"}/>
