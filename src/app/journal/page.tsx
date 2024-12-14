@@ -26,7 +26,7 @@ const MyJournal = () => {
   return (
     <Layout>
       <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center">
-        <h1 className="text-2xl font-bold text-blue-600 mb-4">My Journal</h1>
+        <h1 className="text-2xl font-bold text-pine-green-700 mb-4">My Journal</h1>
 
         {/* Entry Cards */}
         <div className="w-full max-w-lg space-y-4 mb-20">
@@ -51,7 +51,7 @@ const MyJournal = () => {
         {/* Floating Action Button (FAB) */}
         <button
           onClick={() => setModalOpened(true)}
-          className="fixed bottom-6 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
+          className="fixed min-w-[10vw] bottom-6 bg-pine-green-700 text-white p-4 rounded-full shadow-lg"
         >
           + Thought
         </button>

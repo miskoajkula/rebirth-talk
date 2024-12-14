@@ -4,7 +4,7 @@ import Layout from "@/components/layout";
 const Quotes = () => {
   return (
     <Layout>
-      <div className="flex items-center justify-center pt-14 px-4">
+      <div className="flex items-center justify-center pt-14 px-4 bg-white">
         <div className="max-w-md w-full text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Daily Motivational Quotes</h1>
           <p className="text-lg text-gray-500 mb-6">Fuel Your Journey, One Quote at a Time</p>

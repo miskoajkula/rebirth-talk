@@ -1,12 +1,12 @@
 import React from 'react';
-import { FaBook, FaChartLine, FaChevronRight, FaHeart, FaPenFancy, FaTrophy, FaUsers } from "react-icons/fa";
-import { BsChatQuote, BsFillChatQuoteFill } from "react-icons/bs";
-import { ImQuotesLeft } from "react-icons/im";
+import Calendar from "react-calendar";
+import './calendar.css'
 
 const RightSidebar = () => {
   return (
-    <div className="w-96  p-4 border-l-2 bg-gray-50">
+    <div className="w-96  pl-4 border-l-2 bg-gray-50">
 
+      <Calendar className={"react-calendar mt-8"} />
 
     </div>
   );
