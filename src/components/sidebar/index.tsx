@@ -55,7 +55,6 @@ const nav = [
 const Sidebar = () => {
   const pathname = usePathname()
 
-  console.log(pathname)
   return (
     <div className="w-96  p-4 border-r-2 bg-gray-50">
       <div className="mb-8">
