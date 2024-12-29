@@ -9,6 +9,7 @@ import { FaFeather } from "react-icons/fa";
 import ReactQuill from 'react-quill-new';
 
 import 'react-quill/dist/quill.snow.css';
+import { BiPlus } from "react-icons/bi";
 
 type MoodType = {
   name: string,
@@ -87,6 +88,7 @@ const MyJournal = () => {
       }]);
       setValue('');
       setSelectedMood('');
+      setModalOpened(false);
     }
   };
 
@@ -103,9 +105,10 @@ const MyJournal = () => {
         <div className="w-full mb-20 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {/* New Entry Card */}
           <div
-            className="bg-[#02caaf5e] h-[150px] flex justify-center items-center text-pine-green-700 gap-2 rounded-md cursor-pointer shadow-md hover:shadow-lg transition-all"
+            className="bg-[#02caaf24] h-[150px] flex justify-center items-center text-pine-green-700 gap-2 rounded-md cursor-pointer hover:shadow-lg transition-all"
+            onClick={() => setModalOpened(true)}
           >
-            <FaFeather/>
+            <BiPlus className={"w-6 h-6"}/>
             <span>New Entry</span>
           </div>
 
@@ -139,15 +142,6 @@ const MyJournal = () => {
           ))}
         </div>
 
-
-        {/* Floating Action Button (FAB) */}
-        <button
-          onClick={() => setModalOpened(true)}
-          className="flex gap-2 min-w-[10vw] bottom-6 bg-pine-green-700 text-white p-4 rounded-full shadow-lg"
-        >
-          <FaFeather/>
-          <span>Add Thought</span>
-        </button>
 
         <PortalModal isOpen={modalOpened} onClose={() => setModalOpened(false)}>
           <div className="bg-white rounded-lg p-6 w-full">

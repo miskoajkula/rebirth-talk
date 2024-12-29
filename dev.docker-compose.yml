@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: news_db
+    image: postgres:16.0
+    environment:
+      POSTGRES_USER: news_user
+      POSTGRES_PASSWORD: news_pw
+      POSTGRES_DB: news_db
+      PGDATA: /data/postgres
+    volumes:
+      - news_db:/data/postgres
+    networks:
+      - news_network
+    ports:
+      - "5449:5432"
+
+  backend:
+    container_name: news_backend
+    build: ./backend
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    networks:
+      - news_network
+    env_file:
+      - ./backend/.env
+
+  redis:
+    image: 'bitnami/redis:6.2.14'
+    container_name: news_redis
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: J5EGHdss54rtghjgfEWSDbvtr
+    networks:
+      - news_network
+
+networks:
+  news_network:
+    driver: bridge
+
+volumes:
+  news_db:

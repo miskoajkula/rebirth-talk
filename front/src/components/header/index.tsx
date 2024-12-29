@@ -93,7 +93,7 @@ const Header = () => {
             </Link>
             <div className={"flex gap-2"}>
               <GoBell className={"w-[24px] h-[24px]"} color={"black"}/>
-              <Link href={'/auth/login'}>
+              <Link href={'/auth'}>
                 <FaUserCircle className={"w-[24px] h-[24px]"} color={"black"}/>
               </Link>
             </div>

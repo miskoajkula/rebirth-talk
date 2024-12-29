@@ -1,0 +1,90 @@
+services:
+  db:
+    container_name: news_db
+    image: postgres:16.0
+    environment:
+      POSTGRES_USER: news_user
+      POSTGRES_PASSWORD: hgmer45tgdfjewqfxRTfvc
+      POSTGRES_DB: news_db
+      PGDATA: /data/postgres
+    volumes:
+      - news_db:/data/postgres
+    networks:
+      - news_network
+    ports:
+      - "5449:5432"
+    restart: always
+
+  backend:
+    container_name: news_backend
+    build:
+      context: backend
+      dockerfile: prod.Dockerfile
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    networks:
+      - news_network
+    env_file:
+      - ./backend/.env-prod
+    restart: always
+
+  nginx:
+    container_name: news_nginx
+    image: nginx:1.27
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+      - frontend
+      - hashimotto_frontend
+    networks:
+      - news_network
+    restart: always
+
+  frontend:
+    container_name: news_frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    depends_on:
+      - db
+    networks:
+      - news_network
+    restart: always
+
+
+  redis:
+    image: 'bitnami/redis:6.2.14'
+    container_name: news_redis
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: J5EGHdss54rtghjgfEWSDbvtr
+    networks:
+      - news_network
+    restart: always
+
+  hashimotto_frontend:
+    container_name: hashimotto_frontend
+    image: nginx:1.27
+    volumes:
+      - ./hashimotto:/usr/share/nginx/html
+    networks:
+      - news_network
+    restart: always
+
+networks:
+  news_network:
+    driver: bridge
+
+volumes:
+  news_db:
