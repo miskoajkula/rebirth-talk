@@ -1,6 +1,4 @@
-// src/auth/schema/user.schema.ts
-
-import { pgTable, timestamp, uniqueIndex, uuid, varchar, text, boolean, integer, serial } from 'drizzle-orm/pg-core'
+import { pgTable, timestamp, uniqueIndex, varchar, boolean, serial } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),

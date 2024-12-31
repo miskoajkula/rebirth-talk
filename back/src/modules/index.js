@@ -1,14 +1,12 @@
-
 import getDbInstance from '../database/index.js'
-import RSSModule from './rss/index.js'
-import NewsModule from './news/index.js'
+import UserModule from './user/index.js'
 import RedisModule from './redis/index.js'
 
 const modules = [
-  RSSModule,
-  NewsModule,
+  UserModule,
   RedisModule
 ];
+
 
 const initializeModules = async () => {
   try {

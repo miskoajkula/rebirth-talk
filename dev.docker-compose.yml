@@ -2,48 +2,48 @@ version: '3.7'
 
 services:
   db:
-    container_name: news_db
+    container_name: rebirth_talk_db
     image: postgres:16.0
     environment:
-      POSTGRES_USER: news_user
-      POSTGRES_PASSWORD: news_pw
-      POSTGRES_DB: news_db
+      POSTGRES_USER: rebirth_talk_user
+      POSTGRES_PASSWORD: rebirth_talk_pw
+      POSTGRES_DB: rebirth_talk_db
       PGDATA: /data/postgres
     volumes:
-      - news_db:/data/postgres
+      - rebirth_talk_db:/data/postgres
     networks:
-      - news_network
+      - rebirth_talk_network
     ports:
       - "5449:5432"
 
   backend:
-    container_name: news_backend
-    build: ./backend
+    container_name: rebirth_talk_backend
+    build: ./back
     volumes:
-      - ./backend:/usr/src/app
+      - ./back:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - "4000:4000"
     depends_on:
       - db
     networks:
-      - news_network
+      - rebirth_talk_network
     env_file:
-      - ./backend/.env
+      - ./back/.env
 
-  redis:
-    image: 'bitnami/redis:6.2.14'
-    container_name: news_redis
-    ports:
-      - "6379:6379"
-    environment:
-      REDIS_PASSWORD: J5EGHdss54rtghjgfEWSDbvtr
-    networks:
-      - news_network
+#  redis:
+#    image: 'bitnami/redis:6.2.14'
+#    container_name: news_redis
+#    ports:
+#      - "6379:6379"
+#    environment:
+#      REDIS_PASSWORD: J5EGHdss54rtghjgfEWSDbvtr
+#    networks:
+#      - rebirth_talk_network
 
 networks:
-  news_network:
+  rebirth_talk_network:
     driver: bridge
 
 volumes:
-  news_db:
+  rebirth_talk_db:

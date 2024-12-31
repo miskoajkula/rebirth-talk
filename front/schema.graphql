@@ -1,0 +1,22 @@
+# This file was generated. Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+"Indicates exactly one field must be supplied and this field must not be `null`."
+directive @oneOf on INPUT_OBJECT
+
+type CheckAccount {
+    socialAuth: Boolean
+    userExists: Boolean
+}
+
+type Mutation {
+    clickPost(id: ID): Boolean
+}
+
+type Query {
+    checkAccount(email: String!): CheckAccount!
+}
