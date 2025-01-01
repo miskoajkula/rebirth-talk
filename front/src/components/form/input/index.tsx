@@ -7,10 +7,11 @@ interface InputProps {
   register: any;
   placeholder?: string;
   errors?: Record<string, any>;
+  type?: string;
 }
 
 
-const Input: React.FC<InputProps> = ({ label, name, register, placeholder, errors }) => {
+const Input: React.FC<InputProps> = ({ label, name, register, placeholder, errors, type = "text" }) => {
   const hasError = !!errors?.[name];
 
   const inputClasses = classNames(
@@ -29,7 +30,7 @@ const Input: React.FC<InputProps> = ({ label, name, register, placeholder, error
       <input
         id={name}
         {...register(name)}
-        type="text"
+        type={type}
         placeholder={placeholder}
         aria-invalid={hasError}
         aria-describedby={hasError ? `${name}-error` : undefined}

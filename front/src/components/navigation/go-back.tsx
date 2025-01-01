@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 
 interface GoBackProps {
   wrapperStyle?: string
+  title?: string
 }
 
-const GoBack = ({wrapperStyle}: GoBackProps) => {
+const GoBack = ({wrapperStyle, title}: GoBackProps) => {
   const router = useRouter();
 
   const action = () => {
@@ -18,7 +19,9 @@ const GoBack = ({wrapperStyle}: GoBackProps) => {
   return (
     <div className={`flex items-center justify-start gap-2 ${wrapperStyle}`}>
       <IoMdArrowBack className={"text-black w-6 h-6 hover:cursor-pointer"} onClick={action}/>
-      <span className={"text-black hover:cursor-pointer"} onClick={action}>Go back</span>
+      {
+        title && <span className={"text-black hover:cursor-pointer"} onClick={action}>{title}</span>
+      }
     </div>
   );
 };

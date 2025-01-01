@@ -1,5 +1,5 @@
 import React from 'react';
-import { Hind } from 'next/font/google';
+import { Hind, Roboto } from 'next/font/google';
 import Link from 'next/link';
 
 const roboto = Hind({

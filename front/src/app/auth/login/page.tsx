@@ -1,25 +1,79 @@
-import React from 'react';
-import Layout from "@/components/layout";
+"use client";
+
+import React, { useState } from 'react';
 import AuthLayout from "@/components/auth-layout";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import GoBack from "@/components/navigation/go-back";
+import Input from "@/components/form/input";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+
+const schema = yup.object().shape({
+  password: yup.string().required("Required").min(8, "Min. 8 chars").max(100, "Char limit reached"),
+});
+
+interface FormValues {
+  password: string;
+}
 
 const Page = () => {
+
+  const router = useRouter()
+  const searchParams = useSearchParams();
+  const [inputType, setInputType] = useState("password")
+
+  const onInputTypeChange = () => {
+    setInputType(inputType === "password" ? "text" : "password");
+  }
+  console.log()
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit: SubmitHandler<FormValues> = ({password}: FormValues) => {
+
+    alert(password)
+  };
+
+
+  console.log("inputType", inputType);
+
+  const EyeIcon = inputType === "password" ? IoMdEye : IoMdEyeOff
+
   return (
     <AuthLayout>
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">Welcome Back!</h2>
-      <p className="text-sm text-gray-600 mb-6">
-        New user? <Link href="/auth/register" className="text-indigo-600">Register</Link>
-      </p>
+      <h2 className="text-3xl font-semibold text-gray-800 relative">
+        <GoBack wrapperStyle={"absolute left-[-2.4rem] top-1 opacity-80"}/>
+        Welcome Back,</h2>
+      <div className={"flex items-center"}>
+        <h2 className="text-sm  font-semibold text-gray-400 mt-0">{searchParams?.get("email")}</h2>
+      </div>
 
-      <form className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Email address</label>
-          <input type="email" className="mt-1 block w-full p-2 border rounded-md"/>
+      <form className="space-y-4 mt-6" onSubmit={handleSubmit(onSubmit)}>
+
+        <div className={"relative"}>
+
+          <Input
+            label="Password"
+            name="password"
+            register={register}
+            type={inputType}
+            placeholder="**********"
+            errors={errors}
+          />
+          <EyeIcon
+            onClick={onInputTypeChange}
+            className={"w-5 h-5 absolute right-4 opacity-70 text-black top-9 hover:cursor-pointer"}
+          />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Password</label>
-          <input type="password" className="mt-1 block w-full p-2 border rounded-md"/>
-        </div>
+
         <div className="flex items-center justify-between">
           <label className="flex items-center">
             {/*<input type="checkbox" className="h-4 w-4 text-indigo-600 border-gray-300 rounded"/>*/}

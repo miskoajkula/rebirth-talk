@@ -5,10 +5,12 @@ import AuthLayout from "@/components/auth-layout";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
+
 import Input from "@/components/form/input";
 import CHECK_ACCOUNT from "@/lib/queries/user.query";
 import { useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
+import { IoMdEye } from "react-icons/io";
 
 const schema = yup.object().shape({
   email: yup.string().email("Not an email").required("Required").max(100, "Char limit reached"),
@@ -24,6 +26,7 @@ const Page = () => {
     register,
     handleSubmit,
     formState: {errors},
+    getValues,
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
@@ -35,13 +38,18 @@ const Page = () => {
           alert("Use social auth")
           return
         }
-        router.push('/auth/login')
+
+        if(data.checkAccount.userExists) {
+          router.push(`/auth/login?email=${getValues("email")}`)
+          return
+        }
+
+        router.push('/auth/register')
       }
     }
   })
 
   const onSubmit: SubmitHandler<FormValues> = ({ email }: FormValues) => {
-
     checkUser({
       variables: {
         email,
@@ -69,7 +77,7 @@ const Page = () => {
 
         <hr/>
         <p className={"text-center text-gray-700"}>Or</p>
-        <a href={"/auth"} className={"flex items-center justify-center gap-4 bg-pine-green-700 py-2 rounded-md font-medium"}>
+        <a href={"/auth"} className={"flex text-white items-center justify-center gap-4 bg-pine-green-700 py-2 rounded-md font-medium"}>
           <img src={'/google.svg'}/>
           <span>
           Continue with Google
