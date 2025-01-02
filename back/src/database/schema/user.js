@@ -8,6 +8,7 @@ export const users = pgTable('users', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
   socialAuth: boolean('social_auth').default(false),
   isAdmin: boolean('is_admin').default(false),
+  isVerified: boolean('is_verified').default(false),
 }, (users) => {
   return  {
     emailUniqueIndex: uniqueIndex('email_unique_idx').on(users.email)

@@ -10,6 +10,7 @@ import * as yup from "yup";
 import GoBack from "@/components/navigation/go-back";
 import Input from "@/components/form/input";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import classNames from "classnames";
 
 const schema = yup.object().shape({
   password: yup.string().required("Required").min(8, "Min. 8 chars").max(100, "Char limit reached"),
@@ -28,7 +29,7 @@ const Page = () => {
   const onInputTypeChange = () => {
     setInputType(inputType === "password" ? "text" : "password");
   }
-  console.log()
+
   const {
     register,
     handleSubmit,
@@ -38,14 +39,16 @@ const Page = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = ({password}: FormValues) => {
-
     alert(password)
   };
 
 
-  console.log("inputType", inputType);
-
   const EyeIcon = inputType === "password" ? IoMdEye : IoMdEyeOff
+  const shouldRenderEye = !errors["password"]
+  const eyeCss = classNames("w-5 h-5 absolute right-4 opacity-70 text-black top-9 hover:cursor-pointer",
+    {
+      'hidden': !shouldRenderEye,
+    })
 
   return (
     <AuthLayout>
@@ -70,15 +73,11 @@ const Page = () => {
           />
           <EyeIcon
             onClick={onInputTypeChange}
-            className={"w-5 h-5 absolute right-4 opacity-70 text-black top-9 hover:cursor-pointer"}
+            className={eyeCss}
           />
         </div>
 
         <div className="flex items-center justify-between">
-          <label className="flex items-center">
-            {/*<input type="checkbox" className="h-4 w-4 text-indigo-600 border-gray-300 rounded"/>*/}
-            {/*<span className="ml-2 text-sm text-gray-700">Remember this device</span>*/}
-          </label>
           <Link href={"/auth/password-reset"} className={"text-sm text-indigo-600"}>
             Forgot password?
           </Link>

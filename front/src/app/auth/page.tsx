@@ -3,14 +3,15 @@
 import React from 'react';
 import AuthLayout from "@/components/auth-layout";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import Input from "@/components/form/input";
 import CHECK_ACCOUNT from "@/lib/queries/user.query";
 import { useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { IoMdEye } from "react-icons/io";
+import Button from "@/components/button";
+import { GoogleLogin } from "@react-oauth/google";
 
 const schema = yup.object().shape({
   email: yup.string().email("Not an email").required("Required").max(100, "Char limit reached"),
@@ -31,25 +32,27 @@ const Page = () => {
     resolver: yupResolver(schema),
   });
 
-  const [checkUser] = useLazyQuery(CHECK_ACCOUNT, {
+  const [checkUser, {loading}] = useLazyQuery(CHECK_ACCOUNT, {
     onCompleted: data => {
-      if(data.checkAccount) {
-        if(data.checkAccount.socialAuth) {
+      if (data.checkAccount) {
+        if (data.checkAccount.socialAuth) {
           alert("Use social auth")
           return
         }
 
-        if(data.checkAccount.userExists) {
-          router.push(`/auth/login?email=${getValues("email")}`)
+        const emailParam = `email=${getValues("email")}`
+
+        if (data.checkAccount.userExists) {
+          router.push(`/auth/login?${emailParam}`)
           return
         }
 
-        router.push('/auth/register')
+        router.push(`/auth/register?${emailParam}`)
       }
     }
   })
 
-  const onSubmit: SubmitHandler<FormValues> = ({ email }: FormValues) => {
+  const onSubmit: SubmitHandler<FormValues> = ({email}: FormValues) => {
     checkUser({
       variables: {
         email,
@@ -71,9 +74,7 @@ const Page = () => {
           errors={errors}
         />
 
-        <button type="submit" className="w-full py-2 px-4 bg-pine-green-700 text-white font-semibold rounded-md ">
-          Continue
-        </button>
+        <Button title={"Continue"} loading={loading} buttonType="submit"/>
 
         <hr/>
         <p className={"text-center text-gray-700"}>Or</p>
@@ -83,6 +84,15 @@ const Page = () => {
           Continue with Google
           </span>
         </a>
+        <GoogleLogin
+          useOneTap={true}
+          onSuccess={credentialResponse => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        />
 
       </form>
 

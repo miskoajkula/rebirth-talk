@@ -15,8 +15,14 @@ type CheckAccount {
 
 type Mutation {
     clickPost(id: ID): Boolean
+    registerViaEmail(payload: EmailRegisterInput!): Boolean
 }
 
 type Query {
     checkAccount(email: String!): CheckAccount!
+}
+
+input EmailRegisterInput {
+    email: String!
+    password: String!
 }

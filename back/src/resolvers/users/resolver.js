@@ -6,6 +6,7 @@ const newsResolvers = {
   },
   Mutation: {
     clickPost: (_, { id }) => userModule.checkAccount(id),
+    registerViaEmail: (_, { payload }) => userModule.registerViaEmail(payload),
   },
 }
 

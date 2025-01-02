@@ -3,8 +3,11 @@ import { Inter } from "next/font/google";
 import { ApolloWrapper } from "@/lib/network/apollo-wrapper";
 
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GOOGLE_CLIENT_ID } from "@/constants";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,17 +15,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+                                     children,
+                                   }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+    <body className={inter.className}>
+    <GoogleOAuthProvider
+      clientId={GOOGLE_CLIENT_ID}>
       <ApolloWrapper>
         {children}
       </ApolloWrapper>
-      </body>
+      <Toaster/>
+    </GoogleOAuthProvider>;
+    </body>
     </html>
   );
 }
