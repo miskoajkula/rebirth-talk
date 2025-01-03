@@ -1,22 +1,23 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from 'react';
+
 import { useMutation } from "@apollo/client";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import * as yup from "yup";
 import classNames from "classnames";
+import toast from "react-hot-toast";
+import { FaCheck } from "react-icons/fa";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import AuthLayout from "@/components/auth-layout";
 import GoBack from "@/components/navigation/go-back";
 import Input from "@/components/form/input";
 import Button from "@/components/button";
 import REGISTER_VIA_EMAIL from "@/lib/mutations/create-user.mutation";
-import { yupResolver } from "@hookform/resolvers/yup";
-import toast from "react-hot-toast";
 
-import { FaCheck } from "react-icons/fa";
-import { useSearchParams } from "next/navigation";
 
 const schema = yup.object().shape({
   email: yup.string().email("Not an email").required("Required").max(100, "Char limit reached"),
@@ -47,9 +48,7 @@ const Page = () => {
 
   const [submitRegistration, {loading, data: registerData}] = useMutation(REGISTER_VIA_EMAIL, {
     onCompleted: (res) => {
-      console.log(res)
-
-      if (!res.registerViaEmail) {
+      if (!res.createAccountWithEmail) {
         setForbiddenEmail(true)
         return;
       }
@@ -87,7 +86,7 @@ const Page = () => {
 
 
   const renderRegistration = () => {
-    if (registerData?.registerViaEmail) {
+    if (registerData?.createAccountWithEmail) {
       return <div className={"mt-12 bg-pine-green-50 rounded-2xl px-7 py-4"}>
         <div className={"flex items-center gap-2 relative"}>
           <FaCheck className={"text-white bg-pine-green-500 rounded-2xl p-2 w-8 h-8"}/>

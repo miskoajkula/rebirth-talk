@@ -5,8 +5,10 @@ const newsResolvers = {
     checkAccount: (_, { email }) => userModule.checkAccount(email),
   },
   Mutation: {
-    clickPost: (_, { id }) => userModule.checkAccount(id),
-    registerViaEmail: (_, { payload }) => userModule.registerViaEmail(payload),
+    createAccountWithEmail: (_, { payload }) => userModule.registerViaEmail(payload),
+    authenticateWithEmail: (_, { payload }) => userModule.loginViaEmail(payload),
+    authenticateWithSocial: (_, { token }) => userModule.socialLogin(token),
+    requestPasswordReset: (_, { email }) => userModule.requestPasswordReset(email),
   },
 }
 

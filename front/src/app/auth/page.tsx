@@ -1,17 +1,20 @@
 "use client"
 
-import React from 'react';
+import { useRouter } from "next/navigation";
+
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import { GoogleLogin } from "@react-oauth/google";
+import toast from "react-hot-toast";
+import * as yup from "yup";
+
 import AuthLayout from "@/components/auth-layout";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SubmitHandler, useForm } from "react-hook-form";
-import * as yup from "yup";
 
 import Input from "@/components/form/input";
 import CHECK_ACCOUNT from "@/lib/queries/user.query";
-import { useLazyQuery } from "@apollo/client";
-import { useRouter } from "next/navigation";
 import Button from "@/components/button";
-import { GoogleLogin } from "@react-oauth/google";
+import SOCIAL_LOGIN from "@/lib/mutations/social-login.mutation";
 
 const schema = yup.object().shape({
   email: yup.string().email("Not an email").required("Required").max(100, "Char limit reached"),
@@ -33,10 +36,11 @@ const Page = () => {
   });
 
   const [checkUser, {loading}] = useLazyQuery(CHECK_ACCOUNT, {
+    fetchPolicy: 'no-cache',
     onCompleted: data => {
       if (data.checkAccount) {
         if (data.checkAccount.socialAuth) {
-          alert("Use social auth")
+          toast.error("Please use social auth to continue with that account.", { duration: 7000 });
           return
         }
 
@@ -52,6 +56,17 @@ const Page = () => {
     }
   })
 
+  const [socialLogin, {loading: socialLoading}] = useMutation(SOCIAL_LOGIN, {
+    onCompleted: data => {
+      console.log(data)
+    }, onError: error => {
+      toast.error(error.message, {
+        position: "top-right",
+        duration: 6000
+      });
+    }
+  })
+
   const onSubmit: SubmitHandler<FormValues> = ({email}: FormValues) => {
     checkUser({
       variables: {
@@ -59,6 +74,7 @@ const Page = () => {
       }
     })
   };
+
 
   return (
     <AuthLayout>
@@ -78,21 +94,37 @@ const Page = () => {
 
         <hr/>
         <p className={"text-center text-gray-700"}>Or</p>
-        <a href={"/auth"} className={"flex text-white items-center justify-center gap-4 bg-pine-green-700 py-2 rounded-md font-medium"}>
+        <div className={"flex relative text-white items-center justify-center gap-4 bg-pine-green-700 py-2 rounded-md font-medium hover:bg-pine-green-800"}>
           <img src={'/google.svg'}/>
           <span>
           Continue with Google
           </span>
-        </a>
-        <GoogleLogin
-          useOneTap={true}
-          onSuccess={credentialResponse => {
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log('Login Failed');
-          }}
-        />
+
+          <GoogleLogin
+            onSuccess={credentialResponse => {
+              console.log(credentialResponse);
+              if(!socialLoading) {
+                socialLogin({
+                  variables: {
+                    token: credentialResponse.credential
+                  }
+                })
+              }
+            }}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+            width={400}
+            containerProps={{
+              style: {
+                position: "absolute",
+                left: 0,
+                opacity: 0
+              },
+            }}
+          />
+        </div>
+
 
       </form>
 

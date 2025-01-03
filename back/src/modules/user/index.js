@@ -1,5 +1,11 @@
 import { users } from '#database/schema/user.js'
 import { eq } from 'drizzle-orm'
+import googleModule from '#modules/google/index.js'
+import bcrypt from 'bcrypt'
+
+import pkg from 'jsonwebtoken'
+
+const { sign } = pkg
 
 class UserModule {
 
@@ -9,12 +15,15 @@ class UserModule {
   }
 
   async checkAccount (email) {
+
     console.log(email)
     const userRes = await this.db.select({
       id: users.id,
       socialAuth: users.socialAuth,
     }).from(users).where(eq(users.email, email))
 
+    console.log('res')
+    console.log(userRes)
     if (userRes.length === 0) {
       return {
         userExists: false,
@@ -35,11 +44,94 @@ class UserModule {
 
     // todo add email verification
 
+    const saltRounds = 10
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
+
     await this.db.insert(users).values({
       email,
-      password,
+      password: hashedPassword,
       username: `user-${new Date().getTime()}`,
     })
+
+    return true
+  }
+
+  async getByEmail (email) {
+    const userRes = await this.db.select().from(users).where(eq(users.email, email))
+
+    if (userRes.length === 0) {
+      return null
+    }
+
+    return userRes[0]
+  }
+
+  async createSocialUser (email) {
+    return await this.db.insert(users).values({
+      email,
+      username: `user-${new Date().getTime()}`,
+      isVerified: true,
+      socialAuth: true,
+    }).returning()
+  }
+
+  async socialLogin (
+    token,
+  ) {
+    const { payload } = await googleModule.decodeToken(token)
+    const email = payload.email
+    let user = await this.getByEmail(email)
+
+    if (!user) {
+      console.log('== should create == ')
+      user = await this.createSocialUser(email)
+    }
+
+    if (!user.socialAuth) {
+      throw new Error('It seems you already have an account with this email. Please log in using your email and password.')
+    }
+
+    return this.generateAuthResponse(user)
+  }
+
+  async generateAuthResponse (user) {
+
+    const refreshToken = sign({ userId: user.id , createdAt: user.createdAt.toString()}, process.env.JWT_SECRET, {
+      expiresIn: '4w',
+    })
+
+    return { token: refreshToken, userInfo: user }
+  }
+
+  async loginViaEmail ({ email, password }) {
+    const user = await this.getByEmail(email)
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    if (!user.isVerified) {
+      throw new Error('User not verified')
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+    if (!isPasswordValid) {
+      throw new Error('Password is incorrect')
+    }
+
+    return this.generateAuthResponse(user)
+  }
+
+  async requestPasswordReset (email) {
+    const user = await this.getByEmail(email)
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    if (!user.isVerified) {
+      throw new Error('User not verified')
+    }
+
+    //todo send email
 
     return true
   }

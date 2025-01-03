@@ -1,16 +1,22 @@
 "use client";
 
-import React, { useState } from 'react';
-import AuthLayout from "@/components/auth-layout";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from 'react';
+
 import { SubmitHandler, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import classNames from "classnames";
+import { useMutation } from "@apollo/client";
+import toast from "react-hot-toast";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+
+import AuthLayout from "@/components/auth-layout";
+import { yupResolver } from "@hookform/resolvers/yup";
 import GoBack from "@/components/navigation/go-back";
 import Input from "@/components/form/input";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import classNames from "classnames";
+import LOGIN from "@/lib/mutations/login.mutation";
+import Button from "@/components/button";
 
 const schema = yup.object().shape({
   password: yup.string().required("Required").min(8, "Min. 8 chars").max(100, "Char limit reached"),
@@ -38,8 +44,30 @@ const Page = () => {
     resolver: yupResolver(schema),
   });
 
+  const [login, {loading}] = useMutation(LOGIN, {
+    onCompleted: (data) => {
+      if(data.authenticateWithEmail) {
+        alert('save login info')
+
+      }
+      console.log(data);
+    },
+    onError: (error) => {
+      toast.error(error.message, {position: "top-right", duration: 6000});
+    }
+  })
+
   const onSubmit: SubmitHandler<FormValues> = ({password}: FormValues) => {
-    alert(password)
+    if (loading) return
+
+    login({
+      variables: {
+        payload: {
+          email: searchParams?.get("email"),
+          password: password,
+        }
+      }
+    })
   };
 
 
@@ -77,14 +105,12 @@ const Page = () => {
           />
         </div>
 
-        <div className="flex items-center justify-between">
-          <Link href={"/auth/password-reset"} className={"text-sm text-indigo-600"}>
+        <div className="flex items-center justify-end">
+          <Link href={"/auth/password-reset"} className={"text-xs text-gray-500"}>
             Forgot password?
           </Link>
         </div>
-        <button type="submit" className="w-full py-2 px-4 bg-[#047871] text-white font-semibold rounded-md hover:bg-indigo-700">
-          Sign in
-        </button>
+        <Button title={"Sign in"} buttonType={"submit"} loading={loading}/>
       </form>
 
     </AuthLayout>

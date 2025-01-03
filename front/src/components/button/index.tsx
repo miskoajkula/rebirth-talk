@@ -10,7 +10,7 @@ type ButtonProps = {
 const Button = ({title, loading = false, buttonType = "button"}: ButtonProps) => {
 
   const inputClasses = classNames(
-    'w-full py-2 px-4 bg-pine-green-700 text-white font-semibold rounded-md ',
+    'w-full py-2 px-4 bg-pine-green-700 text-white font-semibold rounded-md hover:bg-pine-green-800',
     {
       'opacity-50 pointer-events-none': loading,
     }

@@ -113,3 +113,7 @@ body {
 .ql-editor.ql-blank::before {
   opacity: .7;
 }
+
+#google-login-icon {
+  display: none;
+}
