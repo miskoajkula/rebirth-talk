@@ -1,24 +1,10 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import {
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  TextField,
-  Typography,
-  Avatar,
-  FormControlLabel,
-  Checkbox,
-  Stack,
-  FormGroup,
-  FormLabel,
-  IconButton,
-  Grid,
-} from '@mui/material';
+import { Avatar, Box, Checkbox, Fade, FormControlLabel, FormGroup, Grid, Stack, Step, StepLabel, Stepper, TextField, Typography, } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import Button from '@/components/button';
+
 /**
  * Example data you might pass in or define:
  * - Available Avatars
@@ -62,18 +48,18 @@ function OnboardingForm() {
 
   // Helpers for setting data
   const handleUsernameChange = (e) => {
-    setFormData({ ...formData, username: e.target.value });
+    setFormData({...formData, username: e.target.value});
   };
 
   const handleAvatarSelect = (avatarPath) => {
-    setFormData({ ...formData, avatar: avatarPath });
+    setFormData({...formData, avatar: avatarPath});
   };
 
   const handleAvatarUpload = (file) => {
     // You might want to do actual uploading to a server here
     // For simplicity, just store the file name or base64 as the avatar
     const fileURL = URL.createObjectURL(file);
-    setFormData({ ...formData, avatar: fileURL });
+    setFormData({...formData, avatar: fileURL});
   };
 
   const handleFocusCommunitiesChange = (community) => {
@@ -86,7 +72,7 @@ function OnboardingForm() {
       // add
       updated.push(community);
     }
-    setFormData({ ...formData, focusCommunities: updated });
+    setFormData({...formData, focusCommunities: updated});
   };
 
   const handlePostKindsChange = (kind) => {
@@ -97,7 +83,7 @@ function OnboardingForm() {
     } else {
       updated.push(kind);
     }
-    setFormData({ ...formData, postKinds: updated });
+    setFormData({...formData, postKinds: updated});
   };
 
   // Dynamically render step content
@@ -105,7 +91,7 @@ function OnboardingForm() {
     switch (stepIndex) {
       case 0:
         return (
-          <Box sx={{ width: '100%', maxWidth: 400 }}>
+          <Box sx={{width: '100%', maxWidth: 400}}>
             <Typography variant="h6" mb={2}>
               Choose a username
             </Typography>
@@ -120,7 +106,7 @@ function OnboardingForm() {
 
       case 1:
         return (
-          <Box sx={{ width: '100%', maxWidth: 600 }}>
+          <Box sx={{width: '100%', maxWidth: 600}}>
             <Typography variant="h6" mb={2}>
               Choose or Upload an Avatar
             </Typography>
@@ -151,7 +137,7 @@ function OnboardingForm() {
               <Button
                 variant="contained"
                 component="label"
-                startIcon={<PhotoCameraIcon />}
+                startIcon={<PhotoCameraIcon/>}
               >
                 Upload
                 <input
@@ -169,7 +155,7 @@ function OnboardingForm() {
                 <Avatar
                   src={formData.avatar}
                   alt="selected-avatar"
-                  sx={{ width: 60, height: 60 }}
+                  sx={{width: 60, height: 60}}
                 />
               )}
             </Stack>
@@ -178,7 +164,7 @@ function OnboardingForm() {
 
       case 2:
         return (
-          <Box sx={{ width: '100%', maxWidth: 400 }}>
+          <Box sx={{width: '100%', maxWidth: 400}}>
             <Typography variant="h6" mb={2}>
               Choose Your Focus Communities
             </Typography>
@@ -201,7 +187,7 @@ function OnboardingForm() {
 
       case 3:
         return (
-          <Box sx={{ width: '100%', maxWidth: 400 }}>
+          <Box sx={{width: '100%', maxWidth: 400}}>
             <Typography variant="h6" mb={2}>
               What kind of posts interest you?
             </Typography>
@@ -247,7 +233,7 @@ function OnboardingForm() {
       </Typography>
 
       {/* Stepper Header */}
-      <Stepper activeStep={activeStep} sx={{ mb: 3 }}>
+      <Stepper activeStep={activeStep} sx={{mb: 3}}>
         {steps.map((label) => {
           return (
             <Step key={label}>
@@ -289,8 +275,47 @@ function OnboardingForm() {
 
 
 const App = () => {
-  return <div style={{padding: '2rem', backgroundColor: '#f0f2f5', minHeight: '100vh'}}>
-    <OnboardingForm/>
+  const [showMessage, setShowMessage] = useState(false);
+  const [showAction, setShowActin] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowMessage(true), 100); // Fade in after 500ms
+    const action = setTimeout(() => setShowActin(true), 2000); // Fade in after 500ms
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(action);
+    }
+  }, []);
+
+  const onNext = () => {
+
+  }
+
+  const onSkip = () => {
+
+  }
+
+  return <div className={"bg-pine-green-700 min-h-[100vh] flex flex-col justify-center items-center"}>
+    <img src={"/test2.jpg"} className={'absolute opacity-50 object-cover h-[100%] w-[100%]'}/>
+    <div className="absolute inset-0 bg-gradient-to-b from-pine-green-500 via-pine-reen-600 to-pine-green-700 opacity-60"></div>
+
+    <Fade in={showMessage} timeout={2000} className={"relative text-white"}>
+      <Typography variant="h4" mb={2}>
+        Welcome to Rebirth Talk
+      </Typography>
+    </Fade>
+    <Fade in={showMessage} timeout={4000} className={"relative text-white"}>
+      <div className={"text-gray-200 opacity-50 text-sm"}>
+        Let’s personalize your experience.
+      </div>
+    </Fade>
+    <Fade in={showAction} timeout={7000} className={"relative mt-12 w-[300px] flex gap-4 flex-col items-center"}>
+      <div>
+        <Button title={"Get Started"} onClick={onNext} className={"bg-white text-pine-green-900 hover:bg-white hover:opacity-90 hover:cursor-pointer"}/>
+        <span onClick={onSkip} className={"text-sm hover:cursor-pointer opacity-70 text-white"}>Skip</span>
+      </div>
+    </Fade>
   </div>
 }
 export default App;

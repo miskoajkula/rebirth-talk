@@ -5,19 +5,22 @@ type ButtonProps = {
   title: string;
   loading?: boolean;
   buttonType?: "submit" | "button" ;
+  className?: string;
+  onClick?: () => void;
 }
 
-const Button = ({title, loading = false, buttonType = "button"}: ButtonProps) => {
+const Button = ({title, loading = false, buttonType = "button", className, onClick}: ButtonProps) => {
 
   const inputClasses = classNames(
-    'w-full py-2 px-4 bg-pine-green-700 text-white font-semibold rounded-md hover:bg-pine-green-800',
+    'w-full py-2 px-4 bg-pine-green-700 font-semibold rounded-md hover:bg-pine-green-800',
     {
       'opacity-50 pointer-events-none': loading,
-    }
+    },
+    className
   );
 
   return (
-    <button type={buttonType} className={inputClasses}>
+    <button type={buttonType} className={inputClasses} onClick={onClick}>
       {
         loading && <svg aria-hidden="true" role="status" className="inline w-4 h-4 me-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
