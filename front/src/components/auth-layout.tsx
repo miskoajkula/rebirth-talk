@@ -12,8 +12,10 @@ const AuthLayout = ({ children }: any) => {
   return (
     <div className={`${roboto.className} flex min-h-screen bg-gray-100`}>
       {/* Left Side - Information Section */}
-      <div className="hidden md:flex flex-col justify-center items-start bg-[#047871] text-white p-16 w-full">
-        <div>
+      <div className="hidden md:flex flex-col justify-center items-start bg-pine-green-700 text-white p-16 w-full relative">
+        <img src={"/test2.jpg"} className={'absolute opacity-20 object-cover left-0 w-full h-full'}/>
+
+        <div className={"z-10"}>
           <h1 className="text-4xl font-bold mb-4">Rebirth Talk</h1>
           <p className="text-lg leading-relaxed mb-6">
             A supportive platform for mindfulness, confessions, and recovery.<br/>
