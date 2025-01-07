@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import {
-    Avatar,
     Checkbox,
     FormControlLabel,
     FormGroup,
@@ -14,6 +13,11 @@ import {
 } from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import Button from "@/components/button";
+import Input from "@/components/form/input";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import Avatar from 'boring-avatars';
 
 const AVAILABLE_AVATARS = [
     "/images/avatar1.png",
@@ -69,21 +73,31 @@ function OnboardingForm() {
         setFormData({ ...formData, postKinds: updated });
     };
 
+  const schema = yup.object().shape({
+    username: yup.string().required("Required").min(8, "Min. 8 chars").max(100, "Char limit reached"),
+  });
+
+  const {
+    register,
+    formState: {errors},
+    setValue
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
     const getStepContent = (stepIndex) => {
         switch (stepIndex) {
             case 0:
                 return (
                     <div className="w-full max-w-md">
-                        <div className="mb-4 text-gray-700">
-                            Choose a username
-                        </div>
 
-                        <TextField
-                            fullWidth
-                            label="Username"
-                            value={formData.username}
-                            onChange={handleUsernameChange}
-                        />
+                      <Input
+                        label={"Choose a username"}
+                        extraClassName={"text-white bg-transparent"}
+                        labelClassName={"text-white bg-transparent"}
+                        name={"username"}
+                        register={register} />
+
                     </div>
                 );
             case 1:
@@ -93,7 +107,10 @@ function OnboardingForm() {
                             Choose or Upload an Avatar
                         </Typography>
                         <Stack direction="row" spacing={4} className="mb-4">
-                            {AVAILABLE_AVATARS.map((avatarPath) => (
+                          <Avatar name="xccxwer" colors={["#0a0310", "#49007e"]} variant="beam"  size={80}/>
+                          <Avatar name="Mary Edwards" colors={["#0a0310", "#49007e", "#ff005b", "#ff7d10", "#ffb238"]} variant="beam"  size={80}/>
+
+                          {AVAILABLE_AVATARS.map((avatarPath) => (
                                 <Avatar
                                     key={avatarPath}
                                     src={avatarPath}
@@ -181,11 +198,11 @@ function OnboardingForm() {
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-            <Stepper activeStep={activeStep} className="mb-6">
+        <div className="max-w-3xl mx-auto p-6 bg-[#1d766566] backdrop-blur-2xl  rounded-lg shadow-lg">
+            <Stepper activeStep={activeStep} className="mb-6 onboarding-stepper">
                 {steps.map((label) => (
                     <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
+                      <StepLabel><span className={"text-white"}>{label}</span></StepLabel>
                     </Step>
                 ))}
             </Stepper>
@@ -193,13 +210,13 @@ function OnboardingForm() {
             <div className="flex justify-end items-center ">
                 <Button
                     onClick={handleBack}
-                    className={`w-auto mr-3 bg-transparent text-pine-green-900 hover:bg-transparent ${activeStep === 0 ? "opacity-10 pointer-events-none" : ""}`}
+                    className={`w-auto mr-3 bg-transparent text-gray-200 hover:bg-transparent ${activeStep === 0 ? "opacity-10 pointer-events-none" : ""}`}
                     title={"Back"}
                 />
                 {activeStep === steps.length - 1 ? (
                     <Button className={"w-auto"} onClick={handleSubmit} title={"Finish"} />
                 ) : (
-                    <Button className={"w-auto"}  onClick={handleNext} title={"Next"} />
+                    <Button className={"w-auto bg-white text-pine-green-950 hover:bg-white hover:opacity-90"}  onClick={handleNext} title={"Next"}  />
 
                 )}
             </div>

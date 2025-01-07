@@ -8,10 +8,12 @@ interface InputProps {
   placeholder?: string;
   errors?: Record<string, any>;
   type?: string;
+  extraClassName?: string;
+  labelClassName?: string;
 }
 
 
-const Input: React.FC<InputProps> = ({ label, name, register, placeholder, errors, type = "text" }) => {
+const Input: React.FC<InputProps> = ({label, name, register, placeholder, errors, type = "text", extraClassName, labelClassName}) => {
   const hasError = !!errors?.[name];
 
   const inputClasses = classNames(
@@ -19,12 +21,13 @@ const Input: React.FC<InputProps> = ({ label, name, register, placeholder, error
     {
       'focus:border-red-500  focus:outline-none border-1 border-solid border-red-500': hasError,
       'border-gray-300 focus:ring-blue-500 focus:border-blue-500': !hasError,
-    }
+    },
+    extraClassName
   );
 
   return (
     <div className="relative">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+      <label htmlFor={name} className={`block text-sm font-medium text-gray-700 ${labelClassName}`}>
         {label}
       </label>
       <input

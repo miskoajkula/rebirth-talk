@@ -117,3 +117,29 @@ body {
 #google-login-icon {
   display: none;
 }
+
+.animated-image {
+  animation: slide-zoom 60s ease-in-out infinite;
+}
+
+@keyframes slide-zoom {
+  0%, 100% {
+    transform: translateX(0) scale(1.2);
+  }
+  50% {
+    transform: translateX(8%) scale(1.2);
+  }
+}
+
+.onboarding-stepper .Mui-active svg {
+  color: white;
+}
+
+.onboarding-stepper .Mui-active .MuiStepIcon-text {
+  fill: black;
+}
+
+
+.onboarding-stepper .Mui-completed svg {
+  color: white;
+}
