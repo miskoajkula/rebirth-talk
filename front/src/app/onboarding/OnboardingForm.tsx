@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Avatar from 'boring-avatars';
+import AvatarGenerator from "@/components/avatar-generator";
 
 const AVAILABLE_AVATARS = [
     "/images/avatar1.png",
@@ -85,6 +86,7 @@ function OnboardingForm() {
     resolver: yupResolver(schema),
   });
 
+
     const getStepContent = (stepIndex) => {
         switch (stepIndex) {
             case 0:
@@ -102,51 +104,8 @@ function OnboardingForm() {
                 );
             case 1:
                 return (
-                    <div className="w-full max-w-lg">
-                        <Typography variant="h6" className="mb-4">
-                            Choose or Upload an Avatar
-                        </Typography>
-                        <Stack direction="row" spacing={4} className="mb-4">
-                          <Avatar name="xccxwer" colors={["#0a0310", "#49007e"]} variant="beam"  size={80}/>
-                          <Avatar name="Mary Edwards" colors={["#0a0310", "#49007e", "#ff005b", "#ff7d10", "#ffb238"]} variant="beam"  size={80}/>
+                  <AvatarGenerator />
 
-                          {AVAILABLE_AVATARS.map((avatarPath) => (
-                                <Avatar
-                                    key={avatarPath}
-                                    src={avatarPath}
-                                    alt="avatar"
-                                    className={`cursor-pointer w-16 h-16 ${
-                                        formData.avatar === avatarPath
-                                            ? "border-4 border-blue-500"
-                                            : "border-2 border-gray-300"
-                                    }`}
-                                    onClick={() => handleAvatarSelect(avatarPath)}
-                                />
-                            ))}
-                        </Stack>
-                        <Stack direction="row" alignItems="center" spacing={4}>
-                            <Button variant="contained" component="label" startIcon={<PhotoCameraIcon />}>
-                                Upload
-                                <input
-                                    type="file"
-                                    hidden
-                                    accept="image/*"
-                                    onChange={(e) => {
-                                        if (e.target.files[0]) {
-                                            handleAvatarUpload(e.target.files[0]);
-                                        }
-                                    }}
-                                />
-                            </Button>
-                            {formData.avatar && (
-                                <Avatar
-                                    src={formData.avatar}
-                                    alt="selected-avatar"
-                                    className="w-16 h-16"
-                                />
-                            )}
-                        </Stack>
-                    </div>
                 );
             case 2:
                 return (
@@ -198,16 +157,16 @@ function OnboardingForm() {
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-[#1d766566] backdrop-blur-2xl  rounded-lg shadow-lg">
-            <Stepper activeStep={activeStep} className="mb-6 onboarding-stepper">
+        <div className="max-w-3xl mx-auto p-6 bg-[#1d766566] backdrop-blur-2xl  rounded-lg shadow-lg h-[90vh] overflow-y-scroll">
+            <Stepper activeStep={activeStep} className="mb-6 onboarding-stepper h-[5vh]">
                 {steps.map((label) => (
                     <Step key={label}>
                       <StepLabel><span className={"text-white"}>{label}</span></StepLabel>
                     </Step>
                 ))}
             </Stepper>
-            <div className="mb-6">{getStepContent(activeStep)}</div>
-            <div className="flex justify-end items-center ">
+            <div className="mb-6 h-[65vh] overflow-y-scroll">{getStepContent(activeStep)}</div>
+            <div className="flex justify-end items-center h-[5vh]">
                 <Button
                     onClick={handleBack}
                     className={`w-auto mr-3 bg-transparent text-gray-200 hover:bg-transparent ${activeStep === 0 ? "opacity-10 pointer-events-none" : ""}`}

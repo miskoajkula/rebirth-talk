@@ -74,12 +74,12 @@ const App = () => {
                             <Button
                                 title="Get Started"
                                 onClick={onNext}
-                                className="bg-white text-pine-green-900 hover:bg-white hover:opacity-90 hover:cursor-pointer"
+                                className="bg-white w-full text-pine-green-900 hover:bg-white hover:opacity-90 hover:cursor-pointer"
                             />
                             <Button
                                 title="Skip"
                                 onClick={onNext}
-                                className="bg-transparent text-white hover:bg-transparent hover:opacity-70 hover:cursor-pointer"
+                                className="bg-transparent w-full text-white hover:bg-transparent hover:opacity-70 hover:cursor-pointer"
                             />
                         </motion.div>
                     </motion.div>
