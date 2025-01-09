@@ -27,7 +27,7 @@ const AVAILABLE_AVATARS = [
 ];
 const COMMUNITIES = ["Recovery", "Mental Health", "Lifestyle", "Nutrition"];
 const POST_KINDS = ["Success Stories", "Confessions", "Struggles & Strength"];
-const steps = ["Username", "Avatar", "Focus Communities", "Post Kinds"];
+const steps = ["Profile", "Focus Communities", "Post Kinds"];
 
 function OnboardingForm() {
     const [activeStep, setActiveStep] = useState(0);
@@ -87,30 +87,28 @@ function OnboardingForm() {
   });
 
 
-    const getStepContent = (stepIndex) => {
+    const getStepContent = (stepIndex: number) => {
         switch (stepIndex) {
             case 0:
                 return (
-                    <div className="w-full max-w-md">
-
-                      <Input
-                        label={"Choose a username"}
-                        extraClassName={"text-white bg-transparent"}
-                        labelClassName={"text-white bg-transparent"}
-                        name={"username"}
-                        register={register} />
-
-                    </div>
+                  <div className="w-full">
+                    <Input
+                      label={"Username"}
+                      extraClassName={"text-white bg-transparent placeholder-white placeholder:text-xs placeholder:opacity-40"}
+                      labelClassName={"text-white bg-transparent"}
+                      name={"username"}
+                      placeholder={"Pick a username"}
+                      register={register}/>
+                    <label className={`block text-sm text-white font-medium mt-12 `}>
+                      Avatar
+                    </label>
+                    <AvatarGenerator/>
+                  </div>
                 );
-            case 1:
-                return (
-                  <AvatarGenerator />
-
-                );
-            case 2:
-                return (
-                    <div className="w-full max-w-md">
-                        <Typography variant="h6" className="mb-4">
+          case 1:
+            return (
+              <div className="w-full max-w-md">
+              <Typography variant="h6" className="mb-4">
                             Choose Your Focus Communities
                         </Typography>
                         <FormGroup>
@@ -129,7 +127,7 @@ function OnboardingForm() {
                         </FormGroup>
                     </div>
                 );
-            case 3:
+            case 2:
                 return (
                     <div className="w-full max-w-md">
                         <Typography variant="h6" className="mb-4">
@@ -157,7 +155,7 @@ function OnboardingForm() {
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-[#1d766566] backdrop-blur-2xl  rounded-lg shadow-lg h-[90vh] overflow-y-scroll">
+        <div className="max-w-xl mx-auto p-6 bg-[#1d766566] backdrop-blur-2xl  rounded-lg shadow-lg h-[90vh] overflow-y-scroll">
             <Stepper activeStep={activeStep} className="mb-6 onboarding-stepper h-[5vh]">
                 {steps.map((label) => (
                     <Step key={label}>

@@ -7,12 +7,13 @@ interface PortalModalProps {
   children: ReactNode;
   mini?: boolean;
   contentStyle?: CSSProperties;
+  wrapperClassName?: string;
 }
 
-const PortalModal: React.FC<PortalModalProps> = ({ isOpen, onClose, children, mini = false, contentStyle }) => {
+const PortalModal: React.FC<PortalModalProps> = ({isOpen, onClose, children, mini = false, contentStyle, wrapperClassName}) => {
   return ReactDOM.createPortal(
     <div
-      className={`fixed inset-0 bg-gray-800 bg-opacity-40 backdrop-blur-sm z-50 transition-opacity duration-300 ${
+      className={`fixed inset-0 bg-gray-800 bg-opacity-40 backdrop-blur-sm z-50 transition-opacity duration-300 ${wrapperClassName} ${
         isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
       }`}
       onClick={onClose}
