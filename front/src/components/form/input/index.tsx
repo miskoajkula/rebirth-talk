@@ -10,10 +10,11 @@ interface InputProps {
   type?: string;
   extraClassName?: string;
   labelClassName?: string;
+  wrapperClassName?: string;
 }
 
 
-const Input: React.FC<InputProps> = ({label, name, register, placeholder, errors, type = "text", extraClassName, labelClassName}) => {
+const Input: React.FC<InputProps> = ({label, name, register, placeholder, errors, type = "text", extraClassName, labelClassName, wrapperClassName}) => {
   const hasError = !!errors?.[name];
 
   const inputClasses = classNames(
@@ -26,7 +27,7 @@ const Input: React.FC<InputProps> = ({label, name, register, placeholder, errors
   );
 
   return (
-    <div className="relative">
+    <div className={`relative ${wrapperClassName}`}>
       <label htmlFor={name} className={`block text-sm font-medium text-gray-700 ${labelClassName}`}>
         {label}
       </label>

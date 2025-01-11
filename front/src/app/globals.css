@@ -18,7 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background:white;
+  background: white;
   background: #f9fafb;
 }
 
@@ -29,44 +29,46 @@ body {
 }
 
 
-
 .thought {
-  display:flex;
-  background-color:#067168;
+  display: flex;
+  background-color: #067168;
   padding: 12px;
-  border-radius:30px;
-  min-width:40px;
-  max-width:280px;
-  min-height:40px;
-  position:absolute;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+  border-radius: 30px;
+  min-width: 40px;
+  max-width: 280px;
+  min-height: 40px;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   z-index: 3;
 }
+
 .thought:before,
 .thought:after {
-  content:"";
-  background-color:#067168;
-  border-radius:50%;
-  display:block;
-  position:absolute;
-  z-index:-1;
+  content: "";
+  background-color: #067168;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  z-index: -1;
 }
+
 .thought:before {
-  width:44px;
-  height:44px;
-  top:-12px;
-  left:28px;
-  box-shadow:-50px 30px 0 -12px #067168;
+  width: 44px;
+  height: 44px;
+  top: -12px;
+  left: 28px;
+  box-shadow: -50px 30px 0 -12px #067168;
   z-index: 2;
 }
+
 .thought:after {
-  bottom:-10px;
-  right:26px;
-  width:30px;
-  height:30px;
-  box-shadow:40px -34px 0 0 #067168,
+  bottom: -10px;
+  right: 26px;
+  width: 30px;
+  height: 30px;
+  box-shadow: 40px -34px 0 0 #067168,
   -28px -6px 0 -2px #067168,
   -24px 17px 0 -6px #067168,
   -5px 25px 0 -10px #067168;
@@ -142,4 +144,24 @@ body {
 
 .onboarding-stepper .Mui-completed svg {
   color: white;
+}
+
+.color-chooser > div:nth-child(1) {
+  transform: translateX(-1.1rem) translateY(-0.6rem);
+}
+
+.color-chooser > div:nth-child(2) {
+  transform: translateX(-0.3rem) translateY(-1.1rem);
+}
+
+.color-chooser > div:nth-child(3) {
+  transform: translateX(0.4rem) translateY(-1.2rem);
+}
+
+.color-chooser > div:nth-child(4) {
+  transform: translateX(0.7rem) translateY(-0.95rem);
+}
+
+.color-chooser > div:nth-child(5) {
+  transform:translateX(0.6rem) translateY(-0.7rem);
 }

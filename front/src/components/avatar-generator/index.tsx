@@ -4,6 +4,7 @@ import Button from "@/components/button";
 import PortalModal from "@/components/modal";
 import { FaPalette } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import { TextField } from "@mui/material";
 
 const palettes = [
   {name: "Pine Sunset", colors: ["#03c9a9", "#ff7d10", "#ffb238", "#ff5500", "#effefa"]},
@@ -42,7 +43,12 @@ const AvatarGenerator = () => {
           variant="beam"
           size={100}
         />
-        <FaPalette onClick={() => setModal(true)} className={"w-8 h-8 bg-[#00382e] rounded-2xl p-1.5 absolute top-0 right-0 hover:cursor-pointer hover:scale-95"}/>
+        <div className={"absolute top-0 right-0 z-10 flex flex-col color-chooser"}>
+          {selectedPalette.map(((el, i) => {
+            return <div key={el + i} className={"w-2 h-2 rounded-xl"} style={{backgroundColor: el}}/>
+          }))}
+        </div>
+        <FaPalette onClick={() => setModal(true)} className={"w-8 h-8 bg-[#00382e] text-white rounded-2xl p-2 absolute top-0 right-0 hover:cursor-pointer hover:scale-95"}/>
       </div>
 
 
@@ -94,7 +100,7 @@ const AvatarGenerator = () => {
               setSelectedPalette(tempPalette)
               setModal(false)
             }
-          }} title={"Confirm"} className={`${!tempPalette ? "opacity-50" : "opacity-100"}`}/>
+          }} title={"Confirm"} className={`text-white ${!tempPalette ? "opacity-50" : "opacity-100"}`}/>
         </div>
       </PortalModal>
     </div>

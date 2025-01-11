@@ -91,24 +91,22 @@ function OnboardingForm() {
         switch (stepIndex) {
             case 0:
                 return (
-                  <div className="w-full">
+                  <div className="w-full flex flex-col items-top">
+                    <AvatarGenerator/>
                     <Input
+                      wrapperClassName={"flex-1"}
                       label={"Username"}
                       extraClassName={"text-white bg-transparent placeholder-white placeholder:text-xs placeholder:opacity-40"}
                       labelClassName={"text-white bg-transparent"}
                       name={"username"}
                       placeholder={"Pick a username"}
                       register={register}/>
-                    <label className={`block text-sm text-white font-medium mt-12 `}>
-                      Avatar
-                    </label>
-                    <AvatarGenerator/>
                   </div>
                 );
           case 1:
             return (
               <div className="w-full max-w-md">
-              <Typography variant="h6" className="mb-4">
+              <Typography variant="h6" className="mb-4 ">
                             Choose Your Focus Communities
                         </Typography>
                         <FormGroup>
