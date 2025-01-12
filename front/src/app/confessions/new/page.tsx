@@ -19,14 +19,65 @@ const confessionSchema = yup.object().shape({
 });
 
 const focusCommunities = [
-  { value: "Binge Eating", label: "Binge Eating" },
-  { value: "Drinking Problems", label: "Drinking Problems" },
-  { value: "Smoking", label: "Smoking" },
-  { value: "Mental Health", label: "Mental Health" },
-  { value: "Fitness & Health", label: "Fitness & Health" },
-  { value: "Relationships", label: "Relationships" },
-  { value: "Other", label: "Other" },
+  {
+    category: "Addiction",
+    subcategories: [
+      "Alcohol", "Smoking", "Vaping", "Caffeine", "Sugar", "Energy Drinks",
+      "Nicotine", "Pornography", "Gambling", "Drugs", "Social Media",
+      "Video Games", "Internet Addiction", "Shopping Addiction", "Chemsex",
+      "Prescription Drugs"
+    ]
+  },
+  {
+    category: "Eating Habits",
+    subcategories: [
+      "Binge Eating", "Emotional Eating", "Sugar Addiction", "Food Addiction",
+      "Chewing and Spitting", "Restrictive Eating", "Overeating", "Purging",
+      "Orthorexia", "Fast Food Addiction", "Junk Food Addiction"
+    ]
+  },
+  {
+    category: "Mental Health",
+    subcategories: [
+      "Depression", "Anxiety", "Anger Management", "OCD", "Self-Harm",
+      "Suicidal Thoughts", "PTSD", "ADHD", "Bipolar Disorder", "Stress",
+      "Insomnia", "Low Self-Esteem"
+    ]
+  },
+  {
+    category: "Relationships",
+    subcategories: [
+      "Toxic Relationships", "Codependency", "Trust Issues", "Attachment Issues",
+      "Breakups", "Loneliness", "Dating Apps Addiction", "Stalking", "Jealousy",
+      "Abuse"
+    ]
+  },
+  {
+    category: "Lifestyle Habits",
+    subcategories: [
+      "Procrastination", "Doomscrolling", "Short-Form Videos", "Gossiping",
+      "Overworking", "Excessive Exercising", "Work-Life Imbalance",
+      "Knuckle Cracking", "Nail Biting", "Hair Pulling", "Skin Picking"
+    ]
+  },
+  {
+    category: "Physical Health",
+    subcategories: [
+      "Fitness Motivation", "Weight Loss Struggles", "Sedentary Lifestyle",
+      "Injury Recovery", "Chronic Fatigue", "Overtraining", "Body Dysmorphia",
+      "Muscle Imbalance"
+    ]
+  },
+  {
+    category: "Other",
+    subcategories: [
+      "Financial Issues", "Career Burnout", "Lack of Purpose", "Parenting Struggles",
+      "Addiction to AI/Tech", "Miscellaneous"
+    ]
+  }
 ];
+
+
 
 const tags = [
   { value: "success", label: "Success Story" },
