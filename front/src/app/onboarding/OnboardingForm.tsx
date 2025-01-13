@@ -153,14 +153,6 @@ function OnboardingForm() {
     );
   };
 
-  const handleSelectCategory = (category, subcategories) => {
-    const isSelected = selected.includes(category);
-    const newSelected = isSelected
-      ? selected.filter((item) => item !== category && !subcategories.includes(item))
-      : [...selected, category, ...subcategories.filter((item) => !selected.includes(item))];
-    setSelected(newSelected);
-  };
-
   const handleSelectAll = (category, subcategories) => {
     const allSelected = subcategories.every((sub) => selected.includes(sub));
     if (allSelected) {
@@ -195,7 +187,9 @@ function OnboardingForm() {
             return (
               <div className="w-full px-2">
                 {focusCommunities.map(({category, subcategories, icon}) => (
-                  <div key={category} className="border-b">
+                  <div key={category}  style={{
+                    borderBottom: "1px solid #ffffff24",
+                  }}>
                     {/* Accordion Header */}
                     <div
                       className="flex justify-between items-center py-2 cursor-pointer"
@@ -203,7 +197,11 @@ function OnboardingForm() {
                     >
                       <label className="flex items-center">
                         <div className={"text-white mr-4"}>{icon}</div>
-                        <span className="font-semibold text-white">{category}</span>
+                        <span className=" text-white">{category}
+                          <span className={"text-xs text-pine-green-100 mr-4 block"}>
+                              {selected.filter((sub) => focusCommunities.find((c) => c.category === category).subcategories.includes(sub)).length} selected
+                          </span>
+                        </span>
                       </label>
                       <span
                         className={`transition-transform ${expanded[category] ? "rotate-180" : ""}`}
@@ -214,26 +212,28 @@ function OnboardingForm() {
 
                     {/* Subcategories with Select All */}
                     {expanded[category] && (
-                      <div className="pl-6 py-2">
+                      <div className="pl-6 py-2 grid grid-cols-3">
                         {/* Select All Checkbox */}
-                        <label className="flex items-center py-1 text-white font-semibold">
+                        <label className="flex items-center text-sm py-1 text-pine-green-100 relative">
                           <input
                             type="checkbox"
                             checked={subcategories.every((sub) => selected.includes(sub))}
                             onChange={() => handleSelectAll(category, subcategories)}
-                            className="mr-2"
+                            className="mr-2 accent-green-500 "
+                              // className={"appearance-none h-4 w-4 border-2 mr-2 border-green-200 opacity-20 rounded checked:bg-green-300 checked:border-green-500 focus:outline-none"}
                           />
+                          {/*<span></span>*/}
                           All
                         </label>
 
                         {/* Individual Subcategories */}
                         {subcategories.map((sub) => (
-                          <label key={sub} className="flex items-center py-1 text-white">
+                          <label key={sub} className="flex text-xs items-center py-1 text-pine-green-100">
                             <input
                               type="checkbox"
                               checked={selected.includes(sub)}
                               onChange={() => handleSelect(sub)}
-                              className="mr-2"
+                              className="mr-2 accent-green-400"
                             />
                             {sub}
                           </label>
