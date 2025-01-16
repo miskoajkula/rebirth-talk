@@ -26,12 +26,11 @@ const AVAILABLE_AVATARS = [
     "/images/avatar3.png",
 ];
 const POST_KINDS = ["Success Stories", "Confessions", "Struggles & Strength"];
-const steps = ["Profile", "Focus Communities", "Post Kinds"];
+const steps = ["Profile", "Communities"];
 import { FaWineBottle, FaAppleAlt, FaBrain, FaHeart, FaRunning, FaEllipsisH } from "react-icons/fa";
-import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import { IoIosArrowDown } from "react-icons/io";
 
-import { FaArrowDown } from "react-icons/fa6";
+import { labelMap } from "@/components/cards/post";
 
 const focusCommunities = [
   {
@@ -186,6 +185,7 @@ function OnboardingForm() {
           case 1:
             return (
               <div className="w-full px-2">
+                <h3>Communities to follow </h3>
                 {focusCommunities.map(({category, subcategories, icon}) => (
                   <div key={category}  style={{
                     borderBottom: "1px solid #ffffff24",
@@ -197,7 +197,7 @@ function OnboardingForm() {
                     >
                       <label className="flex items-center">
                         <div className={"text-white mr-4"}>{icon}</div>
-                        <span className=" text-white">{category}
+                        <span className=" text-white text-sm">{category}
                           <span className={"text-xs text-pine-green-100 mr-4 block"}>
                               {selected.filter((sub) => focusCommunities.find((c) => c.category === category).subcategories.includes(sub)).length} selected
                           </span>
@@ -247,23 +247,25 @@ function OnboardingForm() {
             );
           case 2:
             return (
-              <div className="w-full max-w-md">
-                <Typography variant="h6" className="mb-4">
+              <div className="w-full">
+                <h3 >
                   What kind of posts interest you?
-                </Typography>
+                </h3>
                 <FormGroup>
-                  {POST_KINDS.map((kind) => (
-                    <FormControlLabel
-                      key={kind}
-                      control={
-                        <Checkbox
-                          checked={formData.postKinds.includes(kind)}
-                          onChange={() => handlePostKindsChange(kind)}
+                  <div className="grid grid-cols-3 gap-4">
+                    {Object.keys(labelMap).map((label) => (
+                      <label key={label} className="flex items-center gap-1 text-sm py-1 text-pine-green-100">
+                        <input
+                          type="checkbox"
+                          checked={formData.postKinds.includes(label)}
+                          onChange={() => handlePostKindsChange(label)}
+                          className="mr-2 accent-green-400"
                         />
-                      }
-                      label={kind}
-                    />
-                  ))}
+                        {labelMap[label].icon}
+                        {labelMap[label].text}
+                      </label>
+                    ))}
+                  </div>
                 </FormGroup>
               </div>
             );
