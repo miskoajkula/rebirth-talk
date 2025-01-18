@@ -17,15 +17,10 @@ import Input from "@/components/form/input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Avatar from 'boring-avatars';
 import AvatarGenerator from "@/components/avatar-generator";
+import { WiSunrise } from "react-icons/wi";
+import { SiSunrise } from "react-icons/si";
 
-const AVAILABLE_AVATARS = [
-    "/images/avatar1.png",
-    "/images/avatar2.png",
-    "/images/avatar3.png",
-];
-const POST_KINDS = ["Success Stories", "Confessions", "Struggles & Strength"];
 const steps = ["Profile", "Communities"];
 import { FaWineBottle, FaAppleAlt, FaBrain, FaHeart, FaRunning, FaEllipsisH } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
@@ -72,7 +67,7 @@ const focusCommunities = [
   },
   {
     category: "Lifestyle Habits",
-    icon: <FaRunning size={16} />,
+    icon: <SiSunrise size={16} />,
     subcategories: [
       "Procrastination", "Doomscrolling", "Short-Form Videos", "Gossiping",
       "Overworking", "Excessive Exercising", "Work-Life Imbalance",
@@ -81,7 +76,7 @@ const focusCommunities = [
   },
   {
     category: "Physical Health",
-    icon: <FaEllipsisH size={16} />,
+    icon: <FaRunning size={16} />,
     subcategories: [
       "Fitness Motivation", "Weight Loss Struggles", "Sedentary Lifestyle",
       "Injury Recovery", "Chronic Fatigue", "Overtraining", "Body Dysmorphia",
@@ -171,6 +166,10 @@ function OnboardingForm() {
             case 0:
                 return (
                   <div className="w-full flex flex-col items-top">
+                    <h3 className={"text-sm text-white"}>Customize your appearance</h3>
+                    <div className={"mt-2 mb-2 w-full bg-white opacity-20"} style={{
+                      height: '1px'
+                    }}/>
                     <AvatarGenerator/>
                     <Input
                       wrapperClassName={"flex-1"}
@@ -184,8 +183,11 @@ function OnboardingForm() {
                 );
           case 1:
             return (
-              <div className="w-full px-2">
-                <h3>Communities to follow </h3>
+              <div className="w-full">
+                <h3 className={"text-sm text-white"}>Communities to follow </h3>
+                <div className={"mt-2 mb-2 w-full bg-white opacity-20"} style={{
+                  height: '1px'
+                }}/>
                 {focusCommunities.map(({category, subcategories, icon}) => (
                   <div key={category}  style={{
                     borderBottom: "1px solid #ffffff24",
@@ -283,7 +285,7 @@ function OnboardingForm() {
           </Step>
         ))}
       </Stepper>
-      <div className="mb-6 h-[65vh] overflow-y-scroll">{getStepContent(activeStep)}</div>
+      <div className="mb-6 h-[65vh] overflow-y-scroll px-2">{getStepContent(activeStep)}</div>
       <div className="flex justify-end items-center h-[5vh]">
         <Button
           onClick={handleBack}
@@ -291,7 +293,7 @@ function OnboardingForm() {
                     title={"Back"}
                 />
                 {activeStep === steps.length - 1 ? (
-                    <Button className={"w-auto"} onClick={handleSubmit} title={"Finish"} />
+                    <Button className={"w-auto bg-white text-pine-green-950 hover:bg-white hover:opacity-90"} onClick={handleSubmit} title={"Finish"} />
                 ) : (
                     <Button className={"w-auto bg-white text-pine-green-950 hover:bg-white hover:opacity-90"}  onClick={handleNext} title={"Next"}  />
 

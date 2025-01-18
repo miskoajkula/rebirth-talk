@@ -3,7 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Typography, Box } from "@mui/material";
 import Button from "@/components/button";
 import { motion, AnimatePresence } from "framer-motion";
-import OnboardingForm from "./OnboardingForm";
+import dynamic from "next/dynamic";
+import { LoaderIcon } from "react-hot-toast";
+import OnboardingForm from "@/app/onboarding/OnboardingForm";
+
 
 const App = () => {
     const [showWelcome, setShowWelcome] = useState(true);
@@ -14,16 +17,16 @@ const App = () => {
     }, []);
 
     const onNext = () => {
-        // Change the background image with animation
+      const img = new Image();
+      img.src = "/mountains2.webp";
+      img.onload = () => {
+        setBackgroundImage("/mountains2.webp");
         setShowWelcome(false);
-        setTimeout(() => {
-            setBackgroundImage("/mountains2.webp"); // Replace with your new background image
-        }, 11); // Delay to sync with fade-out of the welcome screen
+      };
     };
 
     return (
         <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-            {/* Animated Background Image */}
             <AnimatePresence>
                 <motion.div
                     key={backgroundImage}
@@ -90,9 +93,8 @@ const App = () => {
                 {!showWelcome && (
                     <motion.div
                         className="relative w-full"
-                        initial={{ x: "100%", opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: "100%", opacity: 0 }}
+                        initial={{ translateX: "100%" }}
+                        animate={{ translateX: 0 }}
                         transition={{ duration: 0.5 }}
                     >
                         <OnboardingForm />

@@ -5,7 +5,6 @@ import Layout from "@/components/layout";
 
 const Quotes = () => {
 
-  // State to track days and motivational quotes
   const [streakDays, setStreakDays] = useState(0);
 
   const incrementStreak = () => setStreakDays(streakDays + 1);

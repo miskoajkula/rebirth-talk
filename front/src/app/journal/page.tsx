@@ -4,11 +4,9 @@ import React, { useState } from 'react';
 import Layout from "@/components/layout";
 import PortalModal from "@/components/modal";
 
-import { FaFeather } from "react-icons/fa";
-
 import ReactQuill from 'react-quill-new';
 
-import 'react-quill/dist/quill.snow.css';
+import 'quill/dist/quill.snow.css';
 import { BiPlus } from "react-icons/bi";
 
 type MoodType = {
