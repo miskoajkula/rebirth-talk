@@ -4,7 +4,6 @@ import Button from "@/components/button";
 import PortalModal from "@/components/modal";
 import { FaPalette } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
-import { TextField } from "@mui/material";
 
 const palettes = [
   {name: "Pine Sunset", colors: ["#03c9a9", "#ff7d10", "#ffb238", "#ff5500", "#effefa"]},
@@ -19,8 +18,16 @@ const palettes = [
   {name: "Sunlit Forest", colors: ["#03c9a9", "#047869", "#ff7d10", "#ffb238", "#effefa"]},
 ];
 
+type Avatar = {
+  name: string;
+  colors: string[];
+}
 
-const AvatarGenerator = () => {
+type AvatarGeneratorProps = {
+  onChange: (avatar: Avatar) => void;
+}
+
+const AvatarGenerator = ({onChange}: AvatarGeneratorProps) => {
   const [selectedPalette, setSelectedPalette] = useState(palettes[0].colors);
   const [tempPalette, setTempPalette] = useState();
 
@@ -28,8 +35,12 @@ const AvatarGenerator = () => {
   const [modal, setModal] = useState(false)
 
   const handleGenerate = () => {
-    const randomName = `User ${Math.floor(Math.random() * 1000000)}`;
+    const randomName = `User ${Date.now()}`;
     setName(randomName);
+    onChange({
+      colors: selectedPalette,
+      name: randomName,
+    })
   };
 
   return (
@@ -99,6 +110,7 @@ const AvatarGenerator = () => {
             if (tempPalette?.length) {
               setSelectedPalette(tempPalette)
               setModal(false)
+              handleGenerate()
             }
           }} title={"Confirm"} className={`text-white ${!tempPalette ? "opacity-50" : "opacity-100"}`}/>
         </div>

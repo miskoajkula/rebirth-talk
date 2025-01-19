@@ -21,6 +21,7 @@ const confessionSchema = yup.object().shape({
 const focusCommunities = [
   {
     category: "Addiction",
+    preSelect: true,
     subcategories: [
       "Alcohol", "Smoking", "Vaping", "Caffeine", "Sugar", "Energy Drinks",
       "Nicotine", "Pornography", "Gambling", "Drugs", "Social Media",
@@ -30,6 +31,7 @@ const focusCommunities = [
   },
   {
     category: "Eating Habits",
+    preSelect: true,
     subcategories: [
       "Binge Eating", "Emotional Eating", "Sugar Addiction", "Food Addiction",
       "Chewing and Spitting", "Restrictive Eating", "Overeating", "Purging",
@@ -38,6 +40,7 @@ const focusCommunities = [
   },
   {
     category: "Mental Health",
+    preSelect: true,
     subcategories: [
       "Depression", "Anxiety", "Anger Management", "OCD", "Self-Harm",
       "Suicidal Thoughts", "PTSD", "ADHD", "Bipolar Disorder", "Stress",

@@ -165,3 +165,51 @@ body {
 .color-chooser > div:nth-child(5) {
   transform:translateX(0.6rem) translateY(-0.7rem);
 }
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 9;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Fade-in animation */
+.fade-in {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+/* Delayed fade-in */
+.fade-in-delayed {
+  animation: fadeIn 1s ease-in-out 0.5s forwards;
+}
+
+/* Slide-in animation */
+.slide-in {
+  animation: slideIn 0.5s ease-in-out forwards;
+}
+
+/* Welcome screen fade-out (if needed) */
+.welcome-screen {
+  animation: fadeIn 1s ease-in-out 0.5s forwards;
+}
