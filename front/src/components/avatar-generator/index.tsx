@@ -1,41 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from 'boring-avatars';
+
 import Button from "@/components/button";
 import PortalModal from "@/components/modal";
+import { avatarPallets } from "@/constants";
+import { getRandomNumber } from "@/functions";
+
 import { FaPalette } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 
-const palettes = [
-  {name: "Pine Sunset", colors: ["#03c9a9", "#ff7d10", "#ffb238", "#ff5500", "#effefa"]},
-  {name: "Tropical Vibes", colors: ["#03c9a9", "#ff8800", "#ffcc00", "#ffd580", "#047869"]},
-  {name: "Burning Leaves", colors: ["#d97706", "#b45309", "#92400e", "#78350f", "#effefa"]},
-  {name: "Citrus Punch", colors: ["#ffb238", "#ff8800", "#ff5500", "#ffd166", "#effefa"]},
-  {name: "Golden Hour", colors: ["#ffadad", "#ffd6a5", "#f4a261", "#e76f51", "#effefa"]},
-  {name: "Autumn Glow", colors: ["#09665b", "#047869", "#ff7d10", "#ffb238", "#effefa"]},
-  {name: "Contrast Boost", colors: ["#00332f", "#ff7d10", "#ff5500", "#effefa", "#ffd166"]},
-  {name: "Energetic Spark", colors: ["#03c9a9", "#ef476f", "#ff7d10", "#ffcc00", "#1ce5c2"]},
-  {name: "Warm Glow", colors: ["#ffe4b5", "#ffd580", "#ffcc66", "#ffb238", "#effefa"]},
-  {name: "Sunlit Forest", colors: ["#03c9a9", "#047869", "#ff7d10", "#ffb238", "#effefa"]},
-];
-
-type Avatar = {
+export type Avatar = {
   name: string;
   colors: string[];
 }
 
 type AvatarGeneratorProps = {
   onChange: (avatar: Avatar) => void;
+  defaultAvatar: Avatar;
 }
 
-const AvatarGenerator = ({onChange}: AvatarGeneratorProps) => {
-  const [selectedPalette, setSelectedPalette] = useState(palettes[0].colors);
+const AvatarGenerator = ({onChange, defaultAvatar}: AvatarGeneratorProps) => {
+  const [selectedPalette, setSelectedPalette] = useState(defaultAvatar.colors);
   const [tempPalette, setTempPalette] = useState();
 
-  const [name, setName] = useState(`Random User - ${Date.now()}`);
+  const [name, setName] = useState(defaultAvatar.name);
   const [modal, setModal] = useState(false)
 
   const handleGenerate = () => {
-    const randomName = `User ${Date.now()}`;
+    const randomName = `User ${getRandomNumber(1,99999999999)}`;
     setName(randomName);
     onChange({
       colors: selectedPalette,
@@ -82,7 +74,7 @@ const AvatarGenerator = ({onChange}: AvatarGeneratorProps) => {
           <IoClose className={"text-white w-8 h-8 hover:cursor-pointer"} onClick={() => setModal(false)}/>
         </div>
         <div className="mt-6 grid grid-cols-2 gap-4">
-          {palettes.map((palette, index) => (
+          {avatarPallets.map((palette, index) => (
             <div
               key={index}
               className={`p-4 border rounded cursor-pointer ${
