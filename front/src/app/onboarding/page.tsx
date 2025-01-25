@@ -27,6 +27,9 @@ const App = () => {
     setShowWelcome(true);
   }, []);
 
+  const onSkip = () => {
+  }
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div
@@ -54,7 +57,7 @@ const App = () => {
             />
             <Button
               title="Skip"
-              onClick={onNext}
+              onClick={onSkip}
               className="bg-transparent w-full text-white hover:bg-transparent hover:opacity-70 hover:cursor-pointer"
             />
           </div>

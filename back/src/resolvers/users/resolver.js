@@ -9,6 +9,7 @@ const newsResolvers = {
     authenticateWithEmail: (_, { payload }) => userModule.loginViaEmail(payload),
     authenticateWithSocial: (_, { token }) => userModule.socialLogin(token),
     requestPasswordReset: (_, { email }) => userModule.requestPasswordReset(email),
+    updateProfile: (_, { payload }, { user }) => userModule.updateProfile(payload, user),
   },
 }
 

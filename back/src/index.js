@@ -7,24 +7,26 @@ import initializeModules from './modules/index.js'
 import cors from 'cors'
 import path from 'path'
 
-import { fileURLToPath } from 'url';  // Import fileURLToPath from url module
+import { fileURLToPath } from 'url';
+import getDbInstance from '#database/index.js'
+import { authMiddleware } from './interceptors/middleware/index.js'
+import { isAuthenticatedDirectiveTransformer } from './interceptors/directives/auth.js'
 
-// Resolve __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
-const mergedSchema = makeExecutableSchema({
+let mergedSchema = makeExecutableSchema({
   typeDefs: schemas,
-  resolvers: resolvers.reduce((acc, resolver) => ({ ...acc, ...resolver }), {})
+  resolvers: resolvers.reduce((acc, resolver) => ({ ...acc, ...resolver }), {}),
 });
+mergedSchema = isAuthenticatedDirectiveTransformer(mergedSchema);
 
 const app = express();
 
 async function startServer() {
   try {
-    // Connect to the database
-    await initializeModules();
+    const db = await getDbInstance();
+    await initializeModules(db);
 
     app.use(cors({
       origin: '*', // or '*' to allow any origin
@@ -32,11 +34,16 @@ async function startServer() {
 
     app.use('/images', express.static(path.join(__dirname,'../images')));
 
-    // Create and use the GraphQL handler.
+
+
     app.all(
       "/graphql",
+      authMiddleware(db),
       createHandler({
         schema: mergedSchema,
+        context: ({ raw }) => {
+          return { user: raw.user };
+        },
       })
     );
 

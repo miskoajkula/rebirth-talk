@@ -1,5 +1,5 @@
 import { users } from '#database/schema/user.js'
-import { eq } from 'drizzle-orm'
+import { and, eq, ne } from 'drizzle-orm'
 import googleModule from '#modules/google/index.js'
 import bcrypt from 'bcrypt'
 
@@ -96,7 +96,7 @@ class UserModule {
 
   async generateAuthResponse (user) {
 
-    const refreshToken = sign({ userId: user.id , createdAt: user.createdAt.toString()}, process.env.JWT_SECRET, {
+    const refreshToken = sign({ userId: user.id, createdAt: user.createdAt.toString() }, process.env.JWT_SECRET, {
       expiresIn: '4w',
     })
 
@@ -132,6 +132,43 @@ class UserModule {
     }
 
     //todo send email
+
+    return true
+  }
+
+  updatableFields = ['username', 'avatar', 'communities']
+
+  async checkForDuplicateUsername(username, inputUserId) {
+    const [existingUser] = await this.db.select()
+    .from(users)
+    .where(
+      and(
+        eq(users.username, username),
+        ne(users.id, inputUserId)
+      )
+    );
+    if (existingUser) {
+      throw new Error('Username is already taken');
+    }
+  }
+
+  async updateProfile (payload, user) {
+
+    for (const key of this.updatableFields) {
+      if (payload[key]) {
+        user[key] = payload[key]
+      }
+    }
+
+    if (payload.username) {
+      await this.checkForDuplicateUsername(payload.username, user.id)
+    }
+
+    console.log(payload)
+
+    await this.db.update(users)
+      .set(payload)
+      .where(eq(users.id, user.id));
 
     return true
   }

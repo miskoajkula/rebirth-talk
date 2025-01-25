@@ -13,8 +13,6 @@ const resolverDirs = fs.readdirSync(__dirname).filter(file => {
   return fs.statSync(filePath).isDirectory();
 });
 
-console.log(resolverDirs)
-
 for (const dir of resolverDirs) {
   const resolverPath = path.join(__dirname, dir, 'resolver.js');
   const schemaPath = path.join(__dirname, dir, 'schema.js');

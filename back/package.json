@@ -29,14 +29,13 @@
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "drizzle-orm": "^0.32.0",
-    "express": "^4.19.2",
+    "drizzle-orm": "^0.38.4",
+    "express": "4.21.2",
     "fs": "^0.0.1-security",
     "google-auth-library": "^9.15.0",
-    "graphql": "^16.9.0",
-    "graphql-http": "^1.22.1",
-    "graphql-tools": "^9.0.1",
-    "http-proxy-agent": "^7.0.2",
+    "graphql": "^16.10.0",
+    "graphql-http": "^1.22.4",
+    "graphql-tools": "^9.0.11",
     "jsonwebtoken": "^9.0.2",
     "node-fetch": "^3.3.2",
     "open-graph-scraper": "^6.6.2",
@@ -44,10 +43,9 @@
     "pg": "^8.12.0",
     "redis": "^4.7.0",
     "rss-parser": "^3.13.0",
-    "ruru": "^2.0.0-beta.13",
-    "string-strip-html": "^13.4.8"
+    "ruru": "^2.0.0-beta.13"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.23.0"
+    "drizzle-kit": "^0.30.2"
   }
 }

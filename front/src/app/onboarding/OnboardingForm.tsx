@@ -1,20 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import {
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Step, StepLabel, Stepper, Typography, } from "@mui/material";
 import Button from "@/components/button";
 import Input from "@/components/form/input";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import AvatarGenerator, { Avatar } from "@/components/avatar-generator"; // Ensure the Avatar type exists in your component
-import { FaWineBottle, FaAppleAlt, FaBrain, FaHeart, FaRunning, FaEllipsisH } from "react-icons/fa";
+import AvatarGenerator, { Avatar } from "@/components/avatar-generator";
+import { FaAppleAlt, FaBrain, FaEllipsisH, FaHeart, FaRunning, FaWineBottle } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { avatarPallets } from "@/constants";
+import { SiSunrise } from "react-icons/si";
 
 interface FocusCommunity {
   category: string;
@@ -32,7 +28,7 @@ interface FormValues {
 const focusCommunities: FocusCommunity[] = [
   {
     category: "Addiction",
-    icon: <FaWineBottle size={16} />,
+    icon: <FaWineBottle size={16}/>,
     preselect: true,
     subcategories: [
       "Alcohol", "Smoking", "Vaping", "Caffeine", "Sugar", "Energy Drinks",
@@ -43,7 +39,7 @@ const focusCommunities: FocusCommunity[] = [
   },
   {
     category: "Eating Habits",
-    icon: <FaAppleAlt size={16} />,
+    icon: <FaAppleAlt size={16}/>,
     preselect: true,
     subcategories: [
       "Binge Eating", "Emotional Eating", "Sugar Addiction", "Food Addiction",
@@ -51,7 +47,55 @@ const focusCommunities: FocusCommunity[] = [
       "Orthorexia", "Fast Food Addiction", "Junk Food Addiction",
     ],
   },
-  // Additional categories omitted for brevity...
+  {
+    category: "Mental Health",
+    icon: <FaBrain size={16}/>,
+    preselect: true,
+    subcategories: [
+      "Depression", "Anxiety", "Anger Management", "OCD", "Self-Harm",
+      "Suicidal Thoughts", "PTSD", "ADHD", "Bipolar Disorder", "Stress",
+      "Insomnia", "Low Self-Esteem",
+    ],
+  },
+  {
+    category: "Relationships",
+    icon: <FaHeart size={16}/>,
+    preselect: false,
+    subcategories: [
+      "Toxic Relationships", "Codependency", "Trust Issues", "Attachment Issues",
+      "Breakups", "Loneliness", "Dating Apps Addiction", "Stalking", "Jealousy",
+      "Abuse",
+    ],
+  },
+  {
+    category: "Lifestyle Habits",
+    icon: <SiSunrise size={16}/>,
+    preselect: false,
+    subcategories: [
+      "Procrastination", "Doomscrolling", "Short-Form Videos", "Gossiping",
+      "Overworking", "Excessive Exercising", "Work-Life Imbalance",
+      "Knuckle Cracking", "Nail Biting", "Hair Pulling", "Skin Picking",
+    ],
+  },
+  {
+    category: "Physical Health",
+    icon: <FaRunning size={16}/>,
+    preselect: false,
+    subcategories: [
+      "Fitness Motivation", "Weight Loss Struggles", "Sedentary Lifestyle",
+      "Injury Recovery", "Chronic Fatigue", "Overtraining", "Body Dysmorphia",
+      "Muscle Imbalance",
+    ],
+  },
+  {
+    category: "Other",
+    icon: <FaEllipsisH size={16}/>,
+    preselect: false,
+    subcategories: [
+      "Financial Issues", "Career Burnout", "Lack of Purpose", "Parenting Struggles",
+      "Addiction to AI/Tech", "Miscellaneous",
+    ],
+  },
 ];
 
 const schema = yup.object().shape({
@@ -67,7 +111,7 @@ const OnboardingForm: React.FC = () => {
 
   const {
     register,
-    formState: { errors },
+    formState: {errors},
     getValues,
     setValue,
   } = useForm<FormValues>({
@@ -75,7 +119,10 @@ const OnboardingForm: React.FC = () => {
     resolver: yupResolver(schema),
     defaultValues: {
       username: "",
-      avatar: null,
+      avatar: {
+        name: `Random User - ${Date.now()}`,
+        colors: avatarPallets[0].colors,
+      },
       communities: [],
     },
   });
@@ -117,7 +164,7 @@ const OnboardingForm: React.FC = () => {
   };
 
   const toggleExpand = (category: string) => {
-    setExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
+    setExpanded((prev) => ({...prev, [category]: !prev[category]}));
   };
 
   const getStepContent = (stepIndex: number) => {
@@ -128,10 +175,7 @@ const OnboardingForm: React.FC = () => {
             <h3 className={"text-sm text-white"}>Customize your appearance</h3>
             <form>
               <AvatarGenerator
-                defaultAvatar={{
-                  name: `Random User - ${Date.now()}`,
-                  colors: avatarPallets[0].colors,
-                }}
+                defaultAvatar={getValues("avatar")}
                 onChange={(avatar: Avatar) => {
                   // @ts-ignore
                   setValue("avatar", avatar);
@@ -155,8 +199,8 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="w-full">
             <h3 className={"text-sm text-white"}>Communities to follow</h3>
-            {focusCommunities.map(({ category, subcategories, icon }) => (
-              <div key={category} style={{ borderBottom: "1px solid #ffffff24" }}>
+            {focusCommunities.map(({category, subcategories, icon}) => (
+              <div key={category} style={{borderBottom: "1px solid #ffffff24"}}>
                 <div
                   className="flex justify-between items-center py-2 cursor-pointer"
                   onClick={() => toggleExpand(category)}
@@ -180,7 +224,7 @@ const OnboardingForm: React.FC = () => {
                       expanded[category] ? "rotate-180" : ""
                     }`}
                   >
-                    <IoIosArrowDown className={"text-white"} />
+                    <IoIosArrowDown className={"text-white"}/>
                   </span>
                 </div>
 

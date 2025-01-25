@@ -1,4 +1,6 @@
 const newsSchema = `
+  directive @isAuth(role:String) on FIELD_DEFINITION
+
   type Query {
     checkAccount(email: String!): CheckAccount!
   }
@@ -9,6 +11,7 @@ const newsSchema = `
     authenticateWithEmail(payload: EmailRegisterInput!): AuthUser
     authenticateWithSocial(token: String!): AuthUser
     requestPasswordReset(email: String!): Boolean
+    updateProfile(payload: UpdateProfileInput!): Boolean @isAuth(role: "user")
   }
   
   type CheckAccount {
@@ -21,7 +24,6 @@ const newsSchema = `
     password: String!
   }
   
-  
   type AuthUser {
     token: String!
     userInfo: UserInfo
@@ -30,6 +32,17 @@ const newsSchema = `
   type UserInfo {
     email: String!
     createdAt: String!
+  }
+  
+  input AvatarInput {
+    colors: [String!]!
+    name: String!
+  }
+  
+  input UpdateProfileInput {
+    username: String
+    avatar: AvatarInput
+    communities: [String!]
   }
 
 `

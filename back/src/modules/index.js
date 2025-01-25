@@ -8,9 +8,8 @@ const modules = [
 ];
 
 
-const initializeModules = async () => {
+const initializeModules = async (db) => {
   try {
-    const db = await getDbInstance();
 
     modules.forEach(module => {
 

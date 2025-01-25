@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from 'boring-avatars';
 
 import Button from "@/components/button";
@@ -27,7 +27,7 @@ const AvatarGenerator = ({onChange, defaultAvatar}: AvatarGeneratorProps) => {
   const [modal, setModal] = useState(false)
 
   const handleGenerate = () => {
-    const randomName = `User ${getRandomNumber(1,99999999999)}`;
+    const randomName = `User ${getRandomNumber(1, 99999999999)}`;
     setName(randomName);
     onChange({
       colors: selectedPalette,
@@ -57,7 +57,10 @@ const AvatarGenerator = ({onChange, defaultAvatar}: AvatarGeneratorProps) => {
 
       {/* Generate Button */}
       <div className={"flex items-center gap-4 justify-center "}>
-        <Button title={"Shuffle Avatar!"} className={"text-white mt-6 px-12 bg-transparent border-2"} onClick={handleGenerate}/>
+        <Button title={"Generate Avatar!"}
+                className={"text-white mt-6 px-12 bg-transparent border-2 !rounded-2xl"}
+                onClick={handleGenerate}
+        />
       </div>
 
       <PortalModal isOpen={modal}

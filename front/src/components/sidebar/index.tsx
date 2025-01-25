@@ -44,12 +44,12 @@ const nav = [
     icon: PiNotebookDuotone,
     selectedIcon: PiNotebookFill
   },
-  {
-    name: "Healing Circles",
-    path: "/healing-circles",
-    icon: PiCirclesThreeLight,
-    selectedIcon: PiCirclesThreeFill
-  }
+  // {
+  //   name: "Healing Circles",
+  //   path: "/healing-circles",
+  //   icon: PiCirclesThreeLight,
+  //   selectedIcon: PiCirclesThreeFill
+  // }
 ]
 
 const Sidebar = () => {
