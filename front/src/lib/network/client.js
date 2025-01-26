@@ -1,15 +1,17 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc';
 import { BACKEND_PATH } from '@/constants'
+import Cookies from 'js-cookie';
 
 export const { getClient } = registerApolloClient(() => {
+  const token = Cookies.get('token'); // Retrieve token from cookies
   return new ApolloClient({
     cache: new InMemoryCache({
       typePolicies: {
         Query: {
           fields: {
             getProviderNews: {
-              keyArgs: ['input', ['slug']], // Ensure each slug's data is cached separately
+              keyArgs: ['input', ['slug']],
               merge(existing = [], incoming) {
                 const merged = existing ? existing.slice(0) : [];
 
@@ -32,6 +34,9 @@ export const { getClient } = registerApolloClient(() => {
     }),
     link: new HttpLink({
       uri: `${BACKEND_PATH}/graphql`,
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '', 
+      },
     }),
   });
 });

@@ -5,6 +5,8 @@ schema {
     mutation: Mutation
 }
 
+directive @isAuth(role: String) on FIELD_DEFINITION
+
 "Indicates exactly one field must be supplied and this field must not be `null`."
 directive @oneOf on INPUT_OBJECT
 
@@ -24,6 +26,7 @@ type Mutation {
     clickPost(id: ID): Boolean
     createAccountWithEmail(payload: EmailRegisterInput!): Boolean
     requestPasswordReset(email: String!): Boolean
+    updateProfile(payload: UpdateProfileInput!): Boolean
 }
 
 type Query {
@@ -35,7 +38,18 @@ type UserInfo {
     email: String!
 }
 
+input AvatarInput {
+    colors: [String!]!
+    name: String!
+}
+
 input EmailRegisterInput {
     email: String!
     password: String!
+}
+
+input UpdateProfileInput {
+    avatar: AvatarInput
+    communities: [String!]
+    username: String
 }

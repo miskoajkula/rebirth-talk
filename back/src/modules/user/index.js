@@ -138,25 +138,25 @@ class UserModule {
 
   updatableFields = ['username', 'avatar', 'communities']
 
-  async checkForDuplicateUsername(username, inputUserId) {
-    const [existingUser] = await this.db.select()
-    .from(users)
-    .where(
+  async checkForDuplicateUsername (username, inputUserId) {
+    const [existingUser] = await this.db.select().from(users).where(
       and(
         eq(users.username, username),
-        ne(users.id, inputUserId)
-      )
-    );
+        ne(users.id, inputUserId),
+      ),
+    )
     if (existingUser) {
-      throw new Error('Username is already taken');
+      throw new Error('Username is already taken')
     }
   }
 
   async updateProfile (payload, user) {
 
+    const updateFields = {}
+
     for (const key of this.updatableFields) {
       if (payload[key]) {
-        user[key] = payload[key]
+        updateFields[key] = payload[key]
       }
     }
 
@@ -164,11 +164,15 @@ class UserModule {
       await this.checkForDuplicateUsername(payload.username, user.id)
     }
 
-    console.log(payload)
+    if (updateFields['avatar']) {
+      updateFields['avatar'] = JSON.parse(JSON.stringify(updateFields['avatar']))
+    }
 
-    await this.db.update(users)
-      .set(payload)
-      .where(eq(users.id, user.id));
+    if (updateFields['communities']) {
+      updateFields['communities'] = JSON.parse(JSON.stringify(updateFields['communities']))
+    }
+
+    await this.db.update(users).set(updateFields).where(eq(users.id, user.id))
 
     return true
   }

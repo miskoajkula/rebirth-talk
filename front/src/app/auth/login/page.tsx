@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from 'react';
+import Cookies from 'js-cookie';
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -49,6 +50,13 @@ const Page = () => {
       if(data.authenticateWithEmail) {
         alert('save login info')
 
+
+        //todo
+        Cookies.set('token', 'your-token-here', {
+          secure: true,
+          sameSite: 'strict',
+          expires: 24,
+        });
       }
       console.log(data);
     },

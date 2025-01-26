@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import Button from "@/components/button";
 import OnboardingForm from "@/app/onboarding/OnboardingForm";
+import { useMutation } from "@apollo/client";
+import LOGIN from "@/lib/mutations/login.mutation";
+import toast from "react-hot-toast";
+import UPDATE_PROFILE from "@/lib/mutations/update-profile.mutation";
 
 const App = () => {
   const [showWelcome, setShowWelcome] = useState(false);
@@ -28,6 +32,12 @@ const App = () => {
   }, []);
 
   const onSkip = () => {
+
+
+  }
+
+  const onDataSubmit = () => {
+
   }
 
   return (
@@ -67,7 +77,7 @@ const App = () => {
       {/* Onboarding Form */}
       {!showWelcome && (
         <div className="relative w-full slide-in">
-          <OnboardingForm/>
+          <OnboardingForm  />
         </div>
       )}
     </div>

@@ -11,6 +11,9 @@ import { FaAppleAlt, FaBrain, FaEllipsisH, FaHeart, FaRunning, FaWineBottle } fr
 import { IoIosArrowDown } from "react-icons/io";
 import { avatarPallets } from "@/constants";
 import { SiSunrise } from "react-icons/si";
+import { useMutation } from "@apollo/client";
+import UPDATE_PROFILE from "@/lib/mutations/update-profile.mutation";
+import toast from "react-hot-toast";
 
 interface FocusCommunity {
   category: string;
@@ -108,6 +111,15 @@ const OnboardingForm: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [selected, setSelected] = useState<string[]>([]);
+  const [updateProfile, {loading}] = useMutation(UPDATE_PROFILE, {
+    onCompleted: (data) => {
+
+      console.log(data);
+    },
+    onError: (error) => {
+      toast.error(error.message, {position: "top-right", duration: 6000});
+    }
+  })
 
   const {
     register,
@@ -142,6 +154,11 @@ const OnboardingForm: React.FC = () => {
 
   const handleSubmit = () => {
     console.log(getValues());
+    updateProfile({
+      variables: {
+        payload: getValues(),
+      }
+    })
   };
 
   const handleSelect = (value: string) => {
