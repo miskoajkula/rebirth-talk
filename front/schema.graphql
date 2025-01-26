@@ -15,6 +15,11 @@ type AuthUser {
     userInfo: UserInfo
 }
 
+type AvatarType {
+    colors: [String!]!
+    name: String!
+}
+
 type CheckAccount {
     socialAuth: Boolean
     userExists: Boolean
@@ -34,6 +39,7 @@ type Query {
 }
 
 type UserInfo {
+    avatar: AvatarType
     createdAt: String!
     email: String!
 }

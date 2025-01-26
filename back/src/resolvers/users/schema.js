@@ -32,6 +32,12 @@ const newsSchema = `
   type UserInfo {
     email: String!
     createdAt: String!
+    avatar: AvatarType
+  }
+  
+  type AvatarType {
+    colors: [String!]!
+    name: String!
   }
   
   input AvatarInput {

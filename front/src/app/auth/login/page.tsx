@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from 'react';
-import Cookies from 'js-cookie';
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -18,6 +17,7 @@ import GoBack from "@/components/navigation/go-back";
 import Input from "@/components/form/input";
 import LOGIN from "@/lib/mutations/login.mutation";
 import Button from "@/components/button";
+import Cookies from "js-cookie";
 
 const schema = yup.object().shape({
   password: yup.string().required("Required").min(8, "Min. 8 chars").max(100, "Char limit reached"),
@@ -47,18 +47,21 @@ const Page = () => {
 
   const [login, {loading}] = useMutation(LOGIN, {
     onCompleted: (data) => {
-      if(data.authenticateWithEmail) {
-        alert('save login info')
+      if (data.authenticateWithEmail) {
+        const {token, userInfo} = data.authenticateWithEmail
 
+        localStorage.setItem("user", JSON.stringify(userInfo))
 
-        //todo
-        Cookies.set('token', 'your-token-here', {
-          secure: true,
+        Cookies.set('token', token, {
+          // secure: true,
           sameSite: 'strict',
           expires: 24,
         });
+
+        if (!userInfo.avatar) {
+          router.push('/onboarding');
+        }
       }
-      console.log(data);
     },
     onError: (error) => {
       toast.error(error.message, {position: "top-right", duration: 6000});
@@ -118,7 +121,7 @@ const Page = () => {
             Forgot password?
           </Link>
         </div>
-        <Button title={"Sign in"} buttonType={"submit"} loading={loading}/>
+        <Button title={"Sign in"} className={"w-full text-white"} buttonType={"submit"} loading={loading}/>
       </form>
 
     </AuthLayout>

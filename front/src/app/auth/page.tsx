@@ -90,7 +90,7 @@ const Page = () => {
           errors={errors}
         />
 
-        <Button title={"Continue"} className={"text-white"} loading={loading} buttonType="submit"/>
+        <Button title={"Continue"} className={"text-white w-full"} loading={loading} buttonType="submit"/>
 
         <hr/>
         <p className={"text-center text-gray-700"}>Or</p>

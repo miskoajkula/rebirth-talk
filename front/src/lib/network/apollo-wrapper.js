@@ -8,7 +8,7 @@ import {
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import { BACKEND_PATH } from '@/constants'
-import { ReflectAdapter as Cookies } from 'next/dist/server/web/spec-extension/adapters/reflect'
+import Cookies from 'js-cookie'
 
 function makeClient () {
   const token = Cookies.get('token');
