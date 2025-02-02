@@ -4,14 +4,27 @@ import { Typography } from "@mui/material";
 import Button from "@/components/button";
 import OnboardingForm from "@/app/onboarding/OnboardingForm";
 import { useMutation } from "@apollo/client";
-import LOGIN from "@/lib/mutations/login.mutation";
 import toast from "react-hot-toast";
 import UPDATE_PROFILE from "@/lib/mutations/update-profile.mutation";
+import { avatarPallets } from "@/constants";
+import { useRouter } from "next/navigation";
 
 const App = () => {
+  const router = useRouter()
+
   const [showWelcome, setShowWelcome] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState("/test2.jpg");
   const [imageAnimation, setImageAnim] = useState(false)
+
+  const [updateProfile, {loading: skipLoading}] = useMutation(UPDATE_PROFILE, {
+    onCompleted: (data) => {
+      router.push("/");
+    },
+    onError: (error) => {
+      toast.error(error.message, {position: "top-right", duration: 6000});
+    }
+  })
+
 
   const onNext = () => {
     const img = new Image();
@@ -32,8 +45,20 @@ const App = () => {
   }, []);
 
   const onSkip = () => {
+    if(skipLoading)
+      return;
 
 
+    updateProfile({
+      variables: {
+        payload: {
+          avatar: {
+            name: `Random User - ${Date.now()}`,
+            colors: avatarPallets[0].colors,
+          },
+        }
+      }
+    })
   }
 
   const onDataSubmit = () => {
@@ -67,6 +92,7 @@ const App = () => {
             />
             <Button
               title="Skip"
+              loading={skipLoading}
               onClick={onSkip}
               className="bg-transparent w-full text-white hover:bg-transparent hover:opacity-70 hover:cursor-pointer"
             />

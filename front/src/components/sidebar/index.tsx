@@ -4,14 +4,15 @@ import React from 'react';
 import { FaChevronRight, FaScroll } from "react-icons/fa";
 import { LuScroll } from "react-icons/lu";
 
-import { BiSolidTrophy, BiTrophy } from "react-icons/bi";
-
 
 import { BsCalendar2Check, BsCalendar2CheckFill, BsChatSquareQuote, BsChatSquareQuoteFill } from "react-icons/bs";
 
 
-import { PiCirclesThreeFill, PiCirclesThreeLight, PiNotebookDuotone, PiNotebookFill } from "react-icons/pi";
+import { PiNotebookDuotone, PiNotebookFill } from "react-icons/pi";
 import { usePathname } from "next/navigation";
+import { useUserStore } from "@/store/userStore";
+import Avatar from 'boring-avatars';
+import { avatarPallets } from "@/constants";
 
 const nav = [
   {
@@ -54,16 +55,34 @@ const nav = [
 
 const Sidebar = () => {
   const pathname = usePathname()
+  const {user} = useUserStore();
+
 
   return (
     <div className="w-96  p-4 border-r-2 bg-gray-50">
       <div className="mb-8">
         <div className="mt-12">
           <div className="flex items-center space-x-2">
-            <div className="bg-gray-300 w-10 h-10 rounded-full flex items-center justify-center text-xl">A</div>
+
+            {/*<Avatar*/}
+            {/*  className={"relative"}*/}
+            {/*  name={name}*/}
+            {/*  colors={selectedPalette}*/}
+            {/*  variant="beam"*/}
+            {/*  size={100}*/}
+            {/*/>*/}
+            <div className="bg-gray-300 w-10 h-10 rounded-full flex items-center justify-center text-xl">
+              {user ? <Avatar
+                className={"relative"}
+                name={'test'}
+                colors={avatarPallets[0].colors}
+                variant="beam"
+                size={100}
+              /> : 'A'}
+            </div>
             <div className={"flex-col gap-0"}>
-              <span className={"text-black"}>Alexa Harrison</span>
-              <a href="/" className="text-blue-500 block">View profile</a>
+              <span className={"text-black"}>{user?.username}</span>
+              <a href={user ? '/profile' : '/auth'} className="text-blue-500 block">{user ? `View profile` : 'Login'}</a>
             </div>
 
             <FaChevronRight color={"black"}/>
@@ -77,7 +96,7 @@ const Sidebar = () => {
             let selected = pathname && pathname.indexOf(item.path) > -1
 
             // if homepage
-            if(pathname === "/" && item.name === "Confessions") {
+            if (pathname === "/" && item.name === "Confessions") {
               selected = true
             }
 

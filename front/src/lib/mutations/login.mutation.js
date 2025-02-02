@@ -7,6 +7,8 @@ const LOGIN = gql`
       userInfo {
         createdAt
         email
+        username
+        socialAuth  
         avatar {
           name
           colors  

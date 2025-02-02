@@ -18,6 +18,7 @@ import Input from "@/components/form/input";
 import LOGIN from "@/lib/mutations/login.mutation";
 import Button from "@/components/button";
 import Cookies from "js-cookie";
+import { useUserStore } from "@/store/userStore";
 
 const schema = yup.object().shape({
   password: yup.string().required("Required").min(8, "Min. 8 chars").max(100, "Char limit reached"),
@@ -32,6 +33,7 @@ const Page = () => {
   const router = useRouter()
   const searchParams = useSearchParams();
   const [inputType, setInputType] = useState("password")
+  const { setUser } = useUserStore();
 
   const onInputTypeChange = () => {
     setInputType(inputType === "password" ? "text" : "password");
@@ -51,6 +53,7 @@ const Page = () => {
         const {token, userInfo} = data.authenticateWithEmail
 
         localStorage.setItem("user", JSON.stringify(userInfo))
+        setUser(userInfo);
 
         Cookies.set('token', token, {
           // secure: true,
@@ -61,6 +64,8 @@ const Page = () => {
         if (!userInfo.avatar) {
           router.push('/onboarding');
         }
+
+        router.push('/');
       }
     },
     onError: (error) => {

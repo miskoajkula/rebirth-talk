@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import Header from '@/components/header';
 
 import { Hind } from 'next/font/google'
@@ -8,21 +8,22 @@ import RightSidebar from "@/components/sidebar/right-sidebar";
 const roboto = Hind({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['300','400', '500', '600', '700']
+  weight: ['300', '400', '500', '600', '700']
 });
 
-const Layout = ({ children }: any) => {
+const Layout = ({children}: any) => {
+
   return (
     <div className={roboto.className}>
       <Suspense>
-        <Header />
+        <Header/>
       </Suspense>
       <main className={'mx-auto max-w-[1280px] max-[1024px]:px-1.5 flex'}>
-        <Sidebar />
+        <Sidebar/>
         <div className={"flex w-full flex-col h-[90vh] overflow-y-scroll bg-gray-50"} id={"main-content"}>
           {children}
         </div>
-        <RightSidebar />
+        <RightSidebar/>
       </main>
     </div>
   );

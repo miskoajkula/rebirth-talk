@@ -33,6 +33,8 @@ const newsSchema = `
     email: String!
     createdAt: String!
     avatar: AvatarType
+    username: String
+    socialAuth: Boolean
   }
   
   type AvatarType {

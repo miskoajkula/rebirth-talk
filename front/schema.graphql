@@ -42,6 +42,8 @@ type UserInfo {
     avatar: AvatarType
     createdAt: String!
     email: String!
+    socialAuth: Boolean
+    username: String
 }
 
 input AvatarInput {
