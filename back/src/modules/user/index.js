@@ -12,6 +12,7 @@ class UserModule {
   init (db) {
     this.db = db
     this.num = Math.random()
+    console.log("init")
   }
 
   async checkAccount (email) {
