@@ -62,7 +62,7 @@ const Header = () => {
             <input
               defaultValue={search ?? ''}
               className={
-                'w-full bg-gray-100 rounded-2xl border pb-2 pl-4 pt-2 text-black max-[1024px]:hidden'
+                'w-full bg-gray-100 rounded-2xl border pb-2 pl-4 pt-2 text-black max-[1024px]:hidden active:outline-1 active:outline-pine-green-700 focus:outline-pine-green-900'
               }
               placeholder={'Search Rebirth Talk'}
               onChange={(e) => {
@@ -87,7 +87,7 @@ const Header = () => {
           </div>
 
           <div className={'flex gap-8 max-[1024px]:hidden items-center'}>
-            <Link href={"/confessions/new"} className={"bg-[#047869] text-white rounded-3xl flex items-center gap-1 py-1 px-3"}>
+            <Link href={"/confessions/new"} className={"bg-[#047869] text-white rounded-3xl flex items-center gap-1 py-1 px-3 active:opacity-90"}>
               <GoPlus className={'w-[28px] h-[28px]'} color={"white"}/>
               <span className={"pr-2"}>Add</span>
             </Link>

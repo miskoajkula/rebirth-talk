@@ -82,7 +82,7 @@ const Sidebar = () => {
             </div>
             <div className={"flex-col gap-0"}>
               <span className={"text-black"}>{user?.username}</span>
-              <a href={user ? '/profile' : '/auth'} className="text-blue-500 block">{user ? `View profile` : 'Login'}</a>
+              <a href={user ? `/profile/${user?.username}` : '/auth'} className="text-blue-500 block">{user ? `View profile` : 'Login'}</a>
             </div>
 
             <FaChevronRight color={"black"}/>
@@ -100,8 +100,9 @@ const Sidebar = () => {
               selected = true
             }
 
-            return <a key={item.name} href={item.path}
-                      className={`flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg ${selected ? "bg-gray-50" : ''}`}>
+            return <a key={item.name}
+                      href={item.path}
+                      className={`flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg ${selected ? "bg-gray-50" : ''} active:bg-gray-200`}>
               {selected ? <item.selectedIcon/> : <item.icon/>}
               <span className={`ml-3 ${selected ? ' font-extrabold ' : 'font-light'}`}>{item.name}</span>
             </a>
