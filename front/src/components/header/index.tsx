@@ -13,6 +13,9 @@ import { AiOutlineBell } from "react-icons/ai";
 import { GoBell } from "react-icons/go";
 import { CiSquarePlus, CiCirclePlus } from "react-icons/ci";
 import { GoPlus } from "react-icons/go";
+import { useUserStore } from "@/store/userStore";
+import Avatar from "boring-avatars";
+import { avatarPallets } from "@/constants";
 
 const Header = () => {
   const pathname = usePathname();
@@ -27,6 +30,7 @@ const Header = () => {
 
   const [drawerExpanded, setDrawerExpanded] = useState(false);
   const [fading, setFading] = useState(false);
+  const { user } = useUserStore();
 
   const handleToggle = () => {
     setFading(true);
@@ -39,6 +43,15 @@ const Header = () => {
   const drawerClassName = drawerExpanded
     ? 'max-[1024px]:translate-x-0'
     : 'max-[1024px]:translate-x-[-100%]';
+
+  // const onAuthClick = (e) => {
+  //   if(user) {
+  //
+  //   }
+  // }
+
+  const isAuth = !!user?.username;
+
   return (
     <Suspense>
       <header className={'w-full bg-white max-[1024px]:sticky max-[1024px]:top-0 max-[1024px]:z-20'}>
@@ -93,8 +106,14 @@ const Header = () => {
             </Link>
             <div className={"flex gap-2"}>
               <GoBell className={"w-[24px] h-[24px]"} color={"black"}/>
-              <Link href={'/auth'}>
-                <FaUserCircle className={"w-[24px] h-[24px]"} color={"black"}/>
+              <Link href={isAuth ? `/profile/${user?.username}`: '/auth'} >
+                {user ? <Avatar
+                  className={"relative"}
+                  name={'test'}
+                  colors={avatarPallets[0].colors}
+                  variant="beam"
+                  size={24}
+                /> :  <FaUserCircle className={"w-[24px] h-[24px]"} color={"black"}/>}
               </Link>
             </div>
 

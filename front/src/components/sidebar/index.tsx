@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 import { useUserStore } from "@/store/userStore";
 import Avatar from 'boring-avatars';
 import { avatarPallets } from "@/constants";
+import Link from "next/link";
 
 const nav = [
   {
@@ -82,7 +83,7 @@ const Sidebar = () => {
             </div>
             <div className={"flex-col gap-0"}>
               <span className={"text-black"}>{user?.username}</span>
-              <a href={user ? `/profile/${user?.username}` : '/auth'} className="text-blue-500 block">{user ? `View profile` : 'Login'}</a>
+              <Link href={user ? `/profile/${user?.username}` : '/auth'} className="text-blue-500 block">{user ? `View profile` : 'Login'}</Link>
             </div>
 
             <FaChevronRight color={"black"}/>
