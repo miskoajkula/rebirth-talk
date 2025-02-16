@@ -5,13 +5,12 @@ interface PortalModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-  mini?: boolean;
   contentStyle?: CSSProperties;
   contentClassName?: string;
   wrapperClassName?: string;
 }
 
-const PortalModal: React.FC<PortalModalProps> = ({isOpen, onClose, children, mini = false, contentStyle, wrapperClassName, contentClassName}) => {
+const PortalModal: React.FC<PortalModalProps> = ({isOpen, onClose, children, contentStyle, wrapperClassName, contentClassName}) => {
   return ReactDOM.createPortal(
     <div
       className={`fixed inset-0 bg-gray-800 bg-opacity-40 backdrop-blur-sm z-50 transition-opacity duration-300 ${wrapperClassName} ${
@@ -26,8 +25,7 @@ const PortalModal: React.FC<PortalModalProps> = ({isOpen, onClose, children, min
             ...contentStyle,
           }}
           onClick={(e) => e.stopPropagation()}
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg p-6 transition-transform duration-300 ${
-            mini ? 'h-1/2 overflow-auto' : 'w-11/12 md:w-3/4 lg:w-1/2'} ${contentClassName}`}
+          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg p-6 transition-transform duration-300 ${contentClassName}`}
         >
           {children}
         </div>

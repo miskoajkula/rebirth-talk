@@ -75,8 +75,8 @@ const Sidebar = () => {
             <div className="bg-gray-300 w-10 h-10 rounded-full flex items-center justify-center text-xl">
               {user ? <Avatar
                 className={"relative"}
-                name={'test'}
-                colors={avatarPallets[0].colors}
+                colors={user?.avatar?.colors}
+                name={user?.avatar?.name}
                 variant="beam"
                 size={100}
               /> : 'A'}

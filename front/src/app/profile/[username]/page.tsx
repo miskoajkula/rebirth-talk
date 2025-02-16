@@ -2,19 +2,21 @@
 import React, { useState } from 'react';
 import Layout from "@/components/layout";
 import { useUserStore } from "@/store/userStore";
-import Avatar from "boring-avatars";
-import { avatarPallets } from "@/constants";
 import { MdBrush } from "react-icons/md";
 import { LuBookmark, LuScroll } from "react-icons/lu";
 import { BiCommentDetail, BiHeart } from "react-icons/bi";
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoCloseOutline, IoSettingsOutline } from "react-icons/io5";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import PortalModal from "@/components/modal";
-import AvatarGenerator from "@/components/avatar-generator";
-import { IoCloseOutline } from "react-icons/io5";
-import { IoCheckmarkDoneOutline } from "react-icons/io5";
+import AvatarGenerator, { Avatar } from "@/components/avatar-generator";
+import { useMutation } from "@apollo/client";
+import UPDATE_PROFILE from "@/lib/mutations/update-profile.mutation";
+import toast from "react-hot-toast";
+import BAvatar from 'boring-avatars';
+import { FiEdit2 } from "react-icons/fi";
+import UsernameEdit from "@/components/username-edit";
 
 
 const navItems = [{
@@ -29,10 +31,19 @@ const navItems = [{
   name: "Settings", icon: IoSettingsOutline, path: "-"
 }]
 const Profile = ({children}) => {
-  const {user} = useUserStore();
+
+  const {user, setUser} = useUserStore();
   const params = useParams();
   const pathname = usePathname();
   const [avatarEdit, setAvatarEdit] = useState(false)
+  const [usernameEdit, setUsernameEdit] = useState(false)
+  const [updateProfile] = useMutation(UPDATE_PROFILE, {
+    onCompleted: (data) => {
+      console.log(data);
+    }, onError: (error) => {
+      toast.error(error.message, {position: "top-right", duration: 6000});
+    }
+  })
 
   let lastPath = null
   const pathSplit = pathname?.split("/")
@@ -45,6 +56,7 @@ const Profile = ({children}) => {
 
   const isThatUser = user?.username === lastPath;
 
+  console.log(`avatar obj`, user?.avatar)
   return (<Layout>
     <div className={" h-[100vh] overflow-y-auto"}>
       <div className={"w-full border-b-4 border-pine-green-900 h-[7rem] relative px-4"}>
@@ -56,10 +68,10 @@ const Profile = ({children}) => {
         {user ? <>
 
           <div className={"absolute bottom-[-5rem] flex items-center"}>
-            <Avatar
+            <BAvatar
               className={" border-2 rounded-full border-white"}
-              name={'test'}
-              colors={avatarPallets[0].colors}
+              colors={user?.avatar?.colors}
+              name={user?.avatar?.name}
               variant="beam"
               size={100}
             />
@@ -67,7 +79,11 @@ const Profile = ({children}) => {
                                     className={"absolute w-7 h-7 text-white bottom-[0rem] p-1 border-2 bg-pine-green-700 rounded-full border-white hover:opacity-90 hover:cursor-pointer"}/>}
 
             <div className={"left-3 bottom-[-0.5rem] relative flex flex-col"}>
-              <span className={"text-black relative text-xl font-bold"}>{user?.username}</span>
+              <span className={"text-black relative text-xl font-bold flex items-start justify-center gap-1"}>
+                {user?.username}
+                {isThatUser && <FiEdit2 className={"text-lg hover:cursor-pointer opacity-30 hover:opacity-90"}
+                                        onClick={() => setUsernameEdit(true)}/>}
+              </span>
               <span className={"relative text-xs text-black flex items-start gap-1"}>
                 <FaRegCalendarAlt/>
                 Joined Apr 2025</span>
@@ -93,26 +109,55 @@ const Profile = ({children}) => {
         {children ? children : <div> no children </div>}
       </div>
     </div>
-    {
-      <PortalModal
-        // contentClassName={"bg-white"}
-        contentClassName={"bg-[#04786980]"}
-        isOpen={avatarEdit}
-        onClose={()=> setAvatarEdit(false)} >
-        <div className={"flex justify-end"}>
-          <IoCloseOutline className={"w-6 h-6 hover:cursor-pointer"} color="white" onClick={() => setAvatarEdit(false)} />
-        </div>
-        <AvatarGenerator
-          renderPalletsInModal={false}
-          defaultAvatar={user?.avatar}
-          // defaultAvatar={getValues("avatar")}
-          onChange={(avatar: Avatar) => {
-            console.log(avatar)
-          }}
-        />
 
-      </PortalModal>
-    }
+    {/*Avatar edit*/}
+    {<PortalModal
+      // contentClassName={"bg-white"}
+      contentClassName={"bg-[#04786980]"}
+      isOpen={avatarEdit}
+      onClose={() => setAvatarEdit(false)}>
+      <div className={"flex justify-end"}>
+        <IoCloseOutline className={"w-6 h-6 hover:cursor-pointer"} color="white" onClick={() => setAvatarEdit(false)}/>
+      </div>
+      <AvatarGenerator
+        renderPalletsInModal={false}
+        defaultAvatar={user?.avatar}
+        onChange={(avatar: Avatar) => {
+
+          if (user !== null) {
+            setUser({...user, avatar: avatar});
+          }
+
+          updateProfile({
+            variables: {
+              payload: {
+                avatar: avatar
+              }
+            }
+          })
+
+          setAvatarEdit(false);
+          toast.success("Avatar updated!");
+        }}
+      />
+
+    </PortalModal>}
+
+    <PortalModal
+      wrapperClassName={"height-auto"}
+      contentClassName={"w-4/12 bg-white height-auto"}
+      isOpen={usernameEdit} onClose={() => setUsernameEdit(false)}>
+      <div className={"flex justify-between items-center mb-2"}>
+        <span>Update username</span>
+        <IoCloseOutline className={"w-6 h-6 hover:cursor-pointer"} color="black"
+                        onClick={() => setUsernameEdit(false)}/>
+      </div>
+      <hr/>
+      <UsernameEdit  onCancel={() => setUsernameEdit(false)}/>
+
+    </PortalModal>
+
+
   </Layout>);
 };
 

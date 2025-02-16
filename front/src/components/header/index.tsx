@@ -109,8 +109,8 @@ const Header = () => {
               <Link href={isAuth ? `/profile/${user?.username}`: '/auth'} >
                 {user ? <Avatar
                   className={"relative"}
-                  name={'test'}
-                  colors={avatarPallets[0].colors}
+                  colors={user?.avatar?.colors}
+                  name={user?.avatar?.name}
                   variant="beam"
                   size={24}
                 /> :  <FaUserCircle className={"w-[24px] h-[24px]"} color={"black"}/>}
