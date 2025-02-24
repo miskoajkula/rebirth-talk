@@ -1,4 +1,3 @@
-import getDbInstance from '../database/index.js'
 import UserModule from './user/index.js'
 import RedisModule from './redis/index.js'
 

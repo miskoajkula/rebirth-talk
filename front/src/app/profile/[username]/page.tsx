@@ -152,7 +152,6 @@ const Profile = ({children}) => {
         <IoCloseOutline className={"w-6 h-6 hover:cursor-pointer"} color="black"
                         onClick={() => setUsernameEdit(false)}/>
       </div>
-      <hr/>
       <UsernameEdit  onCancel={() => setUsernameEdit(false)}/>
 
     </PortalModal>
