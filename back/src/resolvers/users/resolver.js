@@ -1,6 +1,6 @@
 import userModule from '#modules/user/index.js'
 
-const newsResolvers = {
+const resolver = {
   Query: {
     checkAccount: (_, { email }) => userModule.checkAccount(email),
   },
@@ -13,4 +13,4 @@ const newsResolvers = {
   },
 }
 
-export default newsResolvers
+export default resolver

@@ -1,5 +1,5 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import Layout from "@/components/layout";
 import { useUserStore } from "@/store/userStore";
 import { MdBrush } from "react-icons/md";
@@ -14,9 +14,10 @@ import AvatarGenerator, { Avatar } from "@/components/avatar-generator";
 import { useMutation } from "@apollo/client";
 import UPDATE_PROFILE from "@/lib/mutations/update-profile.mutation";
 import toast from "react-hot-toast";
-import BAvatar from 'boring-avatars';
+import BAvatar from "boring-avatars";
 import { FiEdit2 } from "react-icons/fi";
 import UsernameEdit from "@/components/username-edit";
+import UserPosts from "@/components/user/profile-posts";
 
 
 const navItems = [{
@@ -29,41 +30,46 @@ const navItems = [{
   name: "Saved (0)", icon: LuBookmark, path: "saved"
 }, {
   name: "Settings", icon: IoSettingsOutline, path: "-"
-}]
-const Profile = ({children}) => {
+}];
+const Profile = ({ children }) => {
 
-  const {user, setUser} = useUserStore();
+  const { user, setUser } = useUserStore();
   const params = useParams();
   const pathname = usePathname();
-  const [avatarEdit, setAvatarEdit] = useState(false)
-  const [usernameEdit, setUsernameEdit] = useState(false)
+  const [avatarEdit, setAvatarEdit] = useState(false);
+  const [usernameEdit, setUsernameEdit] = useState(false);
   const [updateProfile] = useMutation(UPDATE_PROFILE, {
     onCompleted: (data) => {
       console.log(data);
     }, onError: (error) => {
-      toast.error(error.message, {position: "top-right", duration: 6000});
+      toast.error(error.message, { position: "top-right", duration: 6000 });
     }
-  })
+  });
 
-  let lastPath = null
-  const pathSplit = pathname?.split("/")
+  let lastPath = null;
+  let pathBef = null;
+  const pathSplit = pathname?.split("/");
   if (pathSplit?.length) {
     lastPath = pathSplit[pathSplit.length - 1];
+    pathBef = pathSplit[pathSplit.length - 2];
   }
-  console.log("params")
-  console.log(params)
-  console.log("lastPath", lastPath)
+  console.log("params");
+  console.log(params);
+  console.log("lastPath", lastPath);
 
-  const isThatUser = user?.username === lastPath;
+  const isThatUser = user?.username === lastPath || user?.username === pathBef;
 
-  console.log(`avatar obj`, user?.avatar)
+  const isNavPath = navItems.some(item => item.path === lastPath);
+  const activeNavPath = isNavPath ? lastPath : "posts";
+
+
   return (<Layout>
     <div className={" h-[100vh] overflow-y-auto"}>
       <div className={"w-full border-b-4 border-pine-green-900 h-[7rem] relative px-4"}>
         <div className={"w-full h-full absolute left-0 overflow-hidden"}>
           <div
-            className={"absolute inset-0 bg-gradient-to-b from-pine-green-500 via-pine-green-600 to-pine-green-700 opacity-60"}/>
-          <img src={"/test2.webp"} className={" left-0 right-0 w-full h-full object-cover object-center"}/>
+            className={"absolute inset-0 bg-gradient-to-b from-pine-green-500 via-pine-green-600 to-pine-green-700 opacity-60"} />
+          <img src={"/test2.webp"} className={" left-0 right-0 w-full h-full object-cover object-center"} />
         </div>
         {user ? <>
 
@@ -76,16 +82,16 @@ const Profile = ({children}) => {
               size={100}
             />
             {isThatUser && <MdBrush onClick={() => setAvatarEdit(true)}
-                                    className={"absolute w-7 h-7 text-white bottom-[0rem] p-1 border-2 bg-pine-green-700 rounded-full border-white hover:opacity-90 hover:cursor-pointer"}/>}
+                                    className={"absolute w-7 h-7 text-white bottom-[0rem] p-1 border-2 bg-pine-green-700 rounded-full border-white hover:opacity-90 hover:cursor-pointer"} />}
 
             <div className={"left-3 bottom-[-0.5rem] relative flex flex-col"}>
               <span className={"text-black relative text-xl font-bold flex items-start justify-center gap-1"}>
                 {user?.username}
                 {isThatUser && <FiEdit2 className={"text-lg hover:cursor-pointer opacity-30 hover:opacity-90"}
-                                        onClick={() => setUsernameEdit(true)}/>}
+                                        onClick={() => setUsernameEdit(true)} />}
               </span>
               <span className={"relative text-xs text-black flex items-start gap-1"}>
-                <FaRegCalendarAlt/>
+                <FaRegCalendarAlt />
                 Joined Apr 2025</span>
             </div>
           </div>
@@ -97,27 +103,28 @@ const Profile = ({children}) => {
               key={item.name}
               className={`${lastPath === item.path ? "text-[#a9fff4]" : "text-white"} relative  text-sm px-2 flex items-center gap-2`}
             >
-              {lastPath === item.path ?
-                <div className={'absolute bottom-[-0.75rem] left-0 w-full h-[4px] bg-[#84ddd2]'}/> : null}
-              <item.icon/>
+              {activeNavPath === item.path ?
+                <div className={"absolute bottom-[-0.75rem] left-0 w-full h-[4px] bg-[#84ddd2]"} /> : null}
+              <item.icon />
               <span>{item.name}</span>
             </Link>))}
           </div>
-        </> : 'A'}
+        </> : "A"}
       </div>
       <div className={"pt-24 px-4"}>
-        {children ? children : <div> no children </div>}
+        {children ? children : <UserPosts />}
       </div>
     </div>
 
     {/*Avatar edit*/}
     {<PortalModal
       // contentClassName={"bg-white"}
-      contentClassName={"bg-[#04786980]"}
+      contentClassName={"bg-[#04786980] max-w-2xl"}
       isOpen={avatarEdit}
       onClose={() => setAvatarEdit(false)}>
       <div className={"flex justify-end"}>
-        <IoCloseOutline className={"w-6 h-6 hover:cursor-pointer"} color="white" onClick={() => setAvatarEdit(false)}/>
+        <IoCloseOutline className={"w-6 h-6  hover:cursor-pointer"} color="white"
+                        onClick={() => setAvatarEdit(false)} />
       </div>
       <AvatarGenerator
         renderPalletsInModal={false}
@@ -125,7 +132,7 @@ const Profile = ({children}) => {
         onChange={(avatar: Avatar) => {
 
           if (user !== null) {
-            setUser({...user, avatar: avatar});
+            setUser({ ...user, avatar: avatar });
           }
 
           updateProfile({
@@ -134,7 +141,7 @@ const Profile = ({children}) => {
                 avatar: avatar
               }
             }
-          })
+          });
 
           setAvatarEdit(false);
           toast.success("Avatar updated!");
@@ -150,9 +157,9 @@ const Profile = ({children}) => {
       <div className={"flex justify-between items-center mb-2"}>
         <span>Update username</span>
         <IoCloseOutline className={"w-6 h-6 hover:cursor-pointer"} color="black"
-                        onClick={() => setUsernameEdit(false)}/>
+                        onClick={() => setUsernameEdit(false)} />
       </div>
-      <UsernameEdit  onCancel={() => setUsernameEdit(false)}/>
+      <UsernameEdit onCancel={() => setUsernameEdit(false)} />
 
     </PortalModal>
 

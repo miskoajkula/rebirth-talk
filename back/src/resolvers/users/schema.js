@@ -1,11 +1,11 @@
-const newsSchema = `
+const schema = `
   directive @isAuth(role:String) on FIELD_DEFINITION
 
-  type Query {
+  extend type Query {
     checkAccount(email: String!): CheckAccount!
   }
   
-  type Mutation {
+  extend type Mutation {
     clickPost(id: ID): Boolean
     createAccountWithEmail(payload: EmailRegisterInput!): Boolean
     authenticateWithEmail(payload: EmailRegisterInput!): AuthUser
@@ -55,4 +55,4 @@ const newsSchema = `
 
 `
 
-export default newsSchema
+export default schema

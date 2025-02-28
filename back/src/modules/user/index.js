@@ -17,7 +17,7 @@ class UserModule {
 
   async checkAccount (email) {
 
-    console.log(email)
+    console.log(`email ${email}`)
     const userRes = await this.db.select({
       id: users.id,
       socialAuth: users.socialAuth,

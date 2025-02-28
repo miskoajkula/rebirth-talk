@@ -6,6 +6,7 @@ export function isAuthenticatedDirectiveTransformer(schema, directiveName = 'isA
   return mapSchema(schema, {
     [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
       const directive = getDirective(schema, fieldConfig, directiveName)?.[0];
+
       if (directive) {
         const { role } = directive; // Get the optional `role` argument
         const originalResolver = fieldConfig.resolve || ((parent, args, context, info) => info.fieldName);

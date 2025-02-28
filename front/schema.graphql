@@ -36,6 +36,7 @@ type Mutation {
 
 type Query {
     checkAccount(email: String!): CheckAccount!
+    getPostsByUser(pagination: PaginationInput!, username: String!): Boolean
 }
 
 type UserInfo {
@@ -54,6 +55,11 @@ input AvatarInput {
 input EmailRegisterInput {
     email: String!
     password: String!
+}
+
+input PaginationInput {
+    limit: Int!
+    offset: Int!
 }
 
 input UpdateProfileInput {

@@ -62,7 +62,7 @@ const UsernameEdit = ({ onCancel }: UsernameEditProps) => {
     <div className={"relative"}>
 
       <Input
-        label="New Username"
+        label="Edit Username"
         name="username"
         register={register}
         placeholder="Username"

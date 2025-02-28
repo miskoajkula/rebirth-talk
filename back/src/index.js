@@ -8,17 +8,34 @@ import cors from 'cors'
 import path from 'path'
 
 import { fileURLToPath } from 'url';
-import getDbInstance from '#database/index.js'
 import { authMiddleware } from './interceptors/middleware/index.js'
 import { isAuthenticatedDirectiveTransformer } from './interceptors/directives/auth.js'
+
+import getDbInstance from '#database/index.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+
+const mergedResolvers = {
+  Query: {},
+  Mutation: {}
+};
+
+resolvers.forEach(resolver => {
+  if (resolver.Query) {
+    mergedResolvers.Query = { ...mergedResolvers.Query, ...resolver.Query };
+  }
+  if (resolver.Mutation) {
+    mergedResolvers.Mutation = { ...mergedResolvers.Mutation, ...resolver.Mutation };
+  }
+});
+
 let mergedSchema = makeExecutableSchema({
   typeDefs: schemas,
-  resolvers: resolvers.reduce((acc, resolver) => ({ ...acc, ...resolver }), {}),
+  resolvers: mergedResolvers
 });
+
 mergedSchema = isAuthenticatedDirectiveTransformer(mergedSchema);
 
 const app = express();
@@ -33,8 +50,6 @@ async function startServer() {
     }));
 
     app.use('/images', express.static(path.join(__dirname,'../images')));
-
-
 
     app.all(
       "/graphql",
