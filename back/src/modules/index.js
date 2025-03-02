@@ -1,8 +1,10 @@
+import CommonModule from './common/index.js'
 import UserModule from './user/index.js'
 import PostsModule from './post/index.js'
 import RedisModule from './redis/index.js'
 
 const modules = [
+  CommonModule,
   UserModule,
   PostsModule,
   RedisModule

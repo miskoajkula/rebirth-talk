@@ -1,6 +1,7 @@
 const commonSchema = `
   type Query {
     _empty: String
+    getConfig: ConfigType
   }
 
   type Mutation {
@@ -10,6 +11,17 @@ const commonSchema = `
   input PaginationInput {
     limit: Int!
     offset: Int!
+  }
+  
+  type ConfigType {
+    tags: [TagType]
+  }
+  
+  type TagType {
+    id: ID!
+    name: String
+    slug: String
+    bgColor: String
   }
 `;
 

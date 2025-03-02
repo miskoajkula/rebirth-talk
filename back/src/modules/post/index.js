@@ -11,6 +11,10 @@ class PostsModule {
     console.log("posts init");
   }
 
+  async create({ user, post }) {
+
+  }
+
   async getPostsByUsername ({ username, offset, limit = 10 }) {
     console.log(`username ${username} is ${limit}`);
     const userPosts = await this.db.select().
