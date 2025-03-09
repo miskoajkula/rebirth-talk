@@ -15,7 +15,22 @@ const commonSchema = `
   
   type ConfigType {
     tags: [TagType]
+    communities: [FocusCommunity]
   }
+  
+  type FocusCommunity {
+    id: ID!
+    category: String!
+    icon: String!
+    preselect: Boolean!
+    subcategories: [Subcategory!]!
+  }
+  
+  type Subcategory {
+    id: ID!
+    name: String!
+  }
+
   
   type TagType {
     id: ID!

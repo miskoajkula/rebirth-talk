@@ -1,32 +1,44 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type LabelType = {
-  slug: string
-  name: string
-  bgColor: string
-}
+  slug: string;
+  name: string;
+  bgColor: string;
+};
+
+type SubcategoryType = {
+  id: number;
+  name: string;
+};
+
+type FocusCommunityType = {
+  id: number;
+  category: string;
+  icon: string;
+  preselect: boolean;
+  subcategories: SubcategoryType[];
+};
 
 type CfgType = {
-  labels: [LabelType]
-}
+  labels: LabelType[];
+  communities: FocusCommunityType[];
+};
 
 interface CfgStore {
-  user: CfgType | null;
+  cfg: CfgType | null;
   setCfg: (cfg: CfgType) => void;
-  clearUser: () => void;
 }
 
-export const useUserStore = create<CfgStore>()(
+export const useConfigStore = create<CfgStore>()(
   persist(
     (set) => ({
-      user: null,
+      cfg: null,
       setCfg: (cfg: CfgType) => set({ cfg }),
-      clearUser: () => set({ user: null }),
     }),
     {
-      name: 'cfg-storage',
+      name: "cfg-storage",
       getStorage: () => localStorage,
-    }
-  )
+    },
+  ),
 );

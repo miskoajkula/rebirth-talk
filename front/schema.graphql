@@ -25,18 +25,52 @@ type CheckAccount {
     userExists: Boolean
 }
 
+type ConfigType {
+    communities: [FocusCommunity]
+    tags: [TagType]
+}
+
+type FocusCommunity {
+    category: String!
+    icon: String!
+    id: ID!
+    preselect: Boolean!
+    subcategories: [Subcategory!]!
+}
+
 type Mutation {
+    _empty: String
     authenticateWithEmail(payload: EmailRegisterInput!): AuthUser
     authenticateWithSocial(token: String!): AuthUser
     clickPost(id: ID): Boolean
     createAccountWithEmail(payload: EmailRegisterInput!): Boolean
     requestPasswordReset(email: String!): Boolean
+    test: String
     updateProfile(payload: UpdateProfileInput!): Boolean
 }
 
+type PostType {
+    id: ID!
+    name: String!
+}
+
 type Query {
+    _empty: String
     checkAccount(email: String!): CheckAccount!
+    getConfig: ConfigType
     getPostsByUser(pagination: PaginationInput!, username: String!): Boolean
+}
+
+type Subcategory {
+    id: ID!
+    name: String!
+}
+
+type TagType {
+    bgColor: String
+    id: ID!
+    name: String
+    slug: String
 }
 
 type UserInfo {

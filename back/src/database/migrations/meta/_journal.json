@@ -43,6 +43,13 @@
       "when": 1740909892294,
       "tag": "0005_talented_stranger",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1741543037885,
+      "tag": "0006_loving_morph",
+      "breakpoints": true
     }
   ]
 }

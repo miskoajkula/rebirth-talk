@@ -15,6 +15,7 @@
     "db:generate-name": "docker exec -it rebirth_talk_backend sh -c \"npx drizzle-kit generate --name $npm_config_name\"",
     "db:migrate": "docker exec -it rebirth_talk_backend sh -c \" npx drizzle-kit migrate\"",
     "db:seed": "docker exec -it rebirth_talk_backend sh -c \" node src/database/seeders/index.js \"",
+    "db:seed-communities": "docker exec -it rebirth_talk_backend sh -c \" node src/database/seeders/community-seeder.js \"",
     "db:seed-category": "docker exec -it rebirth_talk_backend sh -c \" node src/database/seeders/category-seeder.js \"",
     "db:seed-label": "docker exec -it rebirth_talk_backend sh -c \" node src/database/seeders/label-seeder.js \"",
     "db:seed-proxy": "docker exec -it rebirth_talk_backend sh -c \" node src/database/seeders/proxy-seeder.js \"",

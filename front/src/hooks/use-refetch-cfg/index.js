@@ -1,28 +1,31 @@
 "use client";
+import { useEffect } from "react";
 
 import { useLazyQuery } from "@apollo/client";
-import CHECK_ACCOUNT from "../../lib/queries/user.query";
-import { useEffect } from "react";
-// import { GET_ME } from "api/query/get-me";
-// import { userState } from "state/atom/user";
-// import { useSetRecoilState } from "recoil";
+import GET_CONFIG from "../../lib/queries/common.query";
+import { useConfigStore } from "../../store/cfgStore";
 
 const RefetchConfig = () => {
-  // const setUser = useSetRecoilState(userState);
-  //
-  const [request] = useLazyQuery(CHECK_ACCOUNT, {
+  const { setCfg } = useConfigStore();
+
+  const [request] = useLazyQuery(GET_CONFIG, {
     fetchPolicy: "network-only",
     nextFetchPolicy: "network-only",
-    onCompleted: (d) => {
-
+    onCompleted: (res) => {
+      if (res.getConfig) {
+        setCfg({
+          labels: res.getConfig.tags,
+          communities: res.getConfig.communities,
+        });
+      }
     },
     onError: () => {
       console.log("error");
-    }
+    },
   });
 
   useEffect(() => {
-    request()
+    request();
   }, []);
 
   return null;

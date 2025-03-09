@@ -23,12 +23,14 @@ const Select: React.FC<SelectProps> = ({ label, name, register, options, errors 
       >
         <option value="">Select an option</option>
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option.value} value={option.value} className={"text-gray-600"}>
             {option.label}
           </option>
         ))}
       </select>
-      {errors?.[name] && <p className="text-red-500 text-sm mt-1">{errors[name].message}</p>}
+      {errors?.[name] && (
+        <p className="text-red-500 text-sm mt-1">{errors[name].message}</p>
+      )}
     </div>
   );
 };
