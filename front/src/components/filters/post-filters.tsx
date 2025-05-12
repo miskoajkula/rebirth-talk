@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { FaHashtag } from "react-icons/fa6";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import { GiConvergenceTarget } from "react-icons/gi";
-import { VscTarget } from 'react-icons/vsc';
+import { VscTarget } from "react-icons/vsc";
 import { FaTags, FaUsers } from "react-icons/fa";
 import { BiCategory, BiFilter } from "react-icons/bi";
 import { HiOutlineFilter } from "react-icons/hi";
@@ -15,7 +15,7 @@ const PostFilters = () => {
   const [throttleTimeout, setThrottleTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const handleScroll = () => {
-    const mainContent = document.getElementById('main-content');
+    const mainContent = document.getElementById("main-content");
     const currentScrollY = mainContent?.scrollTop || 0;
 
     if (currentScrollY > lastScrollY) {
@@ -29,48 +29,53 @@ const PostFilters = () => {
   // Throttle the scroll event handler
   const throttleScroll = () => {
     if (!throttleTimeout) {
-      setThrottleTimeout(setTimeout(() => {
-        console.log("handleScroll");
-        handleScroll();
-        setThrottleTimeout(null); // Clear timeout
-        }, 100)); // Adjust the delay as needed
+      setThrottleTimeout(
+        setTimeout(() => {
+          console.log("handleScroll");
+          handleScroll();
+          setThrottleTimeout(null); // Clear timeout
+        }, 100),
+      ); // Adjust the delay as needed
     }
   };
 
   useEffect(() => {
-    const mainContent = document.getElementById('main-content');
+    const mainContent = document.getElementById("main-content");
 
-    mainContent?.addEventListener('scroll', throttleScroll);
+    mainContent?.addEventListener("scroll", throttleScroll);
 
     return () => {
-      mainContent?.removeEventListener('scroll', throttleScroll);
+      mainContent?.removeEventListener("scroll", throttleScroll);
     };
   }, [lastScrollY, throttleTimeout]);
 
   return (
     <div
       className={`sticky top-0 z-10 border-b-2 bg-white flex justify-center gap-4 w-full transition-transform duration-300 ${
-        showFilters ? 'transform translate-y-0' : 'transform -translate-y-full'
+        showFilters ? "transform translate-y-0" : "transform -translate-y-[0px]"
       }`}
     >
       <button
         className="text-black gap-2 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-        type="button">
-        <FaUsers color={"black"} className={"w-4 h-4"}/>
+        type="button"
+      >
+        <FaUsers color={"black"} className={"w-4 h-4"} />
         Focus Community
       </button>
 
       <button
         className="text-black gap-2 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-        type="button">
-        <HiOutlineFilter color={"black"} className={"w-4 h-4"}/>
+        type="button"
+      >
+        <HiOutlineFilter color={"black"} className={"w-4 h-4"} />
         Filter
       </button>
 
       <button
         className="text-black gap-2 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-        type="button">
-        <HiOutlineArrowsUpDown color={"black"} className={"w-4 h-4"}/>
+        type="button"
+      >
+        <HiOutlineArrowsUpDown color={"black"} className={"w-4 h-4"} />
         Sort
       </button>
     </div>

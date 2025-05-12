@@ -1,193 +1,207 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import Layout from "@/components/layout";
 import PortalModal from "@/components/modal";
-
-import ReactQuill from 'react-quill-new';
-
-import 'quill/dist/quill.snow.css';
+import ReactQuill from "react-quill-new";
+import "quill/dist/quill.snow.css";
 import { BiPlus } from "react-icons/bi";
 
-type MoodType = {
-  name: string,
-  value: string,
-  color: string,
-}
-
-function getTextColor(bgColor) {
-  // Convert hex to RGB
-  const rgb = parseInt(bgColor.slice(1), 16); // Remove the '#' and parse as int
-  const r = (rgb >> 16) & 0xff; // Extract red
-  const g = (rgb >> 8) & 0xff; // Extract green
-  const b = rgb & 0xff; // Extract blue
-
-  // Calculate luminance
-  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-
-  // Return black (#000) for light backgrounds, white (#fff) for dark
-  return luminance > 140 ? '#000' : '#fff';
-}
-
 const journalOptions = [
-  { name: "Happy", value: "happy", color: "#FFD700", textColor: getTextColor("#FFD700") }, // Gold
-  { name: "Sad", value: "sad", color: "#87CEEB", textColor: getTextColor("#87CEEB") }, // Sky Blue
-  { name: "Reflective", value: "reflective", color: "#D8BFD8", textColor: getTextColor("#D8BFD8") }, // Thistle
-  { name: "Motivated", value: "motivated", color: "#FFA500", textColor: getTextColor("#FFA500") }, // Orange
-  { name: "Calm", value: "calm", color: "#98FB98", textColor: getTextColor("#98FB98") }, // Pale Green
-  { name: "Anxious", value: "anxious", color: "#FFB6C1", textColor: getTextColor("#FFB6C1") }, // Light Pink
-  { name: "Excited", value: "excited", color: "#FF4500", textColor: getTextColor("#FF4500") }, // Orange Red
-  { name: "Grateful", value: "grateful", color: "#F5DEB3", textColor: getTextColor("#F5DEB3") }, // Wheat
-  { name: "Frustrated", value: "frustrated", color: "#F08080", textColor: getTextColor("#F08080") }, // Light Coral
-  { name: "Inspired", value: "inspired", color: "#6A5ACD", textColor: getTextColor("#6A5ACD") }, // Slate Blue
-  { name: "Lonely", value: "lonely", color: "#708090", textColor: getTextColor("#708090") }, // Slate Gray
-  { name: "Neutral", value: "neutral", color: "#D3D3D3", textColor: getTextColor("#D3D3D3") } // Light Gray
+  { name: "Happy", value: "happy", color: "#FFD700" },
+  { name: "Sad", value: "sad", color: "#87CEEB" },
+  { name: "Reflective", value: "reflective", color: "#D8BFD8" },
+  { name: "Motivated", value: "motivated", color: "#FFA500" },
+  { name: "Calm", value: "calm", color: "#98FB98" },
+  { name: "Anxious", value: "anxious", color: "#FFB6C1" },
+  { name: "Excited", value: "excited", color: "#FF4500" },
+  { name: "Grateful", value: "grateful", color: "#F5DEB3" },
+  { name: "Frustrated", value: "frustrated", color: "#F08080" },
+  { name: "Inspired", value: "inspired", color: "#6A5ACD" },
+  { name: "Lonely", value: "lonely", color: "#708090" },
+  { name: "Neutral", value: "neutral", color: "#D3D3D3" },
 ];
+
 const toolbarOptions = [
-  [
-    'bold', 'italic', 'underline', 'strike',
-    'blockquote', 'code-block', 'link',
-    {'list': 'ordered'},
-    {'list': 'bullet'},
-    {'list': 'check'},
-    {'script': 'sub'},
-    {'script': 'super'},
-    {'indent': '-1'}, {'indent': '+1'},
-    {'direction': 'rtl'},
-    {'size': ['small', false, 'large', 'huge']},
-    {'font': []},
-    {'header': [1, 2, 3, 4, 5, 6, false]},
-    {'color': []}, {'background': []},
-    {'align': []},
-    'clean'
-  ],
+  ["bold", "italic", "underline"],
+  [{ list: "bullet" }, { list: "ordered" }],
+  ["blockquote", "code-block"],
+  ["link"],
+  [{ header: [1, 2, 3, false] }],
 ];
 
 type EntryType = {
-  date: String;
-  content: String;
-  mood: MoodType
-}
-const MyJournal = () => {
-  // State for entries and adding new entries
-  const [entries, setEntries] = useState<[EntryType]>([]);
-  const [selectedMood, setSelectedMood] = useState<MoodType | null>(null);
-  const [modalOpened, setModalOpened] = useState(false)
-  const [value, setValue] = useState('');
+  date: string;
+  content: string;
+  mood: (typeof journalOptions)[number];
+};
 
-  const addNewEntry = () => {
-    if (value.trim()) {
-      const date = new Date().toISOString().slice(0, 10);
+const JournalPage = () => {
+  const [entries, setEntries] = useState<EntryType[]>([]);
+  const [selectedMood, setSelectedMood] = useState<(typeof journalOptions)[0] | null>(
+    null,
+  );
+  const [modalOpen, setModalOpen] = useState(false);
+  const [content, setContent] = useState("");
+  const [viewEntry, setViewEntry] = useState<EntryType | null>(null);
 
-      setEntries([...entries, {
-        date,
-        content: value,
-        mood: selectedMood,
-      }]);
-      setValue('');
-      setSelectedMood('');
-      setModalOpened(false);
-    }
+  const getTextColor = (bg: string) => {
+    const rgb = parseInt(bg.slice(1), 16);
+    const r = (rgb >> 16) & 0xff;
+    const g = (rgb >> 8) & 0xff;
+    const b = rgb & 0xff;
+    const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return lum > 140 ? "#000" : "#fff";
   };
 
-  const closeModal = () => {
-    setModalOpened(false)
-  }
+  const addEntry = () => {
+    if (!content.trim() || !selectedMood) return;
+    const date = new Date().toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+    setEntries([{ date, content, mood: selectedMood }, ...entries]);
+    setContent("");
+    setSelectedMood(null);
+    setModalOpen(false);
+  };
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center">
-        <h1 className="text-2xl font-bold text-pine-green-700 mb-4">My Journal</h1>
-
-        {/* Entry Cards */}
-        <div className="w-full mb-20 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {/* New Entry Card */}
-          <div
-            className="bg-[#02caaf24] h-[150px] flex justify-center items-center text-pine-green-700 gap-2 rounded-md cursor-pointer hover:shadow-lg transition-all"
-            onClick={() => setModalOpened(true)}
-          >
-            <BiPlus className={"w-6 h-6"}/>
-            <span>New Entry</span>
-          </div>
-
-          {/* Existing Entries */}
-          {entries?.map((entry, index) => (
-            <div
-              key={index}
-              className={`p-4 rounded-lg shadow-md bg-opacity-90 ${
-                index % 2 === 0 ? 'bg-yellow-100' : 'bg-blue-100'
-              } hover:shadow-lg transition-all`}
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white p-6">
+        <div className="max-w-5xl mx-auto">
+          <header className="flex items-center justify-between mb-8">
+            <h1 className="text-3xl font-bold text-pine-green-700">My Journal</h1>
+            <button
+              onClick={() => setModalOpen(true)}
+              className="flex items-center gap-2 bg-pine-green-600 hover:bg-pine-green-700 text-white px-4 py-2 rounded-full shadow-md transition"
             >
-              <p className="text-sm text-gray-500 italic mb-2">{entry.date}</p>
-              <div className="flex justify-between items-center">
-                <span className={`text-xs px-2 py-1 rounded-full`}
-                style={{
-                  color: entry.mood.textColor,
-                  background: entry.mood.color}}
+              <BiPlus size={20} /> New Entry
+            </button>
+          </header>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {entries.map((entry, idx) => (
+              <div
+                key={idx}
+                onClick={() => setViewEntry(entry)}
+                className="cursor-pointer bg-white rounded-2xl shadow-lg p-5 hover:shadow-xl transition relative overflow-hidden"
+              >
+                <div
+                  className="absolute top-0 right-0 h-2/3 w-1/4 opacity-20"
+                  style={{ backgroundColor: entry.mood.color }}
+                />
+                <div className="flex justify-between items-center mb-3">
+                  <span
+                    className="px-3 py-1 rounded-full text-sm font-medium"
+                    style={{
+                      backgroundColor: entry.mood.color,
+                      color: getTextColor(entry.mood.color),
+                    }}
                   >
-                  {entry.mood.name}
-                </span>
+                    {entry.mood.name}
+                  </span>
+                  <time className="text-gray-400 text-sm">{entry.date}</time>
+                </div>
+                <div
+                  className="text-gray-700"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                  dangerouslySetInnerHTML={{ __html: entry.content }}
+                />
               </div>
-
-              <p className="text-gray-700 mt-2 leading-snug line-clamp-4"
-                 dangerouslySetInnerHTML={{
-                   __html:
-                     entry.content.length > 100 ? `${entry.content.slice(0, 100)}...` : entry.content
-                 }}
-              />
-
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-
-        <PortalModal isOpen={modalOpened} onClose={() => setModalOpened(false)}>
-          <div className="bg-white rounded-lg p-6 w-full">
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">New Journal Entry</h2>
-            <ReactQuill value={value} onChange={setValue}
-
-                        className={"border-0"}
-
-                        placeholder={"Write about your day..."}
-                        modules={{
-                          toolbar: toolbarOptions,
-                        }}
+        {/* New Entry Modal */}
+        <PortalModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          wrapperClassName="bg-gray-900 bg-opacity-50 backdrop-blur-sm"
+          contentClassName="bg-white rounded-2xl p-8 shadow-2xl"
+          contentStyle={{ maxWidth: "600px" }}
+        >
+          <div>
+            <h2 className="text-xl font-semibold mb-4">New Journal Entry</h2>
+            <ReactQuill
+              value={content}
+              onChange={setContent}
+              modules={{ toolbar: toolbarOptions }}
+              placeholder="Reflect on your day..."
+              className="mb-4"
             />
-            <div className="mt-4">
-              <p className="block text-sm  text-gray-600 mb-2">Select Mood:</p>
-
-              <div className="flex flex-wrap gap-4">
-                {journalOptions.map((entry) => (
-                  <div
-                    key={entry.value} // Add a unique key
-                    style={{background: entry.color}}
-                    className={`px-4 py-2 rounded-md text-white cursor-pointer shadow-md hover:shadow-lg transition-all ${
-                      selectedMood === entry.value ? "ring-2 ring-offset-2 ring-black" : ""
-                    }`}
-                    onClick={() => setSelectedMood(entry)}
+            <div className="mb-4">
+              <p className="text-gray-600 mb-2">Select Mood:</p>
+              <div className="flex flex-wrap gap-3">
+                {journalOptions.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setSelectedMood(opt)}
+                    className={`px-4 py-1 rounded-md font-medium shadow-sm transition
+                      ${selectedMood?.value === opt.value ? "ring-2 ring-offset-2 ring-pine-green-500" : ""}`}
+                    style={{ backgroundColor: opt.color, color: getTextColor(opt.color) }}
                   >
-                    {entry.name}
-                  </div>
+                    {opt.name}
+                  </button>
                 ))}
               </div>
-
             </div>
-
-            <div className={"flex justify-end items-end gap-4"}>
+            <div className="flex justify-end gap-4">
               <button
-                onClick={closeModal}
-                className="mt-4 py-2 text-black rounded-md"
+                onClick={() => setModalOpen(false)}
+                className="py-2 px-4 text-gray-700"
               >
                 Cancel
               </button>
               <button
-                onClick={addNewEntry}
-                className="mt-4 py-2 px-4 bg-pine-green-700 text-white rounded-md"
+                onClick={addEntry}
+                className="py-2 px-6 bg-pine-green-600 text-white rounded-md"
               >
-                Save Entry
+                Save
               </button>
             </div>
+          </div>
+        </PortalModal>
 
+        {/* View Entry Modal */}
+        <PortalModal
+          isOpen={!!viewEntry}
+          onClose={() => setViewEntry(null)}
+          wrapperClassName="bg-gray-900 bg-opacity-50 backdrop-blur-sm"
+          contentClassName="bg-white rounded-2xl p-8 shadow-2xl"
+          contentStyle={{ maxWidth: "800px" }}
+        >
+          <div>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">{viewEntry?.date}</h2>
+              <span
+                className="px-3 py-1 rounded-full text-sm font-medium"
+                style={{
+                  backgroundColor: viewEntry?.mood.color ?? "#FFF",
+                  color: viewEntry ? getTextColor(viewEntry.mood.color) : "#000",
+                }}
+              >
+                {viewEntry?.mood.name}
+              </span>
+            </div>
+            <div
+              className="prose max-w-none text-gray-700"
+              dangerouslySetInnerHTML={{ __html: viewEntry?.content ?? "" }}
+            />
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={() => setViewEntry(null)}
+                className="py-2 px-4 bg-pine-green-600 text-white rounded-md"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </PortalModal>
       </div>
@@ -195,4 +209,4 @@ const MyJournal = () => {
   );
 };
 
-export default MyJournal;
+export default JournalPage;

@@ -1,55 +1,56 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import Layout from "@/components/layout";
 
 const Quotes = () => {
-
   const [streakDays, setStreakDays] = useState(0);
-
-  const incrementStreak = () => setStreakDays(streakDays + 1);
-
 
   return (
     <Layout>
-      <div className=" bg-gray-100 flex items-center justify-center">
-        <div className="bg-white rounded-lg min-h-[90vh] p-6   w-full text-center">
-          <h1 className="text-2xl font-bold text-pine-green-700">Freedom Streak</h1>
-          <p className="text-gray-600 mt-4">
-            Track your journey to freedom, one day at a time.
+      <div className="bg-gradient-to-br from-teal-50 to-white min-h-screen flex items-center justify-center px-4">
+        <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-xl text-center">
+          <h1 className="text-4xl font-bold text-pine-green-700 mb-2">Freedom Streak</h1>
+          <p className="text-gray-600 mb-6">
+            Your journey to healing, tracked one day at a time.
           </p>
 
-          {/* Streak Counter */}
-          <div className="my-8">
-            <div className="text-6xl font-extrabold text-pine-green-600">
+          {/* Streak Display */}
+          <div className="mb-6">
+            <div className="text-7xl font-extrabold text-pine-green-600">
               {streakDays} <span className="text-2xl text-gray-500">days</span>
             </div>
-            <p className="text-sm text-gray-500">Keep going, you're doing great!</p>
+            <p className="text-md text-gray-500 mt-2">
+              Consistency builds strength. Keep going!
+            </p>
           </div>
 
-          <div className="h-3 w-full bg-gray-300 rounded-full overflow-hidden">
+          {/* Progress Bar */}
+          <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden mb-6">
             <div
-              className="h-full bg-green-500 transition-all duration-500"
-              style={{width: `${streakDays * 10}%`}}
-            ></div>
+              className="bg-green-500 h-full transition-all duration-500"
+              style={{ width: `${Math.min(streakDays * 10, 100)}%` }}
+            />
           </div>
 
-          <div className="mt-6 bg-blue-50 p-4 rounded-lg shadow-inner">
-            <p className="text-pine-green-900 italic">"Small steps, big changes."</p>
+          {/* Inspirational Quote */}
+          <div className="bg-pine-green-100 text-pine-green-900 italic p-4 rounded-lg shadow-inner mb-8">
+            "Small steps, big changes."
           </div>
 
-          <div className="mt-8 flex justify-center gap-4">
+          {/* Action Buttons */}
+          <div className="flex justify-center gap-4">
             <button
-              onClick={incrementStreak}
-              className="px-6 py-2 bg-pine-green-600 text-white rounded-full font-semibold hover:bg-green-600 transition"
+              onClick={() => setStreakDays(streakDays + 1)}
+              className="bg-pine-green-600 hover:bg-pine-green-700 text-white px-6 py-2 rounded-full font-semibold shadow-md transition"
             >
               +1 Day
             </button>
             <button
               onClick={() => setStreakDays(0)}
-              className="px-6 py-2 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition"
+              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-semibold shadow-md transition"
             >
-              Reset Streak
+              Reset
             </button>
           </div>
         </div>
