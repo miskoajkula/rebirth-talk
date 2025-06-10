@@ -69,53 +69,94 @@ const JournalPage = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white p-6">
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 p-6">
         <div className="max-w-5xl mx-auto">
           <header className="flex items-center justify-between mb-8">
             <h1 className="text-3xl font-bold text-pine-green-700">My Journal</h1>
-            <button
-              onClick={() => setModalOpen(true)}
-              className="flex items-center gap-2 bg-pine-green-600 hover:bg-pine-green-700 text-white px-4 py-2 rounded-full shadow-md transition"
-            >
-              <BiPlus size={20} /> New Entry
-            </button>
+            {entries.length > 0 && (
+              <>
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="flex items-center gap-2 bg-pine-green-600 hover:bg-pine-green-700 text-white px-4 py-2 rounded-full shadow-md transition"
+                >
+                  <BiPlus size={20} /> New Entry
+                </button>
+              </>
+            )}
           </header>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {entries.map((entry, idx) => (
-              <div
-                key={idx}
-                onClick={() => setViewEntry(entry)}
-                className="cursor-pointer bg-white rounded-2xl shadow-lg p-5 hover:shadow-xl transition relative overflow-hidden"
-              >
-                <div
-                  className="absolute top-0 right-0 h-2/3 w-1/4 opacity-20"
-                  style={{ backgroundColor: entry.mood.color }}
-                />
-                <div className="flex justify-between items-center mb-3">
-                  <span
-                    className="px-3 py-1 rounded-full text-sm font-medium"
-                    style={{
-                      backgroundColor: entry.mood.color,
-                      color: getTextColor(entry.mood.color),
-                    }}
+            {entries.length === 0 ? (
+              // Empty State
+              <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
+                <div className="bg-white rounded-2xl shadow-lg p-12 max-w-md mx-auto">
+                  <div className="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg
+                      className="w-10 h-10 text-pine-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                    Start Your Journey
+                  </h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Your journal is a safe space to reflect, process emotions, and track
+                    your progress. Each entry is a step forward in your recovery journey.
+                  </p>
+                  <button
+                    onClick={() => setModalOpen(true)}
+                    className="flex items-center gap-2 bg-pine-green-600 hover:bg-pine-green-700 text-white px-6 py-3 rounded-full shadow-md transition mx-auto"
                   >
-                    {entry.mood.name}
-                  </span>
-                  <time className="text-gray-400 text-sm">{entry.date}</time>
+                    <BiPlus size={20} /> Write Your First Entry
+                  </button>
                 </div>
-                <div
-                  className="text-gray-700"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                  }}
-                  dangerouslySetInnerHTML={{ __html: entry.content }}
-                />
               </div>
-            ))}
+            ) : (
+              // Existing entries
+              entries.map((entry, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => setViewEntry(entry)}
+                  className="cursor-pointer bg-white rounded-2xl shadow-lg p-5 hover:shadow-xl transition relative overflow-hidden"
+                >
+                  <div
+                    className="absolute top-0 right-0 h-2/3 w-1/4 opacity-20"
+                    style={{ backgroundColor: entry.mood.color }}
+                  />
+                  <div className="flex justify-between items-center mb-3">
+                    <span
+                      className="px-3 py-1 rounded-full text-sm font-medium"
+                      style={{
+                        backgroundColor: entry.mood.color,
+                        color: getTextColor(entry.mood.color),
+                      }}
+                    >
+                      {entry.mood.name}
+                    </span>
+                    <time className="text-gray-400 text-sm">{entry.date}</time>
+                  </div>
+                  <div
+                    className="text-gray-700"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: entry.content }}
+                  />
+                </div>
+              ))
+            )}
           </div>
         </div>
 
