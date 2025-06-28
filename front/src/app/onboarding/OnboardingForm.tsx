@@ -1,19 +1,27 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Step, StepLabel, Stepper, Typography, } from "@mui/material";
+import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import Button from "@/components/button";
 import Input from "@/components/form/input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import AvatarGenerator, { Avatar } from "@/components/avatar-generator";
-import { FaAppleAlt, FaBrain, FaEllipsisH, FaHeart, FaRunning, FaWineBottle } from "react-icons/fa";
+import {
+  FaAppleAlt,
+  FaBrain,
+  FaEllipsisH,
+  FaHeart,
+  FaRunning,
+  FaWineBottle,
+} from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { avatarPallets } from "@/constants";
 import { SiSunrise } from "react-icons/si";
 import { useMutation } from "@apollo/client";
 import UPDATE_PROFILE from "@/lib/mutations/update-profile.mutation";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface FocusCommunity {
   category: string;
@@ -31,99 +39,159 @@ interface FormValues {
 const focusCommunities: FocusCommunity[] = [
   {
     category: "Addiction",
-    icon: <FaWineBottle size={16}/>,
+    icon: <FaWineBottle size={16} />,
     preselect: true,
     subcategories: [
-      "Alcohol", "Smoking", "Vaping", "Caffeine", "Sugar", "Energy Drinks",
-      "Nicotine", "Pornography", "Gambling", "Drugs", "Social Media",
-      "Video Games", "Internet Addiction", "Shopping Addiction", "Chemsex",
+      "Alcohol",
+      "Smoking",
+      "Vaping",
+      "Caffeine",
+      "Sugar",
+      "Energy Drinks",
+      "Nicotine",
+      "Pornography",
+      "Gambling",
+      "Drugs",
+      "Social Media",
+      "Video Games",
+      "Internet Addiction",
+      "Shopping Addiction",
+      "Chemsex",
       "Prescription Drugs",
     ],
   },
   {
     category: "Eating Habits",
-    icon: <FaAppleAlt size={16}/>,
+    icon: <FaAppleAlt size={16} />,
     preselect: true,
     subcategories: [
-      "Binge Eating", "Emotional Eating", "Sugar Addiction", "Food Addiction",
-      "Chewing and Spitting", "Restrictive Eating", "Overeating", "Purging",
-      "Orthorexia", "Fast Food Addiction", "Junk Food Addiction",
+      "Binge Eating",
+      "Emotional Eating",
+      "Sugar Addiction",
+      "Food Addiction",
+      "Chewing and Spitting",
+      "Restrictive Eating",
+      "Overeating",
+      "Purging",
+      "Orthorexia",
+      "Fast Food Addiction",
+      "Junk Food Addiction",
     ],
   },
   {
     category: "Mental Health",
-    icon: <FaBrain size={16}/>,
+    icon: <FaBrain size={16} />,
     preselect: true,
     subcategories: [
-      "Depression", "Anxiety", "Anger Management", "OCD", "Self-Harm",
-      "Suicidal Thoughts", "PTSD", "ADHD", "Bipolar Disorder", "Stress",
-      "Insomnia", "Low Self-Esteem",
+      "Depression",
+      "Anxiety",
+      "Anger Management",
+      "OCD",
+      "Self-Harm",
+      "Suicidal Thoughts",
+      "PTSD",
+      "ADHD",
+      "Bipolar Disorder",
+      "Stress",
+      "Insomnia",
+      "Low Self-Esteem",
     ],
   },
   {
     category: "Relationships",
-    icon: <FaHeart size={16}/>,
+    icon: <FaHeart size={16} />,
     preselect: false,
     subcategories: [
-      "Toxic Relationships", "Codependency", "Trust Issues", "Attachment Issues",
-      "Breakups", "Loneliness", "Dating Apps Addiction", "Stalking", "Jealousy",
+      "Toxic Relationships",
+      "Codependency",
+      "Trust Issues",
+      "Attachment Issues",
+      "Breakups",
+      "Loneliness",
+      "Dating Apps Addiction",
+      "Stalking",
+      "Jealousy",
       "Abuse",
     ],
   },
   {
     category: "Lifestyle Habits",
-    icon: <SiSunrise size={16}/>,
+    icon: <SiSunrise size={16} />,
     preselect: false,
     subcategories: [
-      "Procrastination", "Doomscrolling", "Short-Form Videos", "Gossiping",
-      "Overworking", "Excessive Exercising", "Work-Life Imbalance",
-      "Knuckle Cracking", "Nail Biting", "Hair Pulling", "Skin Picking",
+      "Procrastination",
+      "Doomscrolling",
+      "Short-Form Videos",
+      "Gossiping",
+      "Overworking",
+      "Excessive Exercising",
+      "Work-Life Imbalance",
+      "Knuckle Cracking",
+      "Nail Biting",
+      "Hair Pulling",
+      "Skin Picking",
     ],
   },
   {
     category: "Physical Health",
-    icon: <FaRunning size={16}/>,
+    icon: <FaRunning size={16} />,
     preselect: false,
     subcategories: [
-      "Fitness Motivation", "Weight Loss Struggles", "Sedentary Lifestyle",
-      "Injury Recovery", "Chronic Fatigue", "Overtraining", "Body Dysmorphia",
+      "Fitness Motivation",
+      "Weight Loss Struggles",
+      "Sedentary Lifestyle",
+      "Injury Recovery",
+      "Chronic Fatigue",
+      "Overtraining",
+      "Body Dysmorphia",
       "Muscle Imbalance",
     ],
   },
   {
     category: "Other",
-    icon: <FaEllipsisH size={16}/>,
+    icon: <FaEllipsisH size={16} />,
     preselect: false,
     subcategories: [
-      "Financial Issues", "Career Burnout", "Lack of Purpose", "Parenting Struggles",
-      "Addiction to AI/Tech", "Miscellaneous",
+      "Financial Issues",
+      "Career Burnout",
+      "Lack of Purpose",
+      "Parenting Struggles",
+      "Addiction to AI/Tech",
+      "Miscellaneous",
     ],
   },
 ];
 
 const schema = yup.object().shape({
-  username: yup.string().required("Required").min(8, "Min. 8 chars").max(100, "Char limit reached"),
+  username: yup
+    .string()
+    .required("Required")
+    .min(8, "Min. 8 chars")
+    .max(100, "Char limit reached"),
   avatar: yup.object().nullable(),
   communities: yup.array().of(yup.string().required("Required")),
 });
 
 const OnboardingForm: React.FC = () => {
+  const router = useRouter();
+
   const [activeStep, setActiveStep] = useState<number>(0);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [selected, setSelected] = useState<string[]>([]);
-  const [updateProfile, {loading}] = useMutation(UPDATE_PROFILE, {
-    onCompleted: (data) => {
 
+  const [updateProfile, { loading }] = useMutation(UPDATE_PROFILE, {
+    onCompleted: (data) => {
+      router.push("/");
       console.log(data);
     },
     onError: (error) => {
-      toast.error(error.message, {position: "top-right", duration: 6000});
-    }
-  })
+      toast.error(error.message, { position: "top-right", duration: 6000 });
+    },
+  });
 
   const {
     register,
-    formState: {errors},
+    formState: { errors },
     getValues,
     setValue,
   } = useForm<FormValues>({
@@ -157,8 +225,8 @@ const OnboardingForm: React.FC = () => {
     updateProfile({
       variables: {
         payload: getValues(),
-      }
-    })
+      },
+    });
   };
 
   const handleSelect = (value: string) => {
@@ -181,7 +249,7 @@ const OnboardingForm: React.FC = () => {
   };
 
   const toggleExpand = (category: string) => {
-    setExpanded((prev) => ({...prev, [category]: !prev[category]}));
+    setExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
   };
 
   const getStepContent = (stepIndex: number) => {
@@ -216,8 +284,8 @@ const OnboardingForm: React.FC = () => {
         return (
           <div className="w-full">
             <h3 className={"text-sm text-white"}>Communities to follow</h3>
-            {focusCommunities.map(({category, subcategories, icon}) => (
-              <div key={category} style={{borderBottom: "1px solid #ffffff24"}}>
+            {focusCommunities.map(({ category, subcategories, icon }) => (
+              <div key={category} style={{ borderBottom: "1px solid #ffffff24" }}>
                 <div
                   className="flex justify-between items-center py-2 cursor-pointer"
                   onClick={() => toggleExpand(category)}
@@ -227,11 +295,13 @@ const OnboardingForm: React.FC = () => {
                     <span className="text-white text-sm">
                       {category}
                       <span className="text-xs text-pine-green-100 mr-4 block">
-                        {selected.filter((sub) =>
-                          focusCommunities
-                            .find((c) => c.category === category)
-                            ?.subcategories.includes(sub)
-                        ).length}{" "}
+                        {
+                          selected.filter((sub) =>
+                            focusCommunities
+                              .find((c) => c.category === category)
+                              ?.subcategories.includes(sub),
+                          ).length
+                        }{" "}
                         selected
                       </span>
                     </span>
@@ -241,7 +311,7 @@ const OnboardingForm: React.FC = () => {
                       expanded[category] ? "rotate-180" : ""
                     }`}
                   >
-                    <IoIosArrowDown className={"text-white"}/>
+                    <IoIosArrowDown className={"text-white"} />
                   </span>
                 </div>
 
@@ -257,7 +327,10 @@ const OnboardingForm: React.FC = () => {
                       All
                     </label>
                     {subcategories.map((sub) => (
-                      <label key={sub} className="flex text-xs items-center py-1 text-pine-green-100">
+                      <label
+                        key={sub}
+                        className="flex text-xs items-center py-1 text-pine-green-100"
+                      >
                         <input
                           type="checkbox"
                           checked={selected.includes(sub)}
@@ -289,7 +362,9 @@ const OnboardingForm: React.FC = () => {
           </Step>
         ))}
       </Stepper>
-      <div className="mb-6 h-[65vh] overflow-y-scroll px-2">{getStepContent(activeStep)}</div>
+      <div className="mb-6 h-[65vh] overflow-y-scroll px-2">
+        {getStepContent(activeStep)}
+      </div>
       <div className="flex justify-end items-center h-[5vh]">
         <Button
           onClick={handleBack}
@@ -300,13 +375,17 @@ const OnboardingForm: React.FC = () => {
         />
         {activeStep === 1 ? (
           <Button
-            className={"w-auto bg-white text-pine-green-950 hover:bg-white hover:opacity-90"}
+            className={
+              "w-auto bg-white text-pine-green-950 hover:bg-white hover:opacity-90"
+            }
             onClick={handleSubmit}
             title={"Finish"}
           />
         ) : (
           <Button
-            className={"w-auto bg-white text-pine-green-950 hover:bg-white hover:opacity-90"}
+            className={
+              "w-auto bg-white text-pine-green-950 hover:bg-white hover:opacity-90"
+            }
             onClick={handleNext}
             title={"Next"}
           />
