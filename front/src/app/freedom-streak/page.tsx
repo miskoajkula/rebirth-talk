@@ -3,64 +3,74 @@
 import React, { useState, useEffect, useRef } from "react";
 import Layout from "@/components/layout";
 import {
+  FiSun,
+  FiMoon,
+  FiSunrise,
+  FiActivity,
+  FiCompass,
+  FiAnchor,
+  FiFeather,
+  FiStar,
   FiAward,
   FiHeart,
-  FiShield,
   FiTarget,
   FiTrendingUp,
-  FiStar,
-  FiZap,
-  FiGift,
-  FiSun,
 } from "react-icons/fi";
-import { FaCrown } from "react-icons/fa";
+import {
+  RiLeafLine,
+  RiFlowerLine,
+  RiTreeLine,
+  RiFireLine,
+  RiSeedlingLine,
+  RiPlantLine,
+} from "react-icons/ri";
 
 const milestones = [
-  { days: 1, title: "First Step", icon: FiHeart, color: "bg-pink-500" },
-  { days: 3, title: "Finding Strength", icon: FiTrendingUp, color: "bg-blue-500" },
-  { days: 7, title: "Week Warrior", icon: FiShield, color: "bg-green-500" },
-  { days: 14, title: "Two Week Hero", icon: FiStar, color: "bg-purple-500" },
-  { days: 21, title: "Three Week Strong", icon: FiTarget, color: "bg-indigo-500" },
-  { days: 30, title: "Month Champion", icon: FiAward, color: "bg-yellow-500" },
-  { days: 45, title: "Freedom Fighter", icon: FiZap, color: "bg-orange-500" },
-  { days: 60, title: "Two Month Strong", icon: FiShield, color: "bg-teal-500" },
-  { days: 90, title: "Quarter Master", icon: FaCrown, color: "bg-emerald-500" },
-  { days: 120, title: "Four Month Hero", icon: FiGift, color: "bg-red-500" },
-  { days: 150, title: "Five Month Star", icon: FiStar, color: "bg-cyan-500" },
-  { days: 180, title: "Half Year King", icon: FaCrown, color: "bg-violet-500" },
-  { days: 210, title: "Seven Month Pro", icon: FiTarget, color: "bg-lime-500" },
-  { days: 240, title: "Eight Month Elite", icon: FiZap, color: "bg-rose-500" },
-  { days: 270, title: "Nine Month Legend", icon: FiAward, color: "bg-sky-500" },
-  { days: 300, title: "Ten Month Master", icon: FaCrown, color: "bg-amber-500" },
-  { days: 330, title: "Eleven Month Pro", icon: FiStar, color: "bg-fuchsia-500" },
+  { days: 1, title: "First Light", icon: FiSunrise, color: "bg-amber-400" },
+  { days: 3, title: "Growing", icon: RiSeedlingLine, color: "bg-green-400" },
+  { days: 7, title: "Week Bloom", icon: RiFlowerLine, color: "bg-pink-400" },
+  { days: 14, title: "Two Week Rise", icon: FiActivity, color: "bg-blue-400" },
+  { days: 21, title: "Three Week Flow", icon: FiFeather, color: "bg-purple-400" },
+  { days: 30, title: "Month Bright", icon: FiSun, color: "bg-yellow-500" },
+  { days: 45, title: "Freedom Path", icon: FiCompass, color: "bg-orange-400" },
+  { days: 60, title: "Two Month Strong", icon: FiAnchor, color: "bg-teal-400" },
+  { days: 90, title: "Quarter Tree", icon: RiTreeLine, color: "bg-emerald-500" },
+  { days: 120, title: "Four Month Shine", icon: FiStar, color: "bg-indigo-400" },
+  { days: 150, title: "Five Month Leaf", icon: RiLeafLine, color: "bg-green-500" },
+  { days: 180, title: "Half Year Fire", icon: RiFireLine, color: "bg-red-500" },
+  { days: 210, title: "Seven Month Rise", icon: FiTrendingUp, color: "bg-cyan-400" },
+  { days: 240, title: "Eight Month Gem", icon: FiAward, color: "bg-violet-400" },
+  { days: 270, title: "Nine Month Heart", icon: FiHeart, color: "bg-rose-400" },
+  { days: 300, title: "Ten Month Star", icon: FiStar, color: "bg-amber-500" },
+  { days: 330, title: "Eleven Month Bloom", icon: RiPlantLine, color: "bg-lime-400" },
   {
     days: 365,
-    title: "Year Champion",
+    title: "Year Sunrise",
     icon: FiSun,
     color: "bg-gradient-to-r from-yellow-400 to-orange-500",
   },
   {
     days: 500,
-    title: "Legend Status",
-    icon: FaCrown,
+    title: "Beyond Heights",
+    icon: FiAward,
     color: "bg-gradient-to-r from-purple-500 to-pink-500",
   },
   {
     days: 730,
-    title: "Two Year Master",
-    icon: FiSun,
+    title: "Two Year Moon",
+    icon: FiMoon,
     color: "bg-gradient-to-r from-blue-500 to-purple-500",
   },
   {
     days: 1000,
     title: "Thousand Days",
-    icon: FiGift,
+    icon: FiTarget,
     color: "bg-gradient-to-r from-yellow-500 to-red-500",
   },
   {
     days: 1095,
-    title: "Three Year King",
-    icon: FaCrown,
+    title: "Three Year Light",
+    icon: FiSun,
     color: "bg-gradient-to-r from-green-500 to-blue-500",
   },
 ];
@@ -90,7 +100,7 @@ const FreedomStreak = () => {
     if (milestonesRef.current && nextMilestone) {
       const milestoneIndex = milestones.findIndex((m) => m.days === nextMilestone.days);
       const scrollContainer = milestonesRef.current;
-      const milestoneWidth = 144; // 128px width + 16px gap
+      const milestoneWidth = 100; // Compact width + gap
       const scrollPosition = Math.max(0, (milestoneIndex - 1) * milestoneWidth);
 
       scrollContainer.scrollTo({
@@ -159,9 +169,9 @@ const FreedomStreak = () => {
             </div>
           )}
 
-          {/* Milestones - Horizontal Scroll */}
+          {/* Milestones - Compact Horizontal Scroll */}
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">
+            <h2 className="text-xl font-bold text-gray-800 mb-3 text-center">
               Your Journey
             </h2>
             <div
@@ -169,55 +179,52 @@ const FreedomStreak = () => {
               className="overflow-x-auto pb-2 scrollbar-hide"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              <div className="flex gap-4 px-2" style={{ minWidth: "max-content" }}>
+              <div className="flex gap-6 px-2 py-3" style={{ minWidth: "max-content" }}>
                 {milestones.map((milestone, index) => {
                   const isAchieved = streakDays >= milestone.days;
                   const isNext = milestone === nextMilestone;
-                  const isCurrent = isNext && index > 0;
 
                   return (
                     <div
                       key={milestone.days}
-                      className={`flex-shrink-0 flex flex-col items-center p-4 rounded-xl transition-all duration-300 w-32 ${
+                      className={`flex-shrink-0 flex flex-col items-center p-3 rounded-xl transition-all duration-300 w-40 ${
                         isAchieved
-                          ? "bg-white shadow-lg ring-2 ring-green-200 transform scale-105"
+                          ? "bg-white shadow-md ring-2 ring-pine-green-600 transform scale-105"
                           : isNext
-                            ? "bg-white shadow-lg ring-2 ring-blue-400 transform scale-110"
-                            : "bg-white shadow-md hover:shadow-lg"
+                            ? "bg-white shadow-md ring-2 ring-blue-300 transform scale-110"
+                            : "bg-white shadow-sm hover:shadow-md opacity-50"
                       }`}
                     >
                       <div
-                        className={`w-14 h-14 rounded-full flex items-center justify-center mb-3 transition-all ${
+                        className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all ${
                           isAchieved
                             ? milestone.color
                             : isNext
-                              ? "bg-blue-500"
+                              ? "bg-blue-400"
                               : "bg-gray-300"
                         }`}
                       >
                         <milestone.icon
-                          className={`w-6 h-6 ${isAchieved || isNext ? "text-white" : "text-gray-500"}`}
+                          className={`w-4 h-4 ${isAchieved || isNext ? "text-white" : "text-gray-500"}`}
                         />
                       </div>
                       <div className="text-center">
                         <div
-                          className={`font-semibold text-sm leading-tight mb-1 ${
+                          className={`font-medium text-xs leading-tight mb-1 ${
                             isAchieved
-                              ? "text-green-800"
+                              ? "text-green-700"
                               : isNext
-                                ? "text-blue-800"
+                                ? "text-blue-700"
                                 : "text-gray-600"
                           }`}
                         >
                           {milestone.title}
                         </div>
-                        <div className="text-xs text-gray-500">
-                          {milestone.days} day{milestone.days !== 1 ? "s" : ""}
-                        </div>
+                        <div className="text-xs text-gray-500">{milestone.days}d</div>
                       </div>
-                      {isAchieved && <div className="text-green-600 text-lg mt-2">✓</div>}
+                      {isAchieved && <div className="text-green-600 text-sm mt-1">✓</div>}
                       {isNext && (
-                        <div className="text-blue-600 text-xs font-medium mt-2">Next</div>
+                        <div className="text-blue-600 text-xs font-medium mt-1">Next</div>
                       )}
                     </div>
                   );
