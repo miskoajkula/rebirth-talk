@@ -13,6 +13,8 @@ const RefetchConfig = () => {
     nextFetchPolicy: "network-only",
     onCompleted: (res) => {
       if (res.getConfig) {
+        console.log("aaaa");
+        console.log(res.getConfig);
         setCfg({
           labels: res.getConfig.tags,
           communities: res.getConfig.communities,

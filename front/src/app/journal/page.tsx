@@ -6,6 +6,7 @@ import PortalModal from "@/components/modal";
 import ReactQuill from "react-quill-new";
 import "quill/dist/quill.snow.css";
 import { BiPlus } from "react-icons/bi";
+import { useConfigStore } from "@/store/cfgStore";
 
 // Ordered by color spectrum: warm colors → cool colors → neutrals
 const journalOptions = [
@@ -47,6 +48,7 @@ const JournalPage = () => {
   const [viewEntry, setViewEntry] = useState<EntryType | null>(null);
   const [errors, setErrors] = useState({ content: "", mood: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { cfg } = useConfigStore();
 
   const getTextColor = (bg: string) => {
     const rgb = parseInt(bg.slice(1), 16);
